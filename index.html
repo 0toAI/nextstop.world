@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Stop: World | Global Travel</title>
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. DESIGN VARIABLES --- */
+        :root {
+            --bg-warm: #fdfbf7;         
+            --charcoal: #1a1a1a;        
+            --terracotta: #a84a32;      
+            --gold: #c5a059;            
+            --green: #25D366;           
+            --gray-light: #f4f4f4;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
+        body { color: var(--charcoal); background-color: #000; overflow: hidden; height: 100vh; } /* Black BG for map contrast */
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- 2. HEADER (Matches Georgia Site) --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 12px 5%;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .header-left { display: flex; align-items: center; gap: 30px; }
+        
+        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: default; }
+        .logo-main { 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 1.4rem; 
+            font-weight: 800; 
+            color: var(--charcoal); 
+            letter-spacing: -1px; 
+        }
+        .logo-sub { 
+            font-family: 'Cinzel', serif; 
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            color: var(--terracotta); 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            margin-left: 2px; 
+        }
+
+        /* Toggle */
+        .site-toggle {
+            display: flex; background: var(--gray-light); padding: 4px;
+            border-radius: 30px; border: 1px solid rgba(0,0,0,0.05);
+        }
+        .toggle-btn {
+            padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700;
+            display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none;
+        }
+        /* WORLD is now ACTIVE */
+        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default;}
+        /* GEORGIA is now INACTIVE (Link back) */
+        .toggle-btn.inactive:hover { color: var(--terracotta); }
+        .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
+
+        /* --- 3. HERO MAP --- */
+        .map-container {
+            height: 100vh; width: 100%;
+            display: flex; justify-content: center; align-items: center;
+            background: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop') no-repeat center center/cover;
+            position: relative;
+        }
+        /* Overlay to make text readable */
+        .map-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1;
+        }
+        
+        .content-box {
+            position: relative; z-index: 2; text-align: center; color: white;
+            max-width: 600px; padding: 0 20px;
+        }
+        
+        h1 { font-family: 'Cinzel', serif; font-size: 3.5rem; margin-bottom: 20px; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        p { font-size: 1.2rem; font-weight: 300; margin-bottom: 30px; letter-spacing: 1px; opacity: 0.9; }
+        
+        .coming-soon-badge {
+            display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px;
+            border-radius: 50px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .header-left { gap: 15px; }
+            .logo-main { font-size: 1.2rem; }
+        }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-left">
+            <div class="logo-container">
+                <span class="logo-main">NEXT STOP</span>
+                <span class="logo-sub">WORLD</span>
+            </div>
+            
+            <!-- TOGGLE SWITCH (Logic Reversed) -->
+            <div class="site-toggle">
+                <!-- Link back to GEORGIA -->
+                <a href="https://nextstop.ge" class="toggle-btn inactive">GEORGIA</a>
+                <!-- Current Site WORLD -->
+                <div class="toggle-btn active"><span class="dot">●</span> WORLD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO MAP -->
+    <div class="map-container">
+        <div class="map-overlay"></div>
+        <div class="content-box">
+            <div class="coming-soon-badge">Launching 2026</div>
+            <h1>Your Gateway to the World</h1>
+            <p>Outgoing tours to Europe, Asia, and beyond. Curated experiences for the discerning traveler.</p>
+        </div>
+    </div>
+
+</body>
+</html>
