@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Next Stop: World | Curated Travel</title>
     <meta name="description" content="Next Stop: World. Curated travel experiences to Italy, France, Japan, and beyond.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
@@ -11,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. DYNAMIC VARIABLES (These change per country) --- */
+        /* --- DYNAMIC VARIABLES --- */
         :root {
             --accent: #006994;          /* Default Ocean Blue */
             --bg-warm: #f8fbfd;
@@ -32,43 +31,28 @@
         /* HEADER */
         header {
             background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px);
-            padding: 10px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 12px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .header-left { display: flex; align-items: center; gap: 30px; }
         
-        /* LOGO */
-        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; min-width: 150px; }
+        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; }
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
         .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; }
 
-        /* --- DESTINATION RIBBON (The "Calendar" Picker) --- */
-        .destination-ribbon {
-            display: flex; gap: 10px; overflow-x: auto; 
-            padding: 5px; max-width: 500px; 
-            -ms-overflow-style: none; scrollbar-width: none; 
-            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-        }
-        .destination-ribbon::-webkit-scrollbar { display: none; }
+        /* TWIN TOGGLE */
+        .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
+        .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
+        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
+        .toggle-btn.inactive:hover { color: var(--accent); }
+        .dot { color: var(--accent); font-size: 0.8rem; animation: pulse 2s infinite; }
 
-        .dest-btn {
-            white-space: nowrap; padding: 6px 15px; border-radius: 20px; 
-            font-size: 0.7rem; font-weight: 700; color: #999; background: var(--gray-light);
-            transition: 0.3s; display: flex; align-items: center; gap: 6px; cursor: pointer;
-        }
-        .dest-btn:hover { background: #ddd; color: var(--charcoal); }
-        
-        /* Active State */
-        .dest-btn.active { 
-            background: var(--charcoal); color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
-        }
-        /* Special Georgia Link Style */
-        .dest-btn.geo-link {
-            border: 1px solid #ddd; background: white; color: var(--charcoal);
-        }
+        /* LANG PICKER */
+        .nav-right { display: flex; gap: 20px; align-items: center; }
+        .lang-btn { font-size: 1.2rem; background: none; padding: 5px; border-radius: 4px; }
+        .lang-btn:hover { background: rgba(0,0,0,0.05); }
 
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
@@ -87,24 +71,26 @@
         .slide-btn { border: 2px solid white; color: white; padding: 15px 45px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s; }
         .slide-btn:hover { background: white; color: black; }
 
-        /* PROGRESS BARS */
         .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
 
-        /* ARROWS */
-        .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
-        .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
-        .arrow:hover { background: white; color: black; }
+        /* COUNTRY RIBBON (Below Hero) */
+        .ribbon-container { background: white; padding: 15px 5%; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: center; }
+        .destination-ribbon { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 5px; }
+        .destination-ribbon::-webkit-scrollbar { display: none; }
+        .dest-btn { padding: 8px 20px; border-radius: 25px; font-size: 0.75rem; font-weight: 700; color: #999; background: var(--gray-light); transition: 0.3s; cursor: pointer; white-space: nowrap; border: 1px solid transparent; }
+        .dest-btn:hover { background: #ddd; color: var(--charcoal); }
+        .dest-btn.active { background: var(--charcoal); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-1px); }
+        .dest-btn.geo-link { background: white; border: 1px solid #ddd; color: var(--terracotta); }
 
         /* SECTIONS */
-        .section { padding: 100px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+        .section { padding: 80px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
         .section-title { text-align: center; margin-bottom: 60px; }
         .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 15px; }
         .section-title p { color: #777; font-size: 1rem; max-width: 600px; margin: 0 auto; }
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
 
-        /* CARDS */
         .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 350px; position: relative; cursor: pointer; }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -114,7 +100,6 @@
         .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
         .card-tag { position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
 
-        /* BLOG */
         .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .blog-scroller::-webkit-scrollbar { display: none; }
         .blog-card { flex: 0 0 350px; scroll-snap-align: center; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; cursor: pointer; }
@@ -139,38 +124,38 @@
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--accent); }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } 
+            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
             .header-left { width: 100%; justify-content: space-between; }
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-left">
-            <!-- THE DYNAMIC LOGO -->
             <div class="logo-container" onclick="location.reload()">
                 <span class="logo-main">NEXT STOP</span>
                 <span class="logo-sub" id="logoSub">WORLD</span>
             </div>
-
-            <!-- THE DESTINATION RIBBON -->
-            <div class="destination-ribbon" id="destRibbon">
-                <!-- JS INJECTS BUTTONS HERE -->
+            <div class="site-toggle">
+                <a href="https://nextstop.ge" class="toggle-btn inactive">GEORGIA</a>
+                <div class="toggle-btn active"><span class="dot">●</span> WORLD</div>
             </div>
         </div>
-        
-        <nav class="nav-links">
-            <a href="#experiences" class="nav-item">Itineraries</a>
-            <a href="#services" class="nav-item">Services</a>
-            <a href="#blog" class="nav-item">Journal</a>
-            <a href="#footer" class="nav-item">Contact</a>
-        </nav>
+        <div class="nav-right">
+            <nav class="nav-links">
+                <a href="#destinations" class="nav-item" data-key="nav_tours">Tours</a>
+                <a href="#services" class="nav-item" data-key="nav_services">Services</a>
+                <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
+                <a href="#footer" class="nav-item" data-key="nav_about">About</a>
+            </nav>
+            <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇬🇪</button>
+        </div>
     </header>
 
-    <!-- HERO WHEEL -->
     <div class="hero-wheel">
         <div class="wheel-track" id="heroTrack"></div>
         <div class="progress-container" id="progressContainer"></div>
@@ -180,32 +165,46 @@
         </div>
     </div>
 
-    <!-- CONTENT SECTIONS -->
-    <section id="experiences" class="section">
+    <!-- COUNTRY RIBBON -->
+    <div class="ribbon-container">
+        <div class="destination-ribbon" id="destRibbon"></div>
+    </div>
+
+    <section id="destinations" class="section">
         <div class="section-title">
-            <h2 id="gridTitle">Curated Experiences</h2>
-            <p id="gridDesc">Explore our hand-picked destinations.</p>
+            <h2 id="gridTitle" data-key="section_travel_title">Curated Experiences</h2>
+            <p id="gridDesc" data-key="section_travel_desc">Explore our hand-picked destinations.</p>
         </div>
         <div class="grid-4" id="travelGrid"></div>
     </section>
 
     <section id="services" class="section" style="background-color: #f0f4f8;">
         <div class="section-title">
-            <h2 id="servTitle">Services</h2>
+            <h2 data-key="section_services_title">Services</h2>
+            <p data-key="section_services_desc">Full support for your international journey.</p>
         </div>
         <div class="grid-4" id="servicesGrid"></div>
     </section>
 
     <section id="blog" class="section" style="background: white;">
         <div class="section-title">
-            <h2>Travel Journal</h2>
+            <h2 data-key="section_blog_title">Travel Journal</h2>
+            <p data-key="section_blog_desc">Tips, guides, and inspiration.</p>
         </div>
         <div class="blog-scroller" id="blogTrack"></div>
     </section>
 
     <footer id="footer">
-        <p>Next Stop: Global Travel Management</p>
-        <p>Tbilisi, Georgia | +995 591 70 57 10</p>
+        <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1);">
+            <span class="logo-main">NEXT STOP</span>
+            <span class="logo-sub">WORLD</span>
+        </div>
+        <p>Tbilisi, Georgia | <a href="tel:+995591705710" style="color:#aaa;">+995 591 70 57 10</a></p>
+        <br>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">Instagram</a>
+            <a href="#" class="social-btn wa-link">WhatsApp</a>
+        </div>
     </footer>
 
     <!-- MODAL -->
@@ -222,111 +221,129 @@
     </div>
 
     <script>
-        /* ============================================================
-           --- YOUR CONTROL PANEL (THE MULTI-COUNTRY DATABASE) ---
-           ============================================================ */
+        let currentLang = localStorage.getItem('lang_world') || 'ka';
+
+        const translations = {
+            ka: {
+                nav_tours: "ტურები",
+                nav_services: "სერვისები",
+                nav_blog: "ბლოგი",
+                nav_about: "ჩვენ შესახებ",
+                section_travel_title: "გამორჩეული ტურები",
+                section_travel_desc: "აღმოაჩინეთ მსოფლიოს საუკეთესო მიმართულებები.",
+                section_services_title: "სერვისები",
+                section_services_desc: "სრული მხარდაჭერა თქვენი მოგზაურობისთვის.",
+                section_blog_title: "სამოგზაურო ჟურნალი",
+                section_blog_desc: "რჩევები და სიახლეები.",
+                btn_details: "დეტალურად",
+                btn_read: "წაკითხვა",
+                btn_book: "მოთხოვნის გაგზავნა"
+            },
+            en: {
+                nav_tours: "Tours",
+                nav_services: "Services",
+                nav_blog: "Blog",
+                nav_about: "About",
+                section_travel_title: "Curated Experiences",
+                section_travel_desc: "Explore our hand-picked destinations.",
+                section_services_title: "Services",
+                section_services_desc: "Full support for your international journey.",
+                section_blog_title: "Travel Journal",
+                section_blog_desc: "Tips, guides, and inspiration.",
+                btn_details: "View Details",
+                btn_read: "Read Article",
+                btn_book: "Request Quote"
+            }
+        };
+
         const whatsapp = "995591705710";
 
-        // DEFAULT SERVICES
         const commonServices = [
-            { title: "Visa Support", desc: "Hassle-free Processing", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", text: "We handle the paperwork. Schengen, USA, UK, and Asian visas." },
-            { title: "Flight Booking", desc: "Best Connections", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", text: "Economy to First Class. We find the best routes from Tbilisi and Kutaisi." },
-            { title: "Travel Insurance", desc: "Safety First", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", text: "Comprehensive coverage for medical, luggage, and cancellations." },
-            { title: "Honeymoons", desc: "Romantic Getaways", img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", text: "Special packages for newlyweds with private dinners and luxury suites." }
+            { title: { ka: "ვიზა მხარდაჭერა", en: "Visa Support" }, desc: { ka: "შენგენი და აშშ", en: "Schengen & USA" }, img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", text: { ka: "ჩვენ დაგეხმარებით სავიზო პროცედურებში...", en: "We assist with visa applications..." } },
+            { title: { ka: "ავიაბილეთები", en: "Flight Booking" }, desc: { ka: "საუკეთესო ფასები", en: "Best Rates" }, img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", text: { ka: "ყველაზე იაფი და კომფორტული რეისები...", en: "Best connections and prices..." } },
+            { title: { ka: "სამოგზაურო დაზღვევა", en: "Travel Insurance" }, desc: { ka: "უსაფრთხოება", en: "Safety First" }, img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", text: { ka: "სრული სამოგზაურო დაზღვევა...", en: "Comprehensive travel insurance..." } },
+            { title: { ka: "თაფლობის თვე", en: "Honeymoons" }, desc: { ka: "რომანტიული ტურები", en: "Romantic Getaways" }, img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", text: { ka: "სპეციალური პაკეტები წყვილებისთვის...", en: "Special packages for newlyweds..." } }
         ];
 
-        // --- THE COUNTRIES ---
         const database = {
-            
-            // 1. WORLD (Default Landing)
             world: {
-                accent: "#006994", // Ocean Blue
+                accent: "#006994",
                 hero: [
-                    { title: "Discover the World", desc: "Your Gateway to Global Travel", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074" },
-                    { title: "Visa-Free Travel", desc: "Easy getaways for Georgians", img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070" }
+                    { title: { ka: "აღმოაჩინე მსოფლიო", en: "Discover the World" }, desc: { ka: "თქვენი გზამკვლევი", en: "Gateway to Global Travel" }, img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074", fullText: { ka: "იმოგზაურეთ ევროპაში, აზიასა და ამერიკაში...", en: "Explore Europe, Asia and beyond..." } },
+                    { title: { ka: "უვიზო მიმართულებები", en: "Visa-Free Travel" }, desc: { ka: "მარტივი მოგზაურობა", en: "Easy getaways" }, img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070", fullText: { ka: "ქვეყნები სადაც ვიზა არ გჭირდებათ...", en: "Countries where you don't need a visa..." } }
                 ],
                 tours: [
-                    { title: "Visa-Free Europe", desc: "Italy, France, Spain", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070", tag: "Best Seller", text: "Freedom to travel. We create custom itineraries for the Schengen zone." },
-                    { title: "Exotic & Tropical", desc: "Maldives, Thailand, Bali", img: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?q=80&w=2070", tag: "Honeymoon", text: "Escape to paradise. Perfect for honeymoons or winter sun." },
-                    { title: "Ancient & Nearby", desc: "Turkey, Egypt, Dubai", img: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2070", tag: "Short Haul", text: "Short flights, rich culture, and luxury shopping." },
-                    { title: "Global & Visa Support", desc: "USA, UK, Japan", img: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=2070", tag: "Visa Help", text: "Destinations that require visas. We help you with the paperwork." }
+                    { title: { ka: "ევროპის ქალაქები", en: "European City Breaks" }, desc: { ka: "პარიზი, რომი, მილანი", en: "Paris, Rome, Milan" }, img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: { ka: "პოპულარული", en: "Popular" }, text: { ka: "უქმეები ევროპაში...", en: "Weekend escapes..." } },
+                    { title: { ka: "ეგზოტიკური აზია", en: "Exotic Asia" }, desc: { ka: "ტაილანდი და ბალი", en: "Thailand & Bali" }, img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", tag: { ka: "ტროპიკული", en: "Tropical" }, text: { ka: "პლაჟები და ჯუნგლები...", en: "Beaches and jungles..." } }
                 ],
                 blog: [
-                    { title: "Top 5 Visa-Free Countries", date: "Guide", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" },
-                    { title: "Packing for Asia", date: "Tips", img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070" }
+                    { title: { ka: "ტოპ 5 უვიზო ქვეყანა", en: "Top 5 Visa-Free Countries" }, date: { ka: "გზამკვლევი", en: "Guide" }, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" }
                 ]
             },
-
-            // 2. ITALY
             italy: {
-                accent: "#008C45", 
+                accent: "#008C45",
                 hero: [
-                    { title: "La Dolce Vita", desc: "Experience the sweet life in Italy.", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" },
-                    { title: "Rome & The Vatican", desc: "History around every corner.", img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1996" }
+                    { title: { ka: "La Dolce Vita", en: "La Dolce Vita" }, desc: { ka: "იმოგზაურე იტალიაში", en: "Experience Italy" }, img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070", fullText: { ka: "რომი, ფლორენცია, ვენეცია...", en: "Rome, Florence, Venice..." } }
                 ],
                 tours: [
-                    { title: "Classic Rome", desc: "Colosseum & Vatican", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", tag: "History", text: "3 Days in the Eternal City." },
-                    { title: "Venice Romance", desc: "Gondolas & Canals", img: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?q=80&w=2070", tag: "Honeymoon", text: "The perfect romantic getaway." },
-                    { title: "Tuscany Wine", desc: "Florence & Vineyards", img: "https://images.unsplash.com/photo-1534234828563-02511c842585?q=80&w=2019", tag: "Food & Wine", text: "Tasting tours in Chianti." },
-                    { title: "Amalfi Coast", desc: "Positano & Capri", img: "https://images.unsplash.com/photo-1633321088355-d0f8c15510cb?q=80&w=2070", tag: "Luxury", text: "Summer on the coast of legends." }
+                    { title: { ka: "კლასიკური რომი", en: "Classic Rome" }, desc: { ka: "კოლიზეუმი და ვატიკანი", en: "Colosseum & Vatican" }, img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", tag: { ka: "ისტორია", en: "History" }, text: { ka: "3 დღე მარადიულ ქალაქში...", en: "3 Days in the Eternal City..." } }
                 ],
                 blog: [
-                    { title: "Best Pizza in Naples", date: "Food", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2069" },
-                    { title: "How to use Trains in Italy", date: "Guide", img: "https://images.unsplash.com/photo-1472806426350-603610d85659?q=80&w=2070" }
+                    { title: { ka: "საუკეთესო პიცა ნეაპოლში", en: "Best Pizza in Naples" }, date: { ka: "კვება", en: "Food" }, img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2069" }
                 ]
             },
-
-            // 3. FRANCE
             france: {
                 accent: "#0055A4",
                 hero: [
-                    { title: "Parisian Dreams", desc: "City of Lights and Love.", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070" },
-                    { title: "French Riviera", desc: "Nice, Cannes, Monaco.", img: "https://images.unsplash.com/photo-1533104821562-851402729642?q=80&w=2070" }
+                    { title: { ka: "პარიზული ოცნებები", en: "Parisian Dreams" }, desc: { ka: "სინათლის ქალაქი", en: "City of Lights" }, img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", fullText: { ka: "ეიფელი, ლუვრი და მონმარტრი...", en: "Eiffel, Louvre, Montmartre..." } }
                 ],
                 tours: [
-                    { title: "Paris Highlights", desc: "Eiffel & Louvre", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", tag: "City", text: "The classic Paris experience." },
-                    { title: "Lavender Fields", desc: "Provence Tour", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2000", tag: "Nature", text: "July blooms in Provence." },
-                    { title: "Disneyland Paris", desc: "Family Magic", img: "https://images.unsplash.com/photo-1545579133-99c993680b34?q=80&w=2070", tag: "Family", text: "Fun for the whole family." },
-                    { title: "French Alps", desc: "Ski Courchevel", img: "https://images.unsplash.com/photo-1518182170546-0766ba6f6a56?q=80&w=2070", tag: "Ski", text: "Winter luxury skiing." }
+                    { title: { ka: "პარიზის ტური", en: "Paris Highlights" }, desc: { ka: "ეიფელი და ლუვრი", en: "Eiffel & Louvre" }, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", tag: { ka: "ქალაქი", en: "City" }, text: { ka: "კლასიკური პარიზის გამოცდილება...", en: "Classic Paris experience..." } }
                 ],
                 blog: [
-                    { title: "Paris on a Budget", date: "Tips", img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070" },
-                    { title: "Wine Tasting in Bordeaux", date: "Food", img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070" }
+                    { title: { ka: "პარიზი ბიუჯეტურად", en: "Paris on a Budget" }, date: { ka: "რჩევები", en: "Tips" }, img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070" }
                 ]
             }
         };
 
-        /* --- ENGINE --- */
         let currentKey = 'world';
         let currentSlide = 0;
         let autoPlayTimer;
 
+        function toggleLang() {
+            setLanguage(currentLang === 'en' ? 'ka' : 'en');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang_world', lang);
+            document.getElementById('langBtn').innerText = lang === 'en' ? '🇬🇪' : '🇺🇸';
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if(translations[lang][key]) el.innerText = translations[lang][key];
+            });
+
+            loadCountry(currentKey);
+        }
+
         function init() {
             renderRibbon();
-            loadCountry('world');
+            setLanguage(currentLang);
         }
 
         function renderRibbon() {
             const ribbon = document.getElementById('destRibbon');
             const keys = Object.keys(database);
-            
             ribbon.innerHTML = '';
             
-            // 1. LINK BACK TO GEORGIA
-            const geoBtn = document.createElement('a');
-            geoBtn.className = 'dest-btn geo-link';
-            geoBtn.innerText = "🇬🇪 GEORGIA";
-            geoBtn.href = "https://nextstop.ge";
-            geoBtn.style.textDecoration = "none";
-            ribbon.appendChild(geoBtn);
-
-            // 2. COUNTRY BUTTONS
-            const labels = { world: "🌍 WORLD", italy: "🇮🇹 ITALY", france: "🇫🇷 FRANCE" };
+            const labels = { world: {ka: "🌍 მსოფლიო", en: "🌍 WORLD"}, italy: {ka: "🇮🇹 იტალია", en: "🇮🇹 ITALY"}, france: {ka: "🇫🇷 საფრანგეთი", en: "🇫🇷 FRANCE"} };
 
             keys.forEach(key => {
                 const btn = document.createElement('button');
                 btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
-                btn.innerText = labels[key] || key.toUpperCase();
+                btn.setAttribute('data-country', key);
+                btn.innerText = labels[key][currentLang];
                 btn.onclick = () => loadCountry(key);
                 ribbon.appendChild(btn);
             });
@@ -336,17 +353,16 @@
             currentKey = key;
             const data = database[key];
             
-            // Update UI Colors
             document.documentElement.style.setProperty('--accent', data.accent);
             document.querySelector('.logo-sub').style.color = data.accent;
             document.querySelector('.logo-sub').innerText = key.toUpperCase();
             
-            // Update Ribbon State
             document.querySelectorAll('.dest-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if(btn.innerText.includes(key.toUpperCase()) || (key === 'world' && btn.innerText.includes('WORLD'))) {
-                    btn.classList.add('active');
-                }
+                if(btn.getAttribute('data-country') === key) btn.classList.add('active');
+                // Update label language dynamically
+                const labels = { world: {ka: "🌍 მსოფლიო", en: "🌍 WORLD"}, italy: {ka: "🇮🇹 იტალია", en: "🇮🇹 ITALY"}, france: {ka: "🇫🇷 საფრანგეთი", en: "🇫🇷 FRANCE"} };
+                btn.innerText = labels[btn.getAttribute('data-country')][currentLang];
             });
 
             renderHero(data.hero);
@@ -361,92 +377,58 @@
             const progContainer = document.getElementById('progressContainer');
             track.innerHTML = '';
             progContainer.innerHTML = '';
-            
             slides.forEach((slide, index) => {
                 const div = document.createElement('div');
                 div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.desc}', '${slide.img}')">Details</button></div>`;
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title[currentLang]}</h2><p class="slide-desc">${slide.desc[currentLang]}</p><button class="slide-btn" onclick="openModal('${slide.title[currentLang]}', '${slide.fullText ? slide.fullText[currentLang] : slide.desc[currentLang]}', '${slide.img}')">${translations[currentLang].btn_details}</button></div>`;
                 track.appendChild(div);
-
-                const bar = document.createElement('div');
-                bar.className = 'progress-bar';
+                const bar = document.createElement('div'); bar.className = 'progress-bar';
                 bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
                 progContainer.appendChild(bar);
             });
-            currentSlide = 0;
-            startStoryMode();
+            currentSlide = 0; startStoryMode();
         }
 
         function renderGrid(id, items) {
-            const grid = document.getElementById(id);
-            grid.innerHTML = '';
+            const grid = document.getElementById(id); grid.innerHTML = '';
             items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.onclick = () => openModal(item.title, item.text, item.img);
-                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${item.tag ? `<span class="card-tag">${item.tag}</span>` : ''}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
+                const card = document.createElement('div'); card.className = 'card';
+                const title = item.title[currentLang]; const desc = item.desc[currentLang]; const tag = item.tag ? item.tag[currentLang] : '';
+                card.onclick = () => openModal(title, item.text[currentLang], item.img);
+                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${title}</h3><p>${desc}</p></div>`;
                 grid.appendChild(card);
             });
         }
 
         function renderBlog(items) {
-            const track = document.getElementById('blogTrack');
-            track.innerHTML = '';
+            const track = document.getElementById('blogTrack'); track.innerHTML = '';
             items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'blog-card';
-                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read</span></div>`;
+                const card = document.createElement('div'); card.className = 'blog-card';
+                const title = item.title[currentLang]; const date = item.date[currentLang];
+                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${date}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[currentLang].btn_read}</span></div>`;
                 track.appendChild(card);
             });
         }
 
-        /* --- STORY ENGINE --- */
         function startStoryMode() { showSlide(currentSlide); }
         function showSlide(index) {
-            const track = document.getElementById('heroTrack');
-            const slides = track.getElementsByClassName('hero-slide');
-            const bars = document.querySelectorAll('.progress-fill');
+            const track = document.getElementById('heroTrack'); const slides = track.getElementsByClassName('hero-slide'); const bars = document.querySelectorAll('.progress-fill');
             if(!slides.length) return;
-
             if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
-            
             track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
-            
-            Array.from(slides).forEach(s => s.classList.remove('active'));
-            slides[index].classList.add('active');
-
+            Array.from(slides).forEach(s => s.classList.remove('active')); slides[index].classList.add('active');
             bars.forEach((bar, idx) => {
-                bar.classList.remove('active');
-                bar.style.transition = 'none';
-                if (idx < index) { bar.style.width = '100%'; } 
-                else if (idx === index) { 
-                    bar.style.width = '0%'; 
-                    setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); 
-                } 
-                else { bar.style.width = '0%'; }
+                bar.classList.remove('active'); bar.style.transition = 'none';
+                if (idx < index) { bar.style.width = '100%'; } else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); } else { bar.style.width = '0%'; }
             });
-
-            clearTimeout(autoPlayTimer);
-            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
+            clearTimeout(autoPlayTimer); autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
         }
         function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
 
-        /* MODAL */
-        const modal = document.getElementById('detailModal');
-        const modalImg = document.getElementById('modalImg');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalText = document.getElementById('modalText');
-        const modalBtn = document.querySelector('.modal-btn');
-
-        function openModal(title, text, img) {
-            modalTitle.innerText = title;
-            modalText.innerText = text || title;
-            modalImg.src = img;
-            modalBtn.href = `https://wa.me/${whatsapp}?text=Hi, I am interested in ${title} (${currentKey.toUpperCase()})`;
-            modal.classList.add('active');
-        }
+        const modal = document.getElementById('detailModal'); const modalImg = document.getElementById('modalImg'); const modalTitle = document.getElementById('modalTitle'); const modalText = document.getElementById('modalText'); const modalBtn = document.querySelector('.modal-btn');
+        function openModal(title, text, img) { modalTitle.innerText = title; modalText.innerText = text; modalImg.src = img; modalBtn.innerText = translations[currentLang].btn_book; modalBtn.href = `https://wa.me/${whatsapp}?text=Hi, I am interested in ${title}`; modal.classList.add('active'); }
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
