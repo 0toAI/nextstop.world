@@ -40,14 +40,13 @@
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
         .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; }
 
-        /* TOGGLE BUTTON */
         .site-toggle { display: flex; background: #eef2f5; padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
         .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; transition: 0.3s; }
         .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
         .toggle-btn.inactive:hover { color: var(--accent); }
         .dot { color: var(--accent); font-size: 0.8rem; animation: pulse 2s infinite; }
 
-        /* --- COCKPIT RIBBON --- */
+        /* --- RIBBON --- */
         .ribbon-wrapper {
             position: fixed; top: var(--header-h); left: 0; width: 100%; height: var(--ribbon-h);
             background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -121,9 +120,17 @@
 
         /* --- SECTIONS & GRIDS --- */
         .section { padding: 80px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
-        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title { text-align: center; margin-bottom: 60px; position: relative; }
         .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 10px; }
         
+        .back-btn { 
+            display: none; cursor: pointer; font-size: 0.9rem; font-weight: 700; 
+            color: var(--accent); text-transform: uppercase; 
+            position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            padding: 10px 20px; background: rgba(255,255,255,0.8); border-radius: 20px;
+        }
+        .back-btn.visible { display: block; }
+
         /* GRID 4 LAYOUT */
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
         
@@ -144,12 +151,11 @@
         .blog-content { padding: 20px; }
         .blog-date { font-size: 0.7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
         .blog-title { font-size: 1.1rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; line-height: 1.3; }
-        .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
 
         /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2100; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; width: 90%; max-width: 800px; border-radius: 8px; position: relative; animation: slideUp 0.4s ease; }
+        .modal-content { background: white; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; animation: slideUp 0.4s ease; }
         .modal-header-img { height: 300px; width: 100%; object-fit: cover; }
         .modal-body { padding: 40px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: white; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; }
@@ -165,7 +171,6 @@
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -216,16 +221,18 @@
 
     <section id="destinations" class="section">
         <div class="section-title">
-            <h2 id="gridTitle">Curated Experiences</h2>
-            <p id="gridDesc">Explore our hand-picked destinations.</p>
+            <div class="back-btn" id="toursBack" onclick="resetGrid('tours')">← Back to Categories</div>
+            <h2 id="toursTitle">Curated Experiences</h2>
+            <p id="toursDesc">Select a category to explore.</p>
         </div>
-        <div class="grid-4" id="travelGrid"></div>
+        <div class="grid-4" id="toursGrid"></div>
     </section>
 
     <section id="services" class="section" style="background-color: #f0f4f8;">
         <div class="section-title">
-            <h2>Services</h2>
-            <p>Full support for your international journey.</p>
+            <div class="back-btn" id="servicesBack" onclick="resetGrid('services')">← Back to Services</div>
+            <h2 id="servicesTitle">Services</h2>
+            <p id="servicesDesc">Full support for your international journey.</p>
         </div>
         <div class="grid-4" id="servicesGrid"></div>
     </section>
@@ -255,75 +262,122 @@
             <img src="" class="modal-header-img" id="modalImg">
             <div class="modal-body">
                 <h2 id="modalTitle" style="font-family:'Cinzel', serif; font-size:2rem; margin-bottom:15px;"></h2>
-                <p id="modalText" style="color:#666; line-height:1.8; margin-bottom:20px;"></p>
+                <p id="modalText" style="color:#666; line-height:1.8; margin-bottom:20px; white-space: pre-wrap;"></p>
                 <a href="#" class="modal-btn" id="quoteBtn">Request Quote</a>
             </div>
         </div>
     </div>
 
     <script>
-        // --- DATA STORE ---
-        const commonServices = [
-            { title: "Visa Support", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", desc: "Assistance for Schengen, USA, & UK." },
-            { title: "Flight Booking", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", desc: "Best prices for international flights." },
-            { title: "Travel Insurance", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", desc: "Comprehensive safety packages." },
-            { title: "Private Transfers", img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", desc: "Luxury airport pickups worldwide." }
+        // --- EXPANDED DATA STRUCTURE ---
+        
+        // 1. SERVICES DATA (Global)
+        const serviceCategories = [
+            {
+                title: "Visa Support", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", desc: "Document preparation & consultation.",
+                items: [
+                    { title: "Schengen Visa", img: "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?q=80&w=2070", desc: "Complete application support for EU countries.", content: "SERVICE: SCHENGEN VISA ASSISTANCE\n\nWe provide full support for obtaining a Schengen Visa.\n\nINCLUDES:\n- Review of documents\n- Filling out the application form\n- Appointment scheduling\n- Interview preparation\n- Travel insurance processing\n\nTIMELINE: 15-45 days depending on the embassy." },
+                    { title: "USA Visa", img: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2070", desc: "B1/B2 Visa assistance.", content: "SERVICE: USA B1/B2 VISA\n\nComprehensive support for US Tourist and Business visas.\n\nINCLUDES:\n- DS-160 form filing\n- Payment of consular fees\n- Interview slot booking\n- Mock interview session\n\nTIMELINE: Depends on embassy slots." },
+                    { title: "UK Visa", img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=2070", desc: "Standard Visitor Visa.", content: "SERVICE: UK VISITOR VISA\n\nSupport for UK standard visitor applications.\n\nINCLUDES:\n- Document checklist\n- Online application submission\n- Biometrics appointment\n\nTIMELINE: Approx 3 weeks." }
+                ]
+            },
+            {
+                title: "Transport", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", desc: "Flights & Private Transfers.",
+                items: [
+                    { title: "Flight Booking", img: "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=2070", desc: "Best connections worldwide.", content: "SERVICE: FLIGHT BOOKING\n\nWe find the best connections for your budget.\n\n- Multi-city itineraries\n- Group bookings\n- Complex routing\n- 24/7 support during travel" },
+                    { title: "Airport Transfers", img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", desc: "Luxury pickups.", content: "SERVICE: PRIVATE TRANSFERS\n\nMeet & Greet service at any airport globally.\n\n- Premium vehicles (Mercedes E/S Class, V-Class)\n- Professional chauffeurs\n- Flight tracking" },
+                    { title: "Car Rental", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070", desc: "Self-drive options.", content: "SERVICE: CAR RENTAL\n\nBook reliable cars worldwide.\n\n- Full insurance coverage\n- No hidden fees\n- Wide range of vehicles" }
+                ]
+            },
+            {
+                title: "Accommodation", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", desc: "Hotels, Villas & Apartments.",
+                items: [
+                    { title: "Luxury Hotels", img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070", desc: "5-Star experiences.", content: "SERVICE: LUXURY HOTELS\n\nExclusive rates at top hotels.\n\n- Room upgrades (subject to availability)\n- Early check-in / Late check-out\n- VIP amenities" },
+                    { title: "Private Villas", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2071", desc: "For families and groups.", content: "SERVICE: PRIVATE VILLAS\n\nCurated villas for total privacy.\n\n- Private pools\n- Chef services available\n- Housekeeping included" },
+                    { title: "City Apartments", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=2070", desc: "Live like a local.", content: "SERVICE: CITY APARTMENTS\n\nCentrally located apartments in major capitals.\n\n- Fully equipped kitchens\n- High-speed Wi-Fi\n- Great for long stays" }
+                ]
+            },
+            {
+                title: "VIP Services", img: "https://images.unsplash.com/photo-1551632436-cbf8dd354ca8?q=80&w=2069", desc: "Concierge & Unique Requests.",
+                items: [
+                    { title: "Event Tickets", img: "https://images.unsplash.com/photo-1459749411177-0473ef487758?q=80&w=2070", desc: "Concerts & Sports.", content: "SERVICE: EVENT TICKETS\n\nAccess to sold-out events.\n\n- Football matches (Champions League, Premier League)\n- Concerts & Festivals\n- Opera & Theatre" },
+                    { title: "Restaurant Reservations", img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070", desc: "Top-tier dining.", content: "SERVICE: DINING RESERVATIONS\n\nPriority booking at Michelin-star restaurants and trendy hotspots." },
+                    { title: "Private Guides", img: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=2070", desc: "Local experts.", content: "SERVICE: PRIVATE GUIDES\n\nExpert local guides for personalized tours.\n\n- History & Art focus\n- Culinary tours\n- Shopping assistants" }
+                ]
+            }
         ];
 
-        const blogPosts = [
-            { title: "Top 5 Visa-Free Countries for Georgians", date: "Guide", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" },
-            { title: "How to Pack for a 2-Week Eurotrip", date: "Tips", img: "https://images.unsplash.com/photo-1556557659-180ce79811d5?q=80&w=2070" },
-            { title: "Hidden Gems of Northern Italy", date: "Inspiration", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" },
-            { title: "Traveling on a Budget in 2025", date: "Budget", img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070" },
-            { title: "Safety Tips for Solo Travelers", date: "Safety", img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070" }
-        ];
-
+        // 2. COUNTRY SPECIFIC TOURS (Nested Structure)
         const database = {
             world: {
                 accent: "#006994",
                 hero: [{ title: "Discover the World", desc: "Gateway to Global Travel", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074" }],
-                tours: [
-                    { title: "European Highlights", desc: "Paris, Rome, Amsterdam", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: "Popular" },
-                    { title: "Exotic Asia", desc: "Thailand, Bali, Vietnam", img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", tag: "Tropical" },
-                    { title: "USA Roadtrip", desc: "California & Nevada", img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021", tag: "Adventure" }
+                tourCategories: [
+                    {
+                        title: "City Breaks", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", desc: "Short escapes to capitals.",
+                        items: [
+                            { title: "Rome Weekend", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", desc: "3 Days in the Eternal City.", content: "ITINERARY: ROME WEEKEND\n\nDAY 1: ARRIVAL\nPrivate transfer to hotel near Spanish Steps. Welcome dinner at a rooftop restaurant overlooking the Vatican.\n\nDAY 2: ANCIENT ROME\nMorning guided tour of the Colosseum and Roman Forum. Afternoon walking tour to the Pantheon and Trevi Fountain. Gelato stop included.\n\nDAY 3: VATICAN & DEPARTURE\nEarly access to Vatican Museums and Sistine Chapel. Free time for shopping on Via del Corso before transfer to FCO airport." },
+                            { title: "Paris Escape", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", desc: "Romance in the city of lights.", content: "ITINERARY: PARIS ESCAPE\n\nDAY 1: SEINE CRUISE\nArrival and evening sunset cruise on the Seine with champagne.\n\nDAY 2: LOUVRE & MARAIS\nGuided tour of the Louvre highlights. Lunch in the trendy Marais district. Evening Eiffel Tower summit access.\n\nDAY 3: MONTMARTRE\nMorning walk in Montmartre artist district. Visit Sacré-Cœur. Departure." },
+                            { title: "Barcelona Art", img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", desc: "Gaudi & Gothic Quarter.", content: "ITINERARY: BARCELONA ART\n\nDAY 1: GAUDI TOUR\nVisit Sagrada Familia and Park Güell with skip-the-line tickets.\n\nDAY 2: GOTHIC QUARTER\nWalking tour of the old city. Tapas tasting tour in the evening.\n\nDAY 3: BEACH & SHOPPING\nRelax at Barceloneta beach or shop at Passeig de Gràcia. Departure." }
+                        ]
+                    },
+                    {
+                        title: "Adventure", img: "https://images.unsplash.com/photo-1533240332313-0db49b459ad6?q=80&w=2070", desc: "Hiking, Safari & Nature.",
+                        items: [
+                            { title: "Swiss Alps Hiking", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc: "Interlaken & Jungfrau.", content: "ITINERARY: SWISS ALPS\n\nDAY 1: INTERLAKEN\nArrival in Interlaken. Check-in to mountain lodge.\n\nDAY 2: JUNGFRAUJOCH\nTrain ride to the Top of Europe. Glacier hike and ice palace visit.\n\nDAY 3: LAKE BRIENZ\nBoat cruise on turquoise waters. Departure." },
+                            { title: "Dubai Desert Safari", img: "https://images.unsplash.com/photo-1451290337906-ac938fc89bce?q=80&w=2077", desc: "Dune bashing & BBQ.", content: "ITINERARY: DUBAI DESERT\n\nDAY 1: CITY TOUR\nBurj Khalifa and Dubai Mall.\n\nDAY 2: DESERT SAFARI\n4x4 Dune Bashing, Camel riding, and Bedouin camp dinner with fire show.\n\nDAY 3: PALM JUMEIRAH\nRelax at a beach club on the Palm. Departure." },
+                            { title: "Iceland Roadtrip", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159", desc: "Waterfalls & Geysers.", content: "ITINERARY: ICELAND SOUTH COAST\n\nDAY 1: GOLDEN CIRCLE\nThingvellir, Geysir, and Gullfoss waterfall.\n\nDAY 2: VIK & BLACK BEACH\nSeljalandsfoss waterfall and Reynisfjara black sand beach.\n\nDAY 3: BLUE LAGOON\nRelax in thermal waters before flight." }
+                        ]
+                    },
+                    {
+                        title: "Honeymoon", img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", desc: "Romantic getaways.",
+                        items: [
+                            { title: "Maldives Retreat", img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2070", desc: "Overwater Bungalows.", content: "ITINERARY: MALDIVES LUXURY\n\nDAY 1-5: PRIVATE ISLAND\nStay in an overwater villa with private pool. All-inclusive dining. Sunset dolphin cruise included. Couple's spa treatment." },
+                            { title: "Santorini Sunset", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", desc: "Caldera views.", content: "ITINERARY: SANTORINI DREAM\n\nDAY 1: OIA\nCheck in to a cave hotel with caldera view. Sunset dinner.\n\nDAY 2: CATAMARAN CRUISE\nSailing around the volcano with BBQ lunch and swimming in hot springs.\n\nDAY 3: WINERY TOUR\nTasting local wines. Departure." },
+                            { title: "Amalfi Coast", img: "https://images.unsplash.com/photo-1633321088355-d0f8c054e3e9?q=80&w=2070", desc: "Positano & Capri.", content: "ITINERARY: AMALFI ROMANCE\n\nDAY 1: POSITANO\nArrival and romantic dinner by the sea.\n\nDAY 2: CAPRI DAY TRIP\nPrivate boat to Capri. Visit the Blue Grotto.\n\nDAY 3: RAVELLO\nVisit Villa Cimbrone gardens. Departure." }
+                        ]
+                    },
+                    {
+                        title: "Cultural", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc: "History & Traditions.",
+                        items: [
+                            { title: "Kyoto Temples", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070", desc: "Japan's ancient capital.", content: "ITINERARY: ANCIENT KYOTO\n\nDAY 1: ARASHIYAMA\nBamboo grove and monkey park.\n\nDAY 2: TEMPLES\nKinkaku-ji (Golden Pavilion) and Fushimi Inari Shrine.\n\nDAY 3: GION\nTea ceremony and Geisha district walking tour." },
+                            { title: "Egypt Pyramids", img: "https://images.unsplash.com/photo-1539650116455-251ec23e0659?q=80&w=2070", desc: "Cairo & Luxor.", content: "ITINERARY: PHARAOHS TRAIL\n\nDAY 1: GIZA\nGreat Pyramids and Sphinx tour.\n\nDAY 2: MUSEUM\nEgyptian Museum and Khan el-Khalili bazaar.\n\nDAY 3: NILE DINNER\nDinner cruise on the Nile. Departure." },
+                            { title: "Istanbul History", img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071", desc: "Where East meets West.", content: "ITINERARY: ISTANBUL CLASSIC\n\nDAY 1: SULTANAHMET\nHagia Sophia, Blue Mosque, and Topkapi Palace.\n\nDAY 2: BOSPHORUS\nPrivate boat cruise between Europe and Asia.\n\nDAY 3: BAZAARS\nGrand Bazaar shopping. Departure." }
+                        ]
+                    }
                 ]
             },
-            italy: { 
-                accent: "#008C45", 
-                hero: [{ title: "La Dolce Vita", desc: "Experience Italy", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" }], 
-                tours: [
-                    { title: "Classic Rome", desc: "Colosseum & Vatican", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", tag: "History" },
-                    { title: "Romantic Venice", desc: "Gondolas & Canals", img: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?q=80&w=2070", tag: "Romance" },
-                    { title: "Art of Florence", desc: "Renaissance Masterpieces", img: "https://images.unsplash.com/photo-1534445867742-43195f401b6c?q=80&w=2070", tag: "Art" }
-                ] 
-            },
-            france: { 
-                accent: "#0055A4", 
-                hero: [{ title: "Parisian Dreams", desc: "City of Lights", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" }], 
-                tours: [
-                    { title: "Paris Highlights", desc: "Eiffel & Louvre", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: "City" },
-                    { title: "French Riviera", desc: "Nice & Monaco", img: "https://images.unsplash.com/photo-1533104823323-d62b7a4d9342?q=80&w=2070", tag: "Luxury" },
-                    { title: "Lavender Fields", desc: "Provence Countryside", img: "https://images.unsplash.com/photo-1598394816675-246472232c73?q=80&w=2070", tag: "Nature" }
-                ] 
-            },
-            spain: { accent: "#AA151B", hero: [{ title: "Viva España", desc: "Passion", img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?q=80&w=2070" }], tours: [{ title: "Barcelona", desc: "Gaudi", img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", tag: "Art" }, { title: "Madrid", desc: "Royal Capital", img: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?q=80&w=2070", tag: "City" }, { title: "Ibiza", desc: "Party & Beach", img: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=2070", tag: "Party" }] },
-            portugal: { accent: "#006600", hero: [{ title: "Golden Coast", desc: "Lisbon", img: "https://images.unsplash.com/photo-1555881400-74d7acaacd81?q=80&w=2070" }], tours: [{ title: "Lisbon", desc: "Trams & Tiles", img: "https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070", tag: "City" }, { title: "Algarve", desc: "Sea Caves", img: "https://images.unsplash.com/photo-1589877814089-4d2434432617?q=80&w=2070", tag: "Beach" }, { title: "Porto", desc: "Wine Valley", img: "https://images.unsplash.com/photo-1558102822-da67015d3258?q=80&w=2070", tag: "Wine" }] },
-            greece: { accent: "#0D5EAF", hero: [{ title: "Aegean Blue", desc: "Islands", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2069" }], tours: [{ title: "Santorini", desc: "Sunset Views", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", tag: "Romance" }, { title: "Mykonos", desc: "Island Life", img: "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed92?q=80&w=2070", tag: "Party" }, { title: "Athens", desc: "Ancient History", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", tag: "History" }] },
-            germany: { accent: "#DD0000", hero: [{ title: "Bavarian Alps", desc: "Nature", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070" }], tours: [{ title: "Berlin", desc: "Modern History", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", tag: "City" }, { title: "Munich", desc: "Oktoberfest", img: "https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=2065", tag: "Culture" }, { title: "Black Forest", desc: "Nature Trails", img: "https://images.unsplash.com/photo-1516966006083-b3d27744a6b9?q=80&w=2070", tag: "Nature" }] },
-            iceland: { accent: "#0085CA", hero: [{ title: "Land of Fire", desc: "Ice", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159" }], tours: [{ title: "Golden Circle", desc: "Waterfalls", img: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", tag: "Nature" }, { title: "Blue Lagoon", desc: "Thermal Spa", img: "https://images.unsplash.com/photo-1515636001509-355e76941830?q=80&w=2070", tag: "Relax" }, { title: "Northern Lights", desc: "Aurora Hunt", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", tag: "Magic" }] },
-            norway: { accent: "#BA0C2F", hero: [{ title: "Fjord Majesty", desc: "Nature", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070" }], tours: [{ title: "Lofoten", desc: "Arctic Islands", img: "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", tag: "Nature" }, { title: "Oslo", desc: "Viking History", img: "https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", tag: "City" }, { title: "Trolltunga", desc: "Hiking", img: "https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", tag: "Active" }] }
+            // Note: For other countries, you would copy the structure above. 
+            // For this demo, I'm making other countries fall back to the same structure 
+            // but you can customize them individually in the future.
         };
+
+        const blogPosts = [
+            { title: "Top 5 Visa-Free Countries", date: "Guide", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" },
+            { title: "Packing for Europe", date: "Tips", img: "https://images.unsplash.com/photo-1556557659-180ce79811d5?q=80&w=2070" },
+            { title: "Hidden Italy Gems", date: "Inspiration", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" },
+            { title: "Travel on a Budget", date: "Budget", img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070" },
+            { title: "Solo Travel Safety", date: "Safety", img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070" }
+        ];
 
         // --- LOGIC ---
         let currentKey = 'world';
+        // Fallback: If a country doesn't have categories defined in 'database', use World's categories
+        // In a real app, you'd define categories for every country.
+        function getCountryData(key) {
+            let data = database[key];
+            if (!data) return database['world']; // Fallback
+            if (!data.tourCategories) data.tourCategories = database['world'].tourCategories; // Mixin
+            return data;
+        }
 
         const ribbon = document.getElementById('destRibbon');
         const matrix = document.getElementById('matrixGrid');
-        const keys = Object.keys(database).filter(k => k !== 'world');
+        // List of countries to show in ribbon (you can expand this)
+        const countries = ['italy', 'france', 'spain', 'portugal', 'greece', 'germany', 'iceland', 'norway'];
 
-        // Initialize Controls
-        keys.forEach(key => {
-            // Stream Btn
+        // Init Controls
+        countries.forEach(key => {
             const btn = document.createElement('button');
             btn.className = 'stream-btn';
             btn.innerText = key.toUpperCase();
@@ -331,7 +385,6 @@
             btn.setAttribute('data-key', key);
             ribbon.appendChild(btn);
 
-            // Matrix Item
             const item = document.createElement('div');
             item.className = 'matrix-item';
             item.innerText = key.charAt(0).toUpperCase() + key.slice(1);
@@ -343,24 +396,25 @@
 
         function loadCountry(key) {
             currentKey = key;
-            const data = database[key];
+            const data = getCountryData(key);
 
-            // Theme Updates
-            document.documentElement.style.setProperty('--accent', data.accent);
+            // Theme
+            document.documentElement.style.setProperty('--accent', data.accent || '#006994');
             document.querySelector('.logo-sub').innerText = key.toUpperCase();
-            document.querySelector('.logo-sub').style.color = data.accent;
+            document.querySelector('.logo-sub').style.color = data.accent || '#006994';
 
-            // Ribbon State
+            // Buttons
             document.querySelectorAll('.stream-btn').forEach(b => {
                 b.classList.toggle('active', b.getAttribute('data-key') === key);
             });
 
-            // Render All Sections
             renderHero(data.hero);
-            renderGrid('travelGrid', data.tours);      // Render Tours
-            renderGrid('servicesGrid', commonServices); // Render Services
-            renderBlog(blogPosts);                     // Render Blog
-
+            
+            // RESET GRIDS to Category View
+            renderCategories('toursGrid', data.tourCategories, 'tours');
+            renderCategories('servicesGrid', serviceCategories, 'services');
+            
+            renderBlog(blogPosts);
             window.scrollTo(0,0);
         }
 
@@ -370,22 +424,56 @@
             slides.forEach((slide, index) => {
                 const div = document.createElement('div');
                 div.className = `hero-slide ${index===0?'active':''}`;
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><button class="slide-btn">View Details</button></div>`;
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><button class="slide-btn">Explore</button></div>`;
                 track.appendChild(div);
             });
         }
 
-        function renderGrid(id, items) {
-            const grid = document.getElementById(id); 
+        // RENDER CATEGORIES (Level 1)
+        function renderCategories(gridId, categories, type) {
+            const grid = document.getElementById(gridId);
             grid.innerHTML = '';
-            items.forEach(item => {
-                const card = document.createElement('div'); 
+            document.getElementById(type + 'Back').classList.remove('visible'); // Hide back btn
+            document.getElementById(type + 'Title').innerText = type === 'tours' ? 'Curated Experiences' : 'Services';
+            document.getElementById(type + 'Desc').style.display = 'block';
+
+            categories.forEach((cat, index) => {
+                const card = document.createElement('div');
                 card.className = 'card';
-                const tag = item.tag ? `<span class="card-tag">${item.tag}</span>` : '';
-                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${tag}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
-                card.onclick = () => openDetail(item.title, item.desc, item.img);
+                card.innerHTML = `<img src="${cat.img}" class="card-bg"><div class="card-overlay"><h3>${cat.title}</h3><p>${cat.desc}</p></div>`;
+                card.onclick = () => showSubItems(gridId, cat.items, cat.title, type);
                 grid.appendChild(card);
             });
+        }
+
+        // RENDER SUB ITEMS (Level 2)
+        function showSubItems(gridId, items, catTitle, type) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+            
+            // Update Header
+            document.getElementById(type + 'Back').classList.add('visible');
+            document.getElementById(type + 'Title').innerText = catTitle;
+            document.getElementById(type + 'Desc').style.display = 'none';
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay"><h3>${item.title}</h3><p>${item.desc}</p></div>`;
+                // Click opens Modal (Level 3)
+                card.onclick = () => openDetail(item.title, item.content, item.img);
+                grid.appendChild(card);
+            });
+        }
+
+        // Reset logic for Back Button
+        function resetGrid(type) {
+            if (type === 'tours') {
+                const data = getCountryData(currentKey);
+                renderCategories('toursGrid', data.tourCategories, 'tours');
+            } else {
+                renderCategories('servicesGrid', serviceCategories, 'services');
+            }
         }
 
         function renderBlog(items) {
@@ -394,16 +482,16 @@
             items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'blog-card';
-                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read Article</span></div>`;
+                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4></div>`;
                 track.appendChild(card);
             });
         }
 
         // Modal Logic
         const modal = document.getElementById('detailModal');
-        function openDetail(title, desc, img) {
+        function openDetail(title, content, img) {
             document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalText').innerText = desc;
+            document.getElementById('modalText').innerText = content;
             document.getElementById('modalImg').src = img;
             document.getElementById('quoteBtn').href = `https://wa.me/995591705710?text=I am interested in ${title}`;
             modal.classList.add('active');
