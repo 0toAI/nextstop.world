@@ -47,23 +47,27 @@
         /* --- DESTINATION RIBBON (The "Calendar" Picker) --- */
         .destination-ribbon {
             display: flex; gap: 10px; overflow-x: auto; 
-            padding: 5px; max-width: 400px; /* Limits width on large screens */
+            padding: 5px; max-width: 500px; 
             -ms-overflow-style: none; scrollbar-width: none; 
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
         }
         .destination-ribbon::-webkit-scrollbar { display: none; }
 
         .dest-btn {
             white-space: nowrap; padding: 6px 15px; border-radius: 20px; 
             font-size: 0.7rem; font-weight: 700; color: #999; background: var(--gray-light);
-            transition: 0.3s; display: flex; align-items: center; gap: 6px;
+            transition: 0.3s; display: flex; align-items: center; gap: 6px; cursor: pointer;
         }
         .dest-btn:hover { background: #ddd; color: var(--charcoal); }
         
         /* Active State */
         .dest-btn.active { 
             background: var(--charcoal); color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+        }
+        /* Special Georgia Link Style */
+        .dest-btn.geo-link {
+            border: 1px solid #ddd; background: white; color: var(--charcoal);
         }
 
         .nav-links { display: flex; gap: 30px; }
@@ -87,6 +91,11 @@
         .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
+
+        /* ARROWS */
+        .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
+        .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
+        .arrow:hover { background: white; color: black; }
 
         /* SECTIONS */
         .section { padding: 100px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
@@ -157,7 +166,7 @@
             <a href="#experiences" class="nav-item">Itineraries</a>
             <a href="#services" class="nav-item">Services</a>
             <a href="#blog" class="nav-item">Journal</a>
-            <a href="https://nextstop.ge" class="nav-item" style="color: var(--terracotta);">→ Georgia (Inbound)</a>
+            <a href="#footer" class="nav-item">Contact</a>
         </nav>
     </header>
 
@@ -165,9 +174,13 @@
     <div class="hero-wheel">
         <div class="wheel-track" id="heroTrack"></div>
         <div class="progress-container" id="progressContainer"></div>
+        <div class="wheel-arrows">
+            <div class="arrow" onclick="manualSlide(-1)">&#10094;</div>
+            <div class="arrow" onclick="manualSlide(1)">&#10095;</div>
+        </div>
     </div>
 
-    <!-- CONTENT SECTIONS (Content changes dynamically) -->
+    <!-- CONTENT SECTIONS -->
     <section id="experiences" class="section">
         <div class="section-title">
             <h2 id="gridTitle">Curated Experiences</h2>
@@ -214,7 +227,7 @@
            ============================================================ */
         const whatsapp = "995591705710";
 
-        // DEFAULT SERVICES (Shared across all countries)
+        // DEFAULT SERVICES
         const commonServices = [
             { title: "Visa Support", desc: "Hassle-free Processing", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", text: "We handle the paperwork. Schengen, USA, UK, and Asian visas." },
             { title: "Flight Booking", desc: "Best Connections", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", text: "Economy to First Class. We find the best routes from Tbilisi and Kutaisi." },
@@ -233,10 +246,10 @@
                     { title: "Visa-Free Travel", desc: "Easy getaways for Georgians", img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070" }
                 ],
                 tours: [
-                    { title: "European City Breaks", desc: "Paris, Rome, Milan", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: "Popular", text: "Weekend escapes to Europe's capitals." },
-                    { title: "Exotic Asia", desc: "Thailand & Bali", img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", tag: "Tropical", text: "Beach holidays in paradise." },
-                    { title: "Ancient Egypt", desc: "Pyramids & Nile", img: "https://images.unsplash.com/photo-1539768942893-daf53e448371?q=80&w=2071", tag: "History", text: "Walk among the pharaohs." },
-                    { title: "Turkey Shopping", desc: "Istanbul & Antalya", img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071", tag: "Shopping", text: "Luxury shopping and resorts." }
+                    { title: "Visa-Free Europe", desc: "Italy, France, Spain", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070", tag: "Best Seller", text: "Freedom to travel. We create custom itineraries for the Schengen zone." },
+                    { title: "Exotic & Tropical", desc: "Maldives, Thailand, Bali", img: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?q=80&w=2070", tag: "Honeymoon", text: "Escape to paradise. Perfect for honeymoons or winter sun." },
+                    { title: "Ancient & Nearby", desc: "Turkey, Egypt, Dubai", img: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2070", tag: "Short Haul", text: "Short flights, rich culture, and luxury shopping." },
+                    { title: "Global & Visa Support", desc: "USA, UK, Japan", img: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=2070", tag: "Visa Help", text: "Destinations that require visas. We help you with the paperwork." }
                 ],
                 blog: [
                     { title: "Top 5 Visa-Free Countries", date: "Guide", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" },
@@ -246,7 +259,7 @@
 
             // 2. ITALY
             italy: {
-                accent: "#008C45", // Italian Green (or could use Red)
+                accent: "#008C45", 
                 hero: [
                     { title: "La Dolce Vita", desc: "Experience the sweet life in Italy.", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" },
                     { title: "Rome & The Vatican", desc: "History around every corner.", img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1996" }
@@ -265,7 +278,7 @@
 
             // 3. FRANCE
             france: {
-                accent: "#0055A4", // French Blue
+                accent: "#0055A4",
                 hero: [
                     { title: "Parisian Dreams", desc: "City of Lights and Love.", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070" },
                     { title: "French Riviera", desc: "Nice, Cannes, Monaco.", img: "https://images.unsplash.com/photo-1533104821562-851402729642?q=80&w=2070" }
@@ -288,25 +301,27 @@
         let currentSlide = 0;
         let autoPlayTimer;
 
-        // 1. Initialize
         function init() {
             renderRibbon();
             loadCountry('world');
         }
 
-        // 2. Render The "Country Picker" Ribbon
         function renderRibbon() {
             const ribbon = document.getElementById('destRibbon');
             const keys = Object.keys(database);
             
             ribbon.innerHTML = '';
             
-            // Manual map for Flag + Name
-            const labels = {
-                world: "🌍 WORLD",
-                italy: "🇮🇹 ITALY",
-                france: "🇫🇷 FRANCE"
-            };
+            // 1. LINK BACK TO GEORGIA
+            const geoBtn = document.createElement('a');
+            geoBtn.className = 'dest-btn geo-link';
+            geoBtn.innerText = "🇬🇪 GEORGIA";
+            geoBtn.href = "https://nextstop.ge";
+            geoBtn.style.textDecoration = "none";
+            ribbon.appendChild(geoBtn);
+
+            // 2. COUNTRY BUTTONS
+            const labels = { world: "🌍 WORLD", italy: "🇮🇹 ITALY", france: "🇫🇷 FRANCE" };
 
             keys.forEach(key => {
                 const btn = document.createElement('button');
@@ -317,7 +332,6 @@
             });
         }
 
-        // 3. The Chameleon Function (Swaps ALL Content)
         function loadCountry(key) {
             currentKey = key;
             const data = database[key];
@@ -335,13 +349,10 @@
                 }
             });
 
-            // Update Sections
             renderHero(data.hero);
             renderGrid('travelGrid', data.tours);
-            renderGrid('servicesGrid', commonServices); // Common services
+            renderGrid('servicesGrid', commonServices); 
             renderBlog(data.blog);
-            
-            // Scroll to top
             window.scrollTo(0,0);
         }
 
@@ -363,8 +374,6 @@
                 bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
                 progContainer.appendChild(bar);
             });
-            
-            // Reset Story Mode
             currentSlide = 0;
             startStoryMode();
         }
@@ -392,7 +401,7 @@
             });
         }
 
-        /* --- STORY ENGINE (Reused) --- */
+        /* --- STORY ENGINE --- */
         function startStoryMode() { showSlide(currentSlide); }
         function showSlide(index) {
             const track = document.getElementById('heroTrack');
