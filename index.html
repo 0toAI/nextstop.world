@@ -18,6 +18,7 @@
             --gold: #c5a059;            
             --header-h: 70px;
             --ribbon-h: 65px;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
@@ -39,7 +40,7 @@
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
         .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; }
 
-        /* --- RESTORED OLD TOGGLE --- */
+        /* TOGGLE BUTTON */
         .site-toggle { display: flex; background: #eef2f5; padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
         .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; transition: 0.3s; }
         .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
@@ -54,29 +55,24 @@
             border-bottom: 1px solid rgba(0,0,0,0.05);
             box-shadow: 0 10px 20px rgba(0,0,0,0.02);
         }
-
-        /* Zone 2: The Stream */
         .ribbon-stream { 
             flex: 1; display: flex; align-items: center; gap: 12px; overflow-x: auto; scrollbar-width: none; height: 100%; 
             mask-image: linear-gradient(to right, black 90%, transparent 100%);
             -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-            padding-left: 5px; /* Slight padding since master is gone */
+            padding-left: 5px;
         }
         .ribbon-stream::-webkit-scrollbar { display: none; }
-
         .stream-btn { 
             padding: 8px 20px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; 
             color: #555; background: white; border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03); white-space: nowrap; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03); white-space: nowrap; transition: all 0.3s;
             text-transform: uppercase;
         }
-        .stream-btn:hover { color: var(--accent); transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0,0,0,0.08); }
+        .stream-btn:hover { color: var(--accent); transform: translateY(-2px); }
         .stream-btn.active { 
             background: var(--accent); color: white; border-color: transparent;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2); transform: scale(1.05);
         }
-
-        /* Zone 3: The Library Trigger */
         .more-btn {
             width: 40px; height: 40px; border-radius: 50%; background: var(--charcoal); color: white;
             display: flex; justify-content: center; align-items: center; font-size: 1.2rem; margin-left: 15px;
@@ -95,7 +91,6 @@
         .matrix-title { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--charcoal); }
         .matrix-close { font-size: 2rem; cursor: pointer; transition: 0.3s; }
         .matrix-close:hover { color: var(--accent); transform: rotate(90deg); }
-        
         .matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
         .matrix-item {
             padding: 15px; background: #f9f9f9; border-radius: 8px; text-align: center;
@@ -103,7 +98,7 @@
         }
         .matrix-item:hover { background: white; border-color: var(--accent); color: var(--accent); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transform: translateY(-3px); }
 
-        /* --- STANDARD CSS --- */
+        /* --- NAV & HERO --- */
         .nav-right { display: flex; gap: 20px; align-items: center; }
         .lang-select { padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 700; }
         .nav-links { display: flex; gap: 30px; }
@@ -124,19 +119,32 @@
         .progress-bar { height: 3px; background: rgba(255,255,255,0.2); flex: 1; max-width: 120px; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
 
-        .section { padding: 80px 5%; min-height: 80vh; }
+        /* --- SECTIONS & GRIDS --- */
+        .section { padding: 80px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
         .section-title { text-align: center; margin-bottom: 60px; }
-        .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); }
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
-        .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 350px; position: relative; cursor: pointer; transition: 0.4s; }
-        .card:hover { transform: translateY(-10px); }
-        .card-bg { width: 100%; height: 100%; object-fit: cover; }
-        .card-overlay { position: absolute; bottom: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 30px; display: flex; flex-direction: column; justify-content: flex-end; color: white; }
+        .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 10px; }
+        
+        /* GRID 4 LAYOUT */
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        
+        /* CARDS */
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); height: 380px; position: relative; cursor: pointer; transition: 0.4s; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-bg { transform: scale(1.1); }
+        .card-overlay { position: absolute; bottom: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); padding: 30px; display: flex; flex-direction: column; justify-content: flex-end; color: white; }
+        .card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 8px; color: var(--gold); }
+        .card-tag { position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; border-radius: 4px; }
 
-        .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scrollbar-width: none; }
-        .blog-card { flex: 0 0 350px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        .blog-img-box { height: 200px; overflow: hidden; }
-        .blog-content { padding: 25px; }
+        /* BLOG SCROLLER */
+        .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+        .blog-card { flex: 0 0 300px; scroll-snap-align: center; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; cursor: pointer; }
+        .blog-card:hover { transform: translateY(-5px); }
+        .blog-img-box { height: 180px; overflow: hidden; }
+        .blog-content { padding: 20px; }
+        .blog-date { font-size: 0.7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
+        .blog-title { font-size: 1.1rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; line-height: 1.3; }
+        .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
 
         /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2100; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
@@ -188,7 +196,6 @@
 
     <div class="ribbon-wrapper">
         <div class="ribbon-stream" id="destRibbon"></div>
-
         <div class="ribbon-library">
             <button class="more-btn" onclick="toggleMatrix()">+</button>
         </div>
@@ -218,6 +225,7 @@
     <section id="services" class="section" style="background-color: #f0f4f8;">
         <div class="section-title">
             <h2>Services</h2>
+            <p>Full support for your international journey.</p>
         </div>
         <div class="grid-4" id="servicesGrid"></div>
     </section>
@@ -225,6 +233,7 @@
     <section id="blog" class="section" style="background: white;">
         <div class="section-title">
             <h2>Travel Journal</h2>
+            <p>Tips, guides, and inspiration.</p>
         </div>
         <div class="blog-scroller" id="blogTrack"></div>
     </section>
@@ -253,34 +262,68 @@
     </div>
 
     <script>
-        // --- DATA ---
+        // --- DATA STORE ---
+        const commonServices = [
+            { title: "Visa Support", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", desc: "Assistance for Schengen, USA, & UK." },
+            { title: "Flight Booking", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", desc: "Best prices for international flights." },
+            { title: "Travel Insurance", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", desc: "Comprehensive safety packages." },
+            { title: "Private Transfers", img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", desc: "Luxury airport pickups worldwide." }
+        ];
+
+        const blogPosts = [
+            { title: "Top 5 Visa-Free Countries for Georgians", date: "Guide", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" },
+            { title: "How to Pack for a 2-Week Eurotrip", date: "Tips", img: "https://images.unsplash.com/photo-1556557659-180ce79811d5?q=80&w=2070" },
+            { title: "Hidden Gems of Northern Italy", date: "Inspiration", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" },
+            { title: "Traveling on a Budget in 2025", date: "Budget", img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070" },
+            { title: "Safety Tips for Solo Travelers", date: "Safety", img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070" }
+        ];
+
         const database = {
             world: {
                 accent: "#006994",
                 hero: [{ title: "Discover the World", desc: "Gateway to Global Travel", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074" }],
-                tours: [{ title: "European City Breaks", desc: "Paris, Rome, Milan", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070" }]
+                tours: [
+                    { title: "European Highlights", desc: "Paris, Rome, Amsterdam", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: "Popular" },
+                    { title: "Exotic Asia", desc: "Thailand, Bali, Vietnam", img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", tag: "Tropical" },
+                    { title: "USA Roadtrip", desc: "California & Nevada", img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021", tag: "Adventure" }
+                ]
             },
-            italy: { accent: "#008C45", hero: [{ title: "La Dolce Vita", desc: "Experience Italy", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" }], tours: [{ title: "Rome", desc: "History", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071" }] },
-            france: { accent: "#0055A4", hero: [{ title: "Parisian Dreams", desc: "City of Lights", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" }], tours: [{ title: "Paris", desc: "Romance", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070" }] },
-            spain: { accent: "#AA151B", hero: [{ title: "Viva España", desc: "Passion", img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?q=80&w=2070" }], tours: [{ title: "Barcelona", desc: "Art", img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070" }] },
-            portugal: { accent: "#006600", hero: [{ title: "Golden Coast", desc: "Lisbon", img: "https://images.unsplash.com/photo-1555881400-74d7acaacd81?q=80&w=2070" }], tours: [{ title: "Lisbon", desc: "City", img: "https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070" }] },
-            greece: { accent: "#0D5EAF", hero: [{ title: "Aegean Blue", desc: "Islands", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2069" }], tours: [{ title: "Santorini", desc: "Sunset", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070" }] },
-            germany: { accent: "#DD0000", hero: [{ title: "Bavarian Alps", desc: "Nature", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070" }], tours: [{ title: "Berlin", desc: "History", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070" }] },
-            iceland: { accent: "#0085CA", hero: [{ title: "Land of Fire", desc: "Ice", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159" }], tours: [{ title: "Reykjavik", desc: "Auroras", img: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070" }] },
-            norway: { accent: "#BA0C2F", hero: [{ title: "Fjord Majesty", desc: "Nature", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070" }], tours: [{ title: "Lofoten", desc: "Arctic", img: "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070" }] }
+            italy: { 
+                accent: "#008C45", 
+                hero: [{ title: "La Dolce Vita", desc: "Experience Italy", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" }], 
+                tours: [
+                    { title: "Classic Rome", desc: "Colosseum & Vatican", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", tag: "History" },
+                    { title: "Romantic Venice", desc: "Gondolas & Canals", img: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?q=80&w=2070", tag: "Romance" },
+                    { title: "Art of Florence", desc: "Renaissance Masterpieces", img: "https://images.unsplash.com/photo-1534445867742-43195f401b6c?q=80&w=2070", tag: "Art" }
+                ] 
+            },
+            france: { 
+                accent: "#0055A4", 
+                hero: [{ title: "Parisian Dreams", desc: "City of Lights", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" }], 
+                tours: [
+                    { title: "Paris Highlights", desc: "Eiffel & Louvre", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: "City" },
+                    { title: "French Riviera", desc: "Nice & Monaco", img: "https://images.unsplash.com/photo-1533104823323-d62b7a4d9342?q=80&w=2070", tag: "Luxury" },
+                    { title: "Lavender Fields", desc: "Provence Countryside", img: "https://images.unsplash.com/photo-1598394816675-246472232c73?q=80&w=2070", tag: "Nature" }
+                ] 
+            },
+            spain: { accent: "#AA151B", hero: [{ title: "Viva España", desc: "Passion", img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?q=80&w=2070" }], tours: [{ title: "Barcelona", desc: "Gaudi", img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", tag: "Art" }, { title: "Madrid", desc: "Royal Capital", img: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?q=80&w=2070", tag: "City" }, { title: "Ibiza", desc: "Party & Beach", img: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=2070", tag: "Party" }] },
+            portugal: { accent: "#006600", hero: [{ title: "Golden Coast", desc: "Lisbon", img: "https://images.unsplash.com/photo-1555881400-74d7acaacd81?q=80&w=2070" }], tours: [{ title: "Lisbon", desc: "Trams & Tiles", img: "https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070", tag: "City" }, { title: "Algarve", desc: "Sea Caves", img: "https://images.unsplash.com/photo-1589877814089-4d2434432617?q=80&w=2070", tag: "Beach" }, { title: "Porto", desc: "Wine Valley", img: "https://images.unsplash.com/photo-1558102822-da67015d3258?q=80&w=2070", tag: "Wine" }] },
+            greece: { accent: "#0D5EAF", hero: [{ title: "Aegean Blue", desc: "Islands", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2069" }], tours: [{ title: "Santorini", desc: "Sunset Views", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", tag: "Romance" }, { title: "Mykonos", desc: "Island Life", img: "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed92?q=80&w=2070", tag: "Party" }, { title: "Athens", desc: "Ancient History", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", tag: "History" }] },
+            germany: { accent: "#DD0000", hero: [{ title: "Bavarian Alps", desc: "Nature", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070" }], tours: [{ title: "Berlin", desc: "Modern History", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", tag: "City" }, { title: "Munich", desc: "Oktoberfest", img: "https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=2065", tag: "Culture" }, { title: "Black Forest", desc: "Nature Trails", img: "https://images.unsplash.com/photo-1516966006083-b3d27744a6b9?q=80&w=2070", tag: "Nature" }] },
+            iceland: { accent: "#0085CA", hero: [{ title: "Land of Fire", desc: "Ice", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159" }], tours: [{ title: "Golden Circle", desc: "Waterfalls", img: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", tag: "Nature" }, { title: "Blue Lagoon", desc: "Thermal Spa", img: "https://images.unsplash.com/photo-1515636001509-355e76941830?q=80&w=2070", tag: "Relax" }, { title: "Northern Lights", desc: "Aurora Hunt", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", tag: "Magic" }] },
+            norway: { accent: "#BA0C2F", hero: [{ title: "Fjord Majesty", desc: "Nature", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070" }], tours: [{ title: "Lofoten", desc: "Arctic Islands", img: "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", tag: "Nature" }, { title: "Oslo", desc: "Viking History", img: "https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", tag: "City" }, { title: "Trolltunga", desc: "Hiking", img: "https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", tag: "Active" }] }
         };
 
-        // --- INITIALIZATION ---
+        // --- LOGIC ---
         let currentKey = 'world';
-        let currentSlide = 0;
 
-        // Populate Ribbon & Matrix
         const ribbon = document.getElementById('destRibbon');
         const matrix = document.getElementById('matrixGrid');
-        const keys = Object.keys(database).filter(k => k !== 'world'); // Exclude world from stream
+        const keys = Object.keys(database).filter(k => k !== 'world');
 
+        // Initialize Controls
         keys.forEach(key => {
-            // Stream Button
+            // Stream Btn
             const btn = document.createElement('button');
             btn.className = 'stream-btn';
             btn.innerText = key.toUpperCase();
@@ -296,38 +339,28 @@
             matrix.appendChild(item);
         });
 
-        // Fake 20 more countries for the Matrix Demo
-        const extraCountries = ["Japan", "Thailand", "USA", "Canada", "Brazil", "Argentina", "Egypt", "Morocco", "Kenya", "South Africa", "Australia", "New Zealand", "China", "India", "Vietnam", "Turkey", "Croatia", "Austria", "Switzerland", "Poland"];
-        extraCountries.forEach(c => {
-            const item = document.createElement('div');
-            item.className = 'matrix-item';
-            item.innerText = c;
-            // In a real app, you'd have data for these. For now, load World.
-            item.onclick = () => { alert("Coming soon: " + c); toggleMatrix(); }; 
-            matrix.appendChild(item);
-        });
-
-        function toggleMatrix() {
-            document.getElementById('matrixOverlay').classList.toggle('active');
-        }
+        function toggleMatrix() { document.getElementById('matrixOverlay').classList.toggle('active'); }
 
         function loadCountry(key) {
             currentKey = key;
             const data = database[key];
 
-            // UI Updates
+            // Theme Updates
             document.documentElement.style.setProperty('--accent', data.accent);
             document.querySelector('.logo-sub').innerText = key.toUpperCase();
             document.querySelector('.logo-sub').style.color = data.accent;
 
-            // Highlight Active Stream Button
+            // Ribbon State
             document.querySelectorAll('.stream-btn').forEach(b => {
                 b.classList.toggle('active', b.getAttribute('data-key') === key);
             });
 
-            // Render Content
+            // Render All Sections
             renderHero(data.hero);
-            // Add other render functions here...
+            renderGrid('travelGrid', data.tours);      // Render Tours
+            renderGrid('servicesGrid', commonServices); // Render Services
+            renderBlog(blogPosts);                     // Render Blog
+
             window.scrollTo(0,0);
         }
 
@@ -342,11 +375,42 @@
             });
         }
 
-        // Simple detail modal logic
-        const detailModal = document.getElementById('detailModal');
-        function closeDetail() { detailModal.classList.remove('active'); }
+        function renderGrid(id, items) {
+            const grid = document.getElementById(id); 
+            grid.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div'); 
+                card.className = 'card';
+                const tag = item.tag ? `<span class="card-tag">${item.tag}</span>` : '';
+                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${tag}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
+                card.onclick = () => openDetail(item.title, item.desc, item.img);
+                grid.appendChild(card);
+            });
+        }
 
-        // Initial Load
+        function renderBlog(items) {
+            const track = document.getElementById('blogTrack');
+            track.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'blog-card';
+                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read Article</span></div>`;
+                track.appendChild(card);
+            });
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('detailModal');
+        function openDetail(title, desc, img) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerText = desc;
+            document.getElementById('modalImg').src = img;
+            document.getElementById('quoteBtn').href = `https://wa.me/995591705710?text=I am interested in ${title}`;
+            modal.classList.add('active');
+        }
+        function closeDetail() { modal.classList.remove('active'); }
+
+        // Init
         loadCountry('world');
     </script>
 </body>
