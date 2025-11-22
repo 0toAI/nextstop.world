@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Next Stop: World | Global Travel</title>
-    <meta name="description" content="Next Stop: World. Your gateway to global travel. Exclusive outgoing tours from Georgia to Europe, Asia, and beyond. Visa support, flights, and luxury packages.">
+    <title>Next Stop: World | Curated Travel</title>
+    <meta name="description" content="Next Stop: World. Curated travel experiences to Italy, France, Japan, and beyond.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
 
-    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. DESIGN VARIABLES --- */
+        /* --- 1. DYNAMIC VARIABLES (These change per country) --- */
         :root {
-            --bg-cool: #f8fbfd;
+            --accent: #006994;          /* Default Ocean Blue */
+            --bg-warm: #f8fbfd;
             --charcoal: #1a1a1a;        
-            --ocean: #006994;           
             --gold: #c5a059;            
             --green: #25D366;           
             --gray-light: #eef2f5;
@@ -25,27 +24,51 @@
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        body { color: var(--charcoal); background-color: var(--bg-cool); line-height: 1.6; overflow-x: hidden; }
+        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; transition: background 0.5s; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
         button { cursor: pointer; border: none; outline: none; }
 
         /* HEADER */
-        header { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); padding: 12px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        header {
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px);
+            padding: 10px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
         .header-left { display: flex; align-items: center; gap: 30px; }
-        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; }
-        .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
-        .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--ocean); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; }
         
-        .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
-        .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
-        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
-        .toggle-btn.inactive:hover { color: var(--ocean); }
-        .dot { color: var(--ocean); font-size: 0.8rem; animation: pulse 2s infinite; }
+        /* LOGO */
+        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; min-width: 150px; }
+        .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
+        .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; }
+
+        /* --- DESTINATION RIBBON (The "Calendar" Picker) --- */
+        .destination-ribbon {
+            display: flex; gap: 10px; overflow-x: auto; 
+            padding: 5px; max-width: 400px; /* Limits width on large screens */
+            -ms-overflow-style: none; scrollbar-width: none; 
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .destination-ribbon::-webkit-scrollbar { display: none; }
+
+        .dest-btn {
+            white-space: nowrap; padding: 6px 15px; border-radius: 20px; 
+            font-size: 0.7rem; font-weight: 700; color: #999; background: var(--gray-light);
+            transition: 0.3s; display: flex; align-items: center; gap: 6px;
+        }
+        .dest-btn:hover { background: #ddd; color: var(--charcoal); }
+        
+        /* Active State */
+        .dest-btn.active { 
+            background: var(--charcoal); color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+        }
 
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
-        .nav-item:hover { color: var(--ocean); }
+        .nav-item:hover { color: var(--accent); }
 
         /* HERO WHEEL */
         .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
@@ -60,13 +83,10 @@
         .slide-btn { border: 2px solid white; color: white; padding: 15px 45px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s; }
         .slide-btn:hover { background: white; color: black; }
 
+        /* PROGRESS BARS */
         .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
-
-        .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
-        .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
-        .arrow:hover { background: white; color: black; }
 
         /* SECTIONS */
         .section { padding: 100px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
@@ -75,6 +95,7 @@
         .section-title p { color: #777; font-size: 1rem; max-width: 600px; margin: 0 auto; }
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
 
+        /* CARDS */
         .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 350px; position: relative; cursor: pointer; }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -82,7 +103,7 @@
         .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; color: white; }
         .card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 8px; color: var(--gold); }
         .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
-        .card-tag { position: absolute; top: 20px; right: 20px; background: var(--ocean); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        .card-tag { position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
 
         /* BLOG */
         .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
@@ -91,7 +112,7 @@
         .blog-card:hover { transform: translateY(-5px); }
         .blog-img-box { height: 200px; overflow: hidden; }
         .blog-content { padding: 25px; }
-        .blog-date { font-size: 0.7rem; color: var(--ocean); font-weight: 700; text-transform: uppercase; }
+        .blog-date { font-size: 0.7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
         .blog-title { font-size: 1.2rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
         .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
 
@@ -103,46 +124,40 @@
         .modal-body { padding: 40px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: white; color: black; width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 20px; color: var(--charcoal); }
-        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; white-space: pre-wrap; } /* preserved formatting */
-        .modal-btn { background: var(--ocean); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; }
-        .modal-btn.hidden { display: none; } /* Hides button if needed */
-
-        /* FOOTER */
-        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--ocean); }
-        .footer-social { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
-        .social-btn { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 30px; }
-        .social-btn:hover { color: var(--ocean); border-color: var(--ocean); background: rgba(255,255,255,0.05); }
-        .social-icon { width: 20px; height: 20px; fill: currentColor; }
+        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; white-space: pre-wrap; }
+        .modal-btn { background: var(--accent); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; }
+        
+        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--accent); }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
-            .footer-social { flex-direction: column; align-items: center; }
+            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } 
+            .header-left { width: 100%; justify-content: space-between; }
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-left">
-            <div class="logo-container" onclick="window.scrollTo(0,0)">
+            <!-- THE DYNAMIC LOGO -->
+            <div class="logo-container" onclick="location.reload()">
                 <span class="logo-main">NEXT STOP</span>
-                <span class="logo-sub">WORLD</span>
+                <span class="logo-sub" id="logoSub">WORLD</span>
             </div>
-            <div class="site-toggle">
-                <!-- Link Back to GEORGIA -->
-                <a href="https://nextstop.ge" class="toggle-btn inactive">GEORGIA</a>
-                <!-- Current Site WORLD -->
-                <div class="toggle-btn active"><span class="dot">●</span> WORLD</div>
+
+            <!-- THE DESTINATION RIBBON -->
+            <div class="destination-ribbon" id="destRibbon">
+                <!-- JS INJECTS BUTTONS HERE -->
             </div>
         </div>
+        
         <nav class="nav-links">
-            <a href="#destinations" class="nav-item">Destinations</a>
+            <a href="#experiences" class="nav-item">Itineraries</a>
             <a href="#services" class="nav-item">Services</a>
-            <a href="#blog" class="nav-item">Blog</a>
-            <a href="#footer" class="nav-item">About</a>
+            <a href="#blog" class="nav-item">Journal</a>
+            <a href="https://nextstop.ge" class="nav-item" style="color: var(--terracotta);">→ Georgia (Inbound)</a>
         </nav>
     </header>
 
@@ -150,24 +165,20 @@
     <div class="hero-wheel">
         <div class="wheel-track" id="heroTrack"></div>
         <div class="progress-container" id="progressContainer"></div>
-        <div class="wheel-arrows">
-            <div class="arrow" onclick="manualSlide(-1)">&#10094;</div>
-            <div class="arrow" onclick="manualSlide(1)">&#10095;</div>
-        </div>
     </div>
 
-    <section id="destinations" class="section">
+    <!-- CONTENT SECTIONS (Content changes dynamically) -->
+    <section id="experiences" class="section">
         <div class="section-title">
-            <h2>Explore the World</h2>
-            <p>From the historic streets of Europe to the exotic beaches of Asia.</p>
+            <h2 id="gridTitle">Curated Experiences</h2>
+            <p id="gridDesc">Explore our hand-picked destinations.</p>
         </div>
         <div class="grid-4" id="travelGrid"></div>
     </section>
 
     <section id="services" class="section" style="background-color: #f0f4f8;">
         <div class="section-title">
-            <h2>Travel Services</h2>
-            <p>Full support for your international journey.</p>
+            <h2 id="servTitle">Services</h2>
         </div>
         <div class="grid-4" id="servicesGrid"></div>
     </section>
@@ -175,34 +186,16 @@
     <section id="blog" class="section" style="background: white;">
         <div class="section-title">
             <h2>Travel Journal</h2>
-            <p>Tips, guides, and inspiration for your next trip.</p>
         </div>
         <div class="blog-scroller" id="blogTrack"></div>
     </section>
 
     <footer id="footer">
-        <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1);">
-            <span class="logo-main">NEXT STOP</span>
-            <span class="logo-sub">WORLD</span>
-        </div>
-        <p>Tbilisi, Georgia | <a href="tel:+995591705710" style="color:#aaa;">+995 591 70 57 10</a></p>
-        <br>
-        <div class="footer-social">
-            <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">
-                <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                Instagram
-            </a>
-            <a href="#" class="social-btn wa-link">
-                <svg class="social-icon" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                WhatsApp
-            </a>
-        </div>
-        
-        <a href="#" class="wa-link">Contact Us</a> | <a href="#">About Us</a> | <a href="#">Policies</a>
-        <br><br>
-        <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2025 Next Stop Group. All rights reserved.</p>
+        <p>Next Stop: Global Travel Management</p>
+        <p>Tbilisi, Georgia | +995 591 70 57 10</p>
     </footer>
 
+    <!-- MODAL -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeModal()">×</div>
@@ -216,233 +209,238 @@
     </div>
 
     <script>
-        const config = {
-            whatsapp: "995591705710", 
+        /* ============================================================
+           --- YOUR CONTROL PANEL (THE MULTI-COUNTRY DATABASE) ---
+           ============================================================ */
+        const whatsapp = "995591705710";
 
-            // 1. HERO SLIDES
-            heroSlides: [
-                { 
-                    title: "Discover Europe", 
-                    desc: "Weekend breaks in Paris, Rome, and Barcelona.",
-                    img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", // Paris
-                    fullText: "Explore the history and culture of Europe's most iconic cities. We handle flights, hotels, and visa support for your perfect weekend getaway.\n\nIncludes: Flight, Hotel, Breakfast, City Guide."
-                },
-                { 
-                    title: "Exotic Asia", 
-                    desc: "Thailand, Bali, and Japan Adventures.",
-                    img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", // Bali
-                    fullText: "Immerse yourself in the tropical paradise of Bali or the bustling streets of Tokyo. Full guided packages available with internal transfers.\n\nIncludes: Flights, Transfers, 4* Hotel, Daily Tours."
-                },
-                { 
-                    title: "Luxury Cruises", 
-                    desc: "Mediterranean & Caribbean Voyages.",
-                    img: "https://images.unsplash.com/photo-1599640845513-262d4d0e3728?q=80&w=2070", // Cruise
-                    fullText: "Sail the world in style. All-inclusive luxury cruise packages with MSC, Royal Caribbean, and more. Wake up in a new city every day.\n\nIncludes: All meals, drinks, entertainment, port taxes."
-                }
-            ],
+        // DEFAULT SERVICES (Shared across all countries)
+        const commonServices = [
+            { title: "Visa Support", desc: "Hassle-free Processing", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", text: "We handle the paperwork. Schengen, USA, UK, and Asian visas." },
+            { title: "Flight Booking", desc: "Best Connections", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", text: "Economy to First Class. We find the best routes from Tbilisi and Kutaisi." },
+            { title: "Travel Insurance", desc: "Safety First", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", text: "Comprehensive coverage for medical, luggage, and cancellations." },
+            { title: "Honeymoons", desc: "Romantic Getaways", img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", text: "Special packages for newlyweds with private dinners and luxury suites." }
+        ];
 
-            // 2. DESTINATIONS GRID
-            travelCards: [
-                { 
-                    title: "European City Breaks", 
-                    desc: "Paris, Rome, Milan", 
-                    img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", 
-                    tag: "Popular", 
-                    text: "Short weekend trips to Europe's fashion and culture capitals. Perfect for shopping, dining, and sightseeing. We create custom itineraries based on your interests.",
-                    btn: "Check Availability"
-                },
-                { 
-                    title: "Tropical Escapes", 
-                    desc: "Maldives & Thailand", 
-                    img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2000", 
-                    tag: "Relax", 
-                    text: "Crystal clear water and white sand beaches. Our packages include overwater bungalows, romantic dinners, and spa treatments.",
-                    btn: "See Packages"
-                },
-                { 
-                    title: "Ancient Egypt", 
-                    desc: "Pyramids & Nile Cruise", 
-                    img: "https://images.unsplash.com/photo-1539768942893-daf53e448371?q=80&w=2071", 
-                    tag: "History", 
-                    text: "Walk among the pharaohs. Our guided tours cover Giza, Luxor, and a relaxing cruise down the Nile with a professional Egyptologist.",
-                    btn: "Plan Trip"
-                },
-                { 
-                    title: "Turkey Shopping", 
-                    desc: "Istanbul & Antalya", 
-                    img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071", 
-                    tag: "Shopping", 
-                    text: "High-end shopping tours and luxury resorts in our neighboring Turkey. Great deals on fashion, textiles, and gold.",
-                    btn: "Get Deals"
-                }
-            ],
+        // --- THE COUNTRIES ---
+        const database = {
+            
+            // 1. WORLD (Default Landing)
+            world: {
+                accent: "#006994", // Ocean Blue
+                hero: [
+                    { title: "Discover the World", desc: "Your Gateway to Global Travel", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074" },
+                    { title: "Visa-Free Travel", desc: "Easy getaways for Georgians", img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070" }
+                ],
+                tours: [
+                    { title: "European City Breaks", desc: "Paris, Rome, Milan", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: "Popular", text: "Weekend escapes to Europe's capitals." },
+                    { title: "Exotic Asia", desc: "Thailand & Bali", img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", tag: "Tropical", text: "Beach holidays in paradise." },
+                    { title: "Ancient Egypt", desc: "Pyramids & Nile", img: "https://images.unsplash.com/photo-1539768942893-daf53e448371?q=80&w=2071", tag: "History", text: "Walk among the pharaohs." },
+                    { title: "Turkey Shopping", desc: "Istanbul & Antalya", img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071", tag: "Shopping", text: "Luxury shopping and resorts." }
+                ],
+                blog: [
+                    { title: "Top 5 Visa-Free Countries", date: "Guide", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" },
+                    { title: "Packing for Asia", date: "Tips", img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070" }
+                ]
+            },
 
-            // 3. SERVICES GRID
-            servicesCards: [
-                { 
-                    title: "Visa Support", 
-                    desc: "Schengen & USA", 
-                    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", 
-                    text: "Professional assistance with visa applications, documentation, and interview preparation for Europe, USA, and UK. We increase your chances of approval.",
-                    btn: "Start Application"
-                },
-                { 
-                    title: "Flight Booking", 
-                    desc: "Best Rates Worldwide", 
-                    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", 
-                    text: "We find the best connections and prices for your flights to any destination. Economy, Business, and First Class options available.",
-                    btn: "Find Flights"
-                },
-                { 
-                    title: "Travel Insurance", 
-                    desc: "Safety First", 
-                    img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", 
-                    text: "Comprehensive travel insurance packages to keep you safe and covered abroad. Medical, luggage, and cancellation coverage included.",
-                    btn: "Get Insured"
-                },
-                { 
-                    title: "Honeymoon Packages", 
-                    desc: "Romantic Getaways", 
-                    img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", 
-                    text: "Tailor-made romantic trips for newlyweds. Luxury suites, private dinners, and special experiences designed for two.",
-                    btn: "Plan Honeymoon"
-                }
-            ],
+            // 2. ITALY
+            italy: {
+                accent: "#008C45", // Italian Green (or could use Red)
+                hero: [
+                    { title: "La Dolce Vita", desc: "Experience the sweet life in Italy.", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" },
+                    { title: "Rome & The Vatican", desc: "History around every corner.", img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1996" }
+                ],
+                tours: [
+                    { title: "Classic Rome", desc: "Colosseum & Vatican", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", tag: "History", text: "3 Days in the Eternal City." },
+                    { title: "Venice Romance", desc: "Gondolas & Canals", img: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?q=80&w=2070", tag: "Honeymoon", text: "The perfect romantic getaway." },
+                    { title: "Tuscany Wine", desc: "Florence & Vineyards", img: "https://images.unsplash.com/photo-1534234828563-02511c842585?q=80&w=2019", tag: "Food & Wine", text: "Tasting tours in Chianti." },
+                    { title: "Amalfi Coast", desc: "Positano & Capri", img: "https://images.unsplash.com/photo-1633321088355-d0f8c15510cb?q=80&w=2070", tag: "Luxury", text: "Summer on the coast of legends." }
+                ],
+                blog: [
+                    { title: "Best Pizza in Naples", date: "Food", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2069" },
+                    { title: "How to use Trains in Italy", date: "Guide", img: "https://images.unsplash.com/photo-1472806426350-603610d85659?q=80&w=2070" }
+                ]
+            },
 
-            // 4. BLOG POSTS (Hidden Button)
-            blogPosts: [
-                { 
-                    title: "Top 5 Visa-Free Countries", 
-                    date: "Oct 2025", 
-                    img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", 
-                    text: "Where can you travel with just your Georgian passport? We list the top destinations that require no visa for Georgian citizens, including EU/Schengen zone rules." 
-                },
-                { 
-                    title: "Budget Travel in Europe", 
-                    date: "Sep 2025", 
-                    img: "https://images.unsplash.com/photo-1471623432079-b009d30b6729?q=80&w=2070", 
-                    text: "How to see Paris, Rome, and Berlin without breaking the bank. Tips on hostels, street food, and free attractions." 
-                },
-                { 
-                    title: "Packing for Asia", 
-                    date: "Aug 2025", 
-                    img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070", 
-                    text: "Essential items you need for your trip to Thailand or Bali. From bug spray to the right power adapters." 
-                },
-                { 
-                    title: "Cruise Tips for Beginners", 
-                    date: "July 2025", 
-                    img: "https://images.unsplash.com/photo-1548574505-5e239809ee19?q=80&w=2064", 
-                    text: "First time on a ship? Here is what you need to know about seasickness, dining times, and shore excursions." 
-                }
-            ]
+            // 3. FRANCE
+            france: {
+                accent: "#0055A4", // French Blue
+                hero: [
+                    { title: "Parisian Dreams", desc: "City of Lights and Love.", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070" },
+                    { title: "French Riviera", desc: "Nice, Cannes, Monaco.", img: "https://images.unsplash.com/photo-1533104821562-851402729642?q=80&w=2070" }
+                ],
+                tours: [
+                    { title: "Paris Highlights", desc: "Eiffel & Louvre", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", tag: "City", text: "The classic Paris experience." },
+                    { title: "Lavender Fields", desc: "Provence Tour", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2000", tag: "Nature", text: "July blooms in Provence." },
+                    { title: "Disneyland Paris", desc: "Family Magic", img: "https://images.unsplash.com/photo-1545579133-99c993680b34?q=80&w=2070", tag: "Family", text: "Fun for the whole family." },
+                    { title: "French Alps", desc: "Ski Courchevel", img: "https://images.unsplash.com/photo-1518182170546-0766ba6f6a56?q=80&w=2070", tag: "Ski", text: "Winter luxury skiing." }
+                ],
+                blog: [
+                    { title: "Paris on a Budget", date: "Tips", img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070" },
+                    { title: "Wine Tasting in Bordeaux", date: "Food", img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070" }
+                ]
+            }
         };
 
-        /* --- LOGIC --- */
+        /* --- ENGINE --- */
+        let currentKey = 'world';
         let currentSlide = 0;
         let autoPlayTimer;
-        const SLIDE_DURATION = 10000; 
 
+        // 1. Initialize
         function init() {
-            // Main WhatsApp Links
-            document.querySelectorAll('.wa-link').forEach(a => {
-                if (!a.classList.contains('modal-btn')) {
-                   a.href = `https://wa.me/${config.whatsapp}`;
+            renderRibbon();
+            loadCountry('world');
+        }
+
+        // 2. Render The "Country Picker" Ribbon
+        function renderRibbon() {
+            const ribbon = document.getElementById('destRibbon');
+            const keys = Object.keys(database);
+            
+            ribbon.innerHTML = '';
+            
+            // Manual map for Flag + Name
+            const labels = {
+                world: "🌍 WORLD",
+                italy: "🇮🇹 ITALY",
+                france: "🇫🇷 FRANCE"
+            };
+
+            keys.forEach(key => {
+                const btn = document.createElement('button');
+                btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
+                btn.innerText = labels[key] || key.toUpperCase();
+                btn.onclick = () => loadCountry(key);
+                ribbon.appendChild(btn);
+            });
+        }
+
+        // 3. The Chameleon Function (Swaps ALL Content)
+        function loadCountry(key) {
+            currentKey = key;
+            const data = database[key];
+            
+            // Update UI Colors
+            document.documentElement.style.setProperty('--accent', data.accent);
+            document.querySelector('.logo-sub').style.color = data.accent;
+            document.querySelector('.logo-sub').innerText = key.toUpperCase();
+            
+            // Update Ribbon State
+            document.querySelectorAll('.dest-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.includes(key.toUpperCase()) || (key === 'world' && btn.innerText.includes('WORLD'))) {
+                    btn.classList.add('active');
                 }
             });
+
+            // Update Sections
+            renderHero(data.hero);
+            renderGrid('travelGrid', data.tours);
+            renderGrid('servicesGrid', commonServices); // Common services
+            renderBlog(data.blog);
             
-            // Render Hero
-            const heroTrack = document.getElementById('heroTrack');
+            // Scroll to top
+            window.scrollTo(0,0);
+        }
+
+        function renderHero(slides) {
+            const track = document.getElementById('heroTrack');
             const progContainer = document.getElementById('progressContainer');
-            config.heroSlides.forEach((slide, index) => {
+            track.innerHTML = '';
+            progContainer.innerHTML = '';
+            
+            slides.forEach((slide, index) => {
                 const div = document.createElement('div');
                 div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.fullText.replace(/\n/g, '<br>')}', '${slide.img}', 'Check Availability')">View Details</button></div>`;
-                heroTrack.appendChild(div);
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.desc}', '${slide.img}')">Details</button></div>`;
+                track.appendChild(div);
 
                 const bar = document.createElement('div');
                 bar.className = 'progress-bar';
                 bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
                 progContainer.appendChild(bar);
             });
-
-            // Render Grids
-            const travelGrid = document.getElementById('travelGrid'); config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
-            const servicesGrid = document.getElementById('servicesGrid'); config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
-            const blogTrack = document.getElementById('blogTrack'); config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
-
+            
+            // Reset Story Mode
+            currentSlide = 0;
             startStoryMode();
         }
 
-        function createCard(item, type) {
-            const div = document.createElement('div');
-            div.className = type === 'blog' ? 'blog-card' : 'card';
-            // Pass custom button text or null for blog
-            const btnLabel = type === 'blog' ? null : (item.btn || "Request Quote");
-            
-            div.onclick = () => openModal(item.title, item.text, item.img, btnLabel);
-            
-            if (type === 'blog') {
-                div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read Article &rarr;</span></div>`;
-            } else {
-                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy"><div class="card-overlay">${item.tag ? `<span class="card-tag">${item.tag}</span>` : ''}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
-            }
-            return div;
+        function renderGrid(id, items) {
+            const grid = document.getElementById(id);
+            grid.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openModal(item.title, item.text, item.img);
+                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${item.tag ? `<span class="card-tag">${item.tag}</span>` : ''}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
+                grid.appendChild(card);
+            });
         }
 
-        /* Story Engine */
+        function renderBlog(items) {
+            const track = document.getElementById('blogTrack');
+            track.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'blog-card';
+                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read</span></div>`;
+                track.appendChild(card);
+            });
+        }
+
+        /* --- STORY ENGINE (Reused) --- */
         function startStoryMode() { showSlide(currentSlide); }
         function showSlide(index) {
             const track = document.getElementById('heroTrack');
-            const slides = document.querySelectorAll('.hero-slide');
+            const slides = track.getElementsByClassName('hero-slide');
             const bars = document.querySelectorAll('.progress-fill');
+            if(!slides.length) return;
+
             if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
-            if (index < 0) { currentSlide = slides.length - 1; resetBars(); index = slides.length - 1; }
+            
             track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
-            slides.forEach(s => s.classList.remove('active'));
+            
+            Array.from(slides).forEach(s => s.classList.remove('active'));
             slides[index].classList.add('active');
+
             bars.forEach((bar, idx) => {
                 bar.classList.remove('active');
-                if (idx < index) { bar.style.width = '100%'; bar.style.transition = 'none'; } 
-                else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width ${SLIDE_DURATION}ms linear`; bar.style.width = '100%'; }, 50); } 
-                else { bar.style.width = '0%'; bar.style.transition = 'none'; }
+                bar.style.transition = 'none';
+                if (idx < index) { bar.style.width = '100%'; } 
+                else if (idx === index) { 
+                    bar.style.width = '0%'; 
+                    setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); 
+                } 
+                else { bar.style.width = '0%'; }
             });
+
             clearTimeout(autoPlayTimer);
-            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, SLIDE_DURATION);
+            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
         }
         function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
 
-        /* Modal System */
-        const modal = document.getElementById('detailModal'); 
-        const modalImg = document.getElementById('modalImg'); 
-        const modalTitle = document.getElementById('modalTitle'); 
+        /* MODAL */
+        const modal = document.getElementById('detailModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalTitle = document.getElementById('modalTitle');
         const modalText = document.getElementById('modalText');
         const modalBtn = document.querySelector('.modal-btn');
 
-        function openModal(title, text, img, btnLabel) { 
-            modalTitle.innerText = title; 
-            modalText.innerText = text; 
-            modalImg.src = img; 
-            
-            // Logic: If btnLabel is null (Blog), hide button. Else show it.
-            if (btnLabel) {
-                modalBtn.style.display = 'flex';
-                modalBtn.innerHTML = `
-                    <svg style="width:20px;height:20px;fill:white;margin-right:10px;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                    ${btnLabel}`;
-                modalBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}`;
-            } else {
-                modalBtn.style.display = 'none';
-            }
-            
-            modal.classList.add('active'); 
+        function openModal(title, text, img) {
+            modalTitle.innerText = title;
+            modalText.innerText = text || title;
+            modalImg.src = img;
+            modalBtn.href = `https://wa.me/${whatsapp}?text=Hi, I am interested in ${title} (${currentKey.toUpperCase()})`;
+            modal.classList.add('active');
         }
-        
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-        
+
         init();
     </script>
 </body>
