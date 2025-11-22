@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Next Stop: World | Global Travel Experiences</title>
+    <!-- SEO & BROWSER ICON -->
+    <title>Next Stop: World | Global Travel</title>
     <meta name="description" content="Next Stop: World. Your gateway to global travel. Exclusive outgoing tours from Georgia to Europe, Asia, and beyond. Visa support, flights, and luxury packages.">
+    <!-- World Icon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
 
     <!-- FONTS -->
@@ -14,7 +16,7 @@
     <style>
         /* --- 1. DESIGN VARIABLES (WORLD THEME) --- */
         :root {
-            --bg-warm: #f8fbfd;         /* Very cool white/blue tint */
+            --bg-cool: #f8fbfd;         /* Cool White/Blue Tint */
             --charcoal: #1a1a1a;        
             --ocean: #006994;           /* GLOBAL ACCENT (Ocean Blue) */
             --gold: #c5a059;            
@@ -24,8 +26,11 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
+        
+        /* SMOOTH SCROLLING */
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; }
+        
+        body { color: var(--charcoal); background-color: var(--bg-cool); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
         button { cursor: pointer; border: none; outline: none; }
@@ -51,16 +56,12 @@
             font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--ocean); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; 
         }
 
-        /* TOGGLE (Set to WORLD active) */
+        /* TOGGLE */
         .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
         .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; }
-        
-        /* World is Active here */
-        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
-        .toggle-btn.inactive:hover { color: var(--ocean); }
-        .dot { color: var(--ocean); font-size: 0.8rem; animation: pulse 2s infinite; } /* Blue Dot */
+        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .dot { color: var(--ocean); font-size: 0.8rem; animation: pulse 2s infinite; }
 
-        /* NAV */
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
         .nav-item:hover { color: var(--ocean); }
@@ -68,20 +69,31 @@
         /* --- 3. HERO WHEEL --- */
         .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
         .wheel-track { display: flex; width: 100%; height: 100%; overflow: hidden; }
-        .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
+        
+        .hero-slide { 
+            flex: 0 0 100%; height: 100%; position: relative;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            text-align: center; color: white; padding: 20px;
+        }
         .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.65; z-index: 1; transition: transform 10s linear; }
         .hero-slide.active .slide-bg { transform: scale(1.1); }
+
         .slide-content { position: relative; z-index: 2; max-width: 800px; opacity: 0; transform: translateY(30px); transition: 1s; }
         .hero-slide.active .slide-content { opacity: 1; transform: translateY(0); }
+
         .slide-title { font-size: 4rem; font-family: 'Cinzel', serif; margin-bottom: 15px; text-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .slide-desc { font-size: 1.2rem; opacity: 0.9; margin-bottom: 25px; font-weight: 300; letter-spacing: 1px; }
-        .slide-btn { border: 2px solid white; color: white; padding: 15px 45px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s; }
+        .slide-btn { 
+            border: 2px solid white; color: white; padding: 15px 45px; 
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block;
+            background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s;
+        }
         .slide-btn:hover { background: white; color: black; }
 
         .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
-        
+
         .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
         .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
         .arrow:hover { background: white; color: black; }
@@ -93,7 +105,6 @@
         .section-title p { color: #777; font-size: 1rem; max-width: 600px; margin: 0 auto; }
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
 
-        /* CARDS */
         .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 350px; position: relative; cursor: pointer; }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -111,4 +122,350 @@
         .blog-img-box { height: 200px; overflow: hidden; }
         .blog-content { padding: 25px; }
         .blog-date { font-size: 0.7rem; color: var(--ocean); font-weight: 700; text-transform: uppercase; }
-        .blog-title { font-size: 1.2rem; margin: 10px 0; color: var(--charcoal
+        .blog-title { font-size: 1.2rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
+        .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); opacity: 0; transition: 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: white; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; animation: slideUp 0.4s ease; }
+        .modal-header-img { height: 300px; width: 100%; object-fit: cover; }
+        .modal-body { padding: 40px; }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: white; color: black; width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 20px; color: var(--charcoal); }
+        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; }
+        .modal-btn { background: var(--ocean); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; }
+        
+        /* FOOTER */
+        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--ocean); }
+        .footer-social { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
+        .social-btn { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 30px; }
+        .social-btn:hover { color: var(--ocean); border-color: var(--ocean); background: rgba(255,255,255,0.05); }
+        .social-icon { width: 20px; height: 20px; fill: currentColor; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
+            .footer-social { flex-direction: column; align-items: center; }
+        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="logo-container" onclick="window.scrollTo(0,0)">
+                <span class="logo-main">NEXT STOP</span>
+                <span class="logo-sub">WORLD</span>
+            </div>
+            <div class="site-toggle">
+                <!-- LINK TO GEORGIA -->
+                <a href="https://nextstop.ge" class="toggle-btn inactive">GEORGIA</a>
+                <!-- CURRENT SITE -->
+                <div class="toggle-btn active"><span class="dot">●</span> WORLD</div>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#destinations" class="nav-item">Destinations</a>
+            <a href="#services" class="nav-item">Services</a>
+            <a href="#blog" class="nav-item">Blog</a>
+            <a href="#footer" class="nav-item">About</a>
+        </nav>
+    </header>
+
+    <div class="hero-wheel">
+        <div class="wheel-track" id="heroTrack"></div>
+        <div class="progress-container" id="progressContainer"></div>
+        <div class="wheel-arrows">
+            <div class="arrow" onclick="manualSlide(-1)">&#10094;</div>
+            <div class="arrow" onclick="manualSlide(1)">&#10095;</div>
+        </div>
+    </div>
+
+    <section id="destinations" class="section">
+        <div class="section-title">
+            <h2>Explore the World</h2>
+            <p>From the historic streets of Europe to the exotic beaches of Asia.</p>
+        </div>
+        <div class="grid-4" id="travelGrid"></div>
+    </section>
+
+    <section id="services" class="section" style="background-color: #f0f4f8;">
+        <div class="section-title">
+            <h2>Travel Services</h2>
+            <p>Full support for your international journey.</p>
+        </div>
+        <div class="grid-4" id="servicesGrid"></div>
+    </section>
+
+    <section id="blog" class="section" style="background: white;">
+        <div class="section-title">
+            <h2>Travel Journal</h2>
+            <p>Tips, guides, and inspiration for your next trip.</p>
+        </div>
+        <div class="blog-scroller" id="blogTrack"></div>
+    </section>
+
+    <footer id="footer">
+        <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1);">
+            <span class="logo-main">NEXT STOP</span>
+            <span class="logo-sub">WORLD</span>
+        </div>
+        <p>Tbilisi, Georgia | <a href="tel:+995591705710" style="color:#aaa;">+995 591 70 57 10</a></p>
+        <br>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                Instagram
+            </a>
+            <a href="#" class="social-btn wa-link">
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                WhatsApp
+            </a>
+        </div>
+        
+        <a href="#" class="wa-link">Contact Us</a> | <a href="#">About Us</a> | <a href="#">Policies</a>
+        <br><br>
+        <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2025 Next Stop Group. All rights reserved.</p>
+    </footer>
+
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal()">×</div>
+            <img src="" class="modal-header-img" id="modalImg">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle">Title</h2>
+                <div class="modal-text" id="modalText">Description</div>
+                <a href="#" class="modal-btn wa-link">Request Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================================
+           --- YOUR CONTROL PANEL (EDIT HERE) ---
+           ============================================================ */
+        const config = {
+            whatsapp: "995591705710", 
+
+            // 1. HERO SLIDES
+            heroSlides: [
+                { 
+                    title: "Discover Europe", 
+                    desc: "Weekend breaks in Paris, Rome, and Barcelona.",
+                    img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", // Paris
+                    fullText: "Explore the history and culture of Europe's most iconic cities. We handle flights, hotels, and visa support."
+                },
+                { 
+                    title: "Exotic Asia", 
+                    desc: "Thailand, Bali, and Japan Adventures.",
+                    img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", // Bali
+                    fullText: "Immerse yourself in the tropical paradise of Bali or the bustling streets of Tokyo. Full guided packages available."
+                },
+                { 
+                    title: "Luxury Cruises", 
+                    desc: "Mediterranean & Caribbean Voyages.",
+                    img: "https://images.unsplash.com/photo-1599640845513-262d4d0e3728?q=80&w=2070", // Cruise
+                    fullText: "Sail the world in style. All-inclusive luxury cruise packages with MSC, Royal Caribbean, and more."
+                }
+            ],
+
+            // 2. DESTINATIONS GRID
+            travelCards: [
+                { 
+                    title: "European City Breaks", 
+                    desc: "Paris, Rome, Milan", 
+                    img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", 
+                    tag: "Popular", 
+                    text: "Short weekend trips to Europe's fashion and culture capitals." 
+                },
+                { 
+                    title: "Tropical Escapes", 
+                    desc: "Maldives & Thailand", 
+                    img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2000", 
+                    tag: "Relax", 
+                    text: "Crystal clear water and white sand beaches. Perfect for honeymooners." 
+                },
+                { 
+                    title: "Ancient Egypt", 
+                    desc: "Pyramids & Nile Cruise", 
+                    img: "https://images.unsplash.com/photo-1539768942893-daf53e448371?q=80&w=2071", 
+                    tag: "History", 
+                    text: "Walk among the pharaohs. Guided tours of Giza, Luxor, and the Nile." 
+                },
+                { 
+                    title: "Turkey Shopping", 
+                    desc: "Istanbul & Antalya", 
+                    img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071", 
+                    tag: "Shopping", 
+                    text: "High-end shopping tours and luxury resorts in our neighboring Turkey." 
+                }
+            ],
+
+            // 3. SERVICES GRID
+            servicesCards: [
+                { 
+                    title: "Visa Support", 
+                    desc: "Schengen & USA", 
+                    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", // Passport/Visa
+                    text: "Professional assistance with visa applications, documentation, and interview preparation." 
+                },
+                { 
+                    title: "Flight Booking", 
+                    desc: "Best Rates Worldwide", 
+                    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", // Airplane Wing
+                    text: "We find the best connections and prices for your flights to any destination." 
+                },
+                { 
+                    title: "Travel Insurance", 
+                    desc: "Safety First", 
+                    img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", // Planning/Writing
+                    text: "Comprehensive travel insurance packages to keep you safe and covered abroad." 
+                },
+                { 
+                    title: "Honeymoon Packages", 
+                    desc: "Romantic Getaways", 
+                    img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", // Couple/Wedding
+                    text: "Tailor-made romantic trips for newlyweds. Luxury suites, private dinners, and more." 
+                }
+            ],
+
+            // 4. BLOG POSTS
+            blogPosts: [
+                { 
+                    title: "Top 5 Visa-Free Countries for Georgians", 
+                    date: "Oct 2025", 
+                    img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", 
+                    text: "Where can you travel with just your Georgian passport? Here is the list." 
+                },
+                { 
+                    title: "Budget Travel in Europe", 
+                    date: "Sep 2025", 
+                    img: "https://images.unsplash.com/photo-1471623432079-b009d30b6729?q=80&w=2070", 
+                    text: "How to see Paris and Rome without breaking the bank." 
+                },
+                { 
+                    title: "Packing for Asia", 
+                    date: "Aug 2025", 
+                    img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070", 
+                    text: "Essential items you need for your trip to Thailand or Bali." 
+                },
+                { 
+                    title: "Cruise Tips for Beginners", 
+                    date: "July 2025", 
+                    img: "https://images.unsplash.com/photo-1548574505-5e239809ee19?q=80&w=2064", 
+                    text: "First time on a ship? Here is what you need to know." 
+                }
+            ]
+        };
+
+        /* --- RENDER LOGIC --- */
+        let currentSlide = 0;
+        let autoPlayTimer;
+        let barAnimTimer;
+        const SLIDE_DURATION = 10000; 
+
+        function init() {
+            updateWaLinks(config.whatsapp);
+            
+            // Render Hero
+            const heroTrack = document.getElementById('heroTrack');
+            const progContainer = document.getElementById('progressContainer');
+            
+            config.heroSlides.forEach((slide, index) => {
+                const div = document.createElement('div');
+                div.className = 'hero-slide';
+                if(index === 0) div.classList.add('active');
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.fullText}', '${slide.img}')">View Details</button></div>`;
+                heroTrack.appendChild(div);
+
+                const bar = document.createElement('div');
+                bar.className = 'progress-bar';
+                bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
+                progContainer.appendChild(bar);
+            });
+
+            // Render Grids
+            const travelGrid = document.getElementById('travelGrid'); config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
+            const servicesGrid = document.getElementById('servicesGrid'); config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
+            const blogTrack = document.getElementById('blogTrack'); config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
+
+            startStoryMode();
+        }
+
+        function updateWaLinks(number) {
+            document.querySelectorAll('.wa-link').forEach(a => {
+                if(!a.classList.contains('modal-btn')) { 
+                    a.href = `https://wa.me/${number}`;
+                }
+            });
+        }
+
+        function createCard(item, type) {
+            const div = document.createElement('div');
+            div.className = type === 'blog' ? 'blog-card' : 'card';
+            div.onclick = () => openModal(item.title, item.text, item.img);
+            if (type === 'blog') {
+                div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read Article &rarr;</span></div>`;
+            } else {
+                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy"><div class="card-overlay">${item.tag ? `<span class="card-tag">${item.tag}</span>` : ''}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
+            }
+            return div;
+        }
+
+        function startStoryMode() { showSlide(currentSlide); }
+
+        function showSlide(index) {
+            const track = document.getElementById('heroTrack');
+            const slides = document.querySelectorAll('.hero-slide');
+            const bars = document.querySelectorAll('.progress-fill');
+            
+            if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
+            if (index < 0) { currentSlide = slides.length - 1; resetBars(); index = slides.length - 1; }
+
+            track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
+
+            slides.forEach(s => s.classList.remove('active'));
+            slides[index].classList.add('active');
+
+            bars.forEach((bar, idx) => {
+                bar.classList.remove('active');
+                if (idx < index) { bar.style.width = '100%'; bar.style.transition = 'none'; } 
+                else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width ${SLIDE_DURATION}ms linear`; bar.style.width = '100%'; }, 50); } 
+                else { bar.style.width = '0%'; bar.style.transition = 'none'; }
+            });
+
+            clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, SLIDE_DURATION);
+        }
+
+        function resetBars() {
+            document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; });
+        }
+
+        function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
+
+        const modal = document.getElementById('detailModal'); 
+        const modalImg = document.getElementById('modalImg'); 
+        const modalTitle = document.getElementById('modalTitle'); 
+        const modalText = document.getElementById('modalText');
+        const modalBtn = document.querySelector('.modal-btn');
+
+        function openModal(title, text, img) { 
+            modalTitle.innerText = title; 
+            modalText.innerText = text; 
+            modalImg.src = img; 
+            // Smart WhatsApp Link
+            modalBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}`;
+            modal.classList.add('active'); 
+        }
+        
+        function closeModal() { modal.classList.remove('active'); }
+        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+        
+        init();
+    </script>
+</body>
+</html>
