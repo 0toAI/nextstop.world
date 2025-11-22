@@ -79,7 +79,7 @@
         }
         .more-btn:hover { transform: rotate(90deg) scale(1.1); background: var(--accent); }
 
-        /* --- MATRIX OVERLAY --- */
+        /* --- MATRIX --- */
         .matrix-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98);
             z-index: 2000; display: none; flex-direction: column; padding: 100px 10%;
@@ -118,7 +118,7 @@
         .progress-bar { height: 3px; background: rgba(255,255,255,0.2); flex: 1; max-width: 120px; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
 
-        /* --- SECTIONS & GRIDS --- */
+        /* --- SECTIONS --- */
         .section { padding: 80px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
         .section-title { text-align: center; margin-bottom: 60px; position: relative; }
         .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 10px; }
@@ -131,10 +131,8 @@
         }
         .back-btn.visible { display: block; }
 
-        /* GRID 4 LAYOUT */
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
         
-        /* CARDS */
         .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); height: 380px; position: relative; cursor: pointer; transition: 0.4s; }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -143,7 +141,7 @@
         .card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 8px; color: var(--gold); }
         .card-tag { position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; border-radius: 4px; }
 
-        /* BLOG SCROLLER */
+        /* BLOG */
         .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scrollbar-width: none; scroll-snap-type: x mandatory; }
         .blog-card { flex: 0 0 300px; scroll-snap-align: center; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; cursor: pointer; }
         .blog-card:hover { transform: translateY(-5px); }
@@ -162,13 +160,7 @@
         .modal-btn { background: var(--accent); color: white; padding: 15px 30px; display: inline-block; font-weight: bold; text-transform: uppercase; margin-top: 20px; }
 
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; border-top: 5px solid var(--accent); }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .slide-title { font-size: 2.5rem; }
-            .header-left { width: 100%; justify-content: space-between; }
-            .site-toggle { display: none; }
-        }
+        @media (max-width: 768px) { .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .header-left { width: 100%; justify-content: space-between; } .site-toggle { display: none; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -269,87 +261,106 @@
     </div>
 
     <script>
-        // --- EXPANDED DATA STRUCTURE ---
-        
-        // 1. SERVICES DATA (Global)
+        // --- DATA STORE ---
         const serviceCategories = [
-            {
-                title: "Visa Support", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", desc: "Document preparation & consultation.",
-                items: [
-                    { title: "Schengen Visa", img: "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?q=80&w=2070", desc: "Complete application support for EU countries.", content: "SERVICE: SCHENGEN VISA ASSISTANCE\n\nWe provide full support for obtaining a Schengen Visa.\n\nINCLUDES:\n- Review of documents\n- Filling out the application form\n- Appointment scheduling\n- Interview preparation\n- Travel insurance processing\n\nTIMELINE: 15-45 days depending on the embassy." },
-                    { title: "USA Visa", img: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2070", desc: "B1/B2 Visa assistance.", content: "SERVICE: USA B1/B2 VISA\n\nComprehensive support for US Tourist and Business visas.\n\nINCLUDES:\n- DS-160 form filing\n- Payment of consular fees\n- Interview slot booking\n- Mock interview session\n\nTIMELINE: Depends on embassy slots." },
-                    { title: "UK Visa", img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=2070", desc: "Standard Visitor Visa.", content: "SERVICE: UK VISITOR VISA\n\nSupport for UK standard visitor applications.\n\nINCLUDES:\n- Document checklist\n- Online application submission\n- Biometrics appointment\n\nTIMELINE: Approx 3 weeks." }
-                ]
-            },
-            {
-                title: "Transport", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", desc: "Flights & Private Transfers.",
-                items: [
-                    { title: "Flight Booking", img: "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=2070", desc: "Best connections worldwide.", content: "SERVICE: FLIGHT BOOKING\n\nWe find the best connections for your budget.\n\n- Multi-city itineraries\n- Group bookings\n- Complex routing\n- 24/7 support during travel" },
-                    { title: "Airport Transfers", img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", desc: "Luxury pickups.", content: "SERVICE: PRIVATE TRANSFERS\n\nMeet & Greet service at any airport globally.\n\n- Premium vehicles (Mercedes E/S Class, V-Class)\n- Professional chauffeurs\n- Flight tracking" },
-                    { title: "Car Rental", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070", desc: "Self-drive options.", content: "SERVICE: CAR RENTAL\n\nBook reliable cars worldwide.\n\n- Full insurance coverage\n- No hidden fees\n- Wide range of vehicles" }
-                ]
-            },
-            {
-                title: "Accommodation", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", desc: "Hotels, Villas & Apartments.",
-                items: [
-                    { title: "Luxury Hotels", img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070", desc: "5-Star experiences.", content: "SERVICE: LUXURY HOTELS\n\nExclusive rates at top hotels.\n\n- Room upgrades (subject to availability)\n- Early check-in / Late check-out\n- VIP amenities" },
-                    { title: "Private Villas", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2071", desc: "For families and groups.", content: "SERVICE: PRIVATE VILLAS\n\nCurated villas for total privacy.\n\n- Private pools\n- Chef services available\n- Housekeeping included" },
-                    { title: "City Apartments", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=2070", desc: "Live like a local.", content: "SERVICE: CITY APARTMENTS\n\nCentrally located apartments in major capitals.\n\n- Fully equipped kitchens\n- High-speed Wi-Fi\n- Great for long stays" }
-                ]
-            },
-            {
-                title: "VIP Services", img: "https://images.unsplash.com/photo-1551632436-cbf8dd354ca8?q=80&w=2069", desc: "Concierge & Unique Requests.",
-                items: [
-                    { title: "Event Tickets", img: "https://images.unsplash.com/photo-1459749411177-0473ef487758?q=80&w=2070", desc: "Concerts & Sports.", content: "SERVICE: EVENT TICKETS\n\nAccess to sold-out events.\n\n- Football matches (Champions League, Premier League)\n- Concerts & Festivals\n- Opera & Theatre" },
-                    { title: "Restaurant Reservations", img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070", desc: "Top-tier dining.", content: "SERVICE: DINING RESERVATIONS\n\nPriority booking at Michelin-star restaurants and trendy hotspots." },
-                    { title: "Private Guides", img: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=2070", desc: "Local experts.", content: "SERVICE: PRIVATE GUIDES\n\nExpert local guides for personalized tours.\n\n- History & Art focus\n- Culinary tours\n- Shopping assistants" }
-                ]
-            }
+            { title: "Visa Support", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", desc: "Document preparation & consultation.", items: [ { title: "Schengen Visa", img: "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?q=80&w=2070", desc: "Complete application support.", content: "SERVICE: SCHENGEN VISA\n\nFull assistance with form filling, appointment booking, and insurance." }, { title: "USA Visa", img: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2070", desc: "B1/B2 Visa assistance.", content: "SERVICE: USA B1/B2 VISA\n\nSupport for US Tourist and Business visa applications including interview prep." } ] },
+            { title: "Transport", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", desc: "Flights & Transfers.", items: [ { title: "Flight Booking", img: "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=2070", desc: "Best connections.", content: "SERVICE: FLIGHTS\n\nWe find the best routes and prices for your travel dates." }, { title: "Private Transfers", img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", desc: "Luxury pickups.", content: "SERVICE: TRANSFERS\n\nAirport meet & greet with premium vehicles." } ] },
+            { title: "Accommodation", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", desc: "Hotels & Villas.", items: [ { title: "Luxury Hotels", img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070", desc: "5-Star experiences.", content: "SERVICE: HOTELS\n\nExclusive rates and perks at top hotels worldwide." } ] },
+            { title: "VIP Services", img: "https://images.unsplash.com/photo-1551632436-cbf8dd354ca8?q=80&w=2069", desc: "Concierge.", items: [ { title: "Event Tickets", img: "https://images.unsplash.com/photo-1459749411177-0473ef487758?q=80&w=2070", desc: "Concerts & Sports.", content: "SERVICE: TICKETS\n\nAccess to sold-out events and premium seating." } ] }
         ];
 
-        // 2. COUNTRY SPECIFIC TOURS (Nested Structure)
+        // --- SPECIFIC COUNTRY DATA ---
         const database = {
             world: {
                 accent: "#006994",
                 hero: [{ title: "Discover the World", desc: "Gateway to Global Travel", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074" }],
                 tourCategories: [
-                    {
-                        title: "City Breaks", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", desc: "Short escapes to capitals.",
-                        items: [
-                            { title: "Rome Weekend", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", desc: "3 Days in the Eternal City.", content: "ITINERARY: ROME WEEKEND\n\nDAY 1: ARRIVAL\nPrivate transfer to hotel near Spanish Steps. Welcome dinner at a rooftop restaurant overlooking the Vatican.\n\nDAY 2: ANCIENT ROME\nMorning guided tour of the Colosseum and Roman Forum. Afternoon walking tour to the Pantheon and Trevi Fountain. Gelato stop included.\n\nDAY 3: VATICAN & DEPARTURE\nEarly access to Vatican Museums and Sistine Chapel. Free time for shopping on Via del Corso before transfer to FCO airport." },
-                            { title: "Paris Escape", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", desc: "Romance in the city of lights.", content: "ITINERARY: PARIS ESCAPE\n\nDAY 1: SEINE CRUISE\nArrival and evening sunset cruise on the Seine with champagne.\n\nDAY 2: LOUVRE & MARAIS\nGuided tour of the Louvre highlights. Lunch in the trendy Marais district. Evening Eiffel Tower summit access.\n\nDAY 3: MONTMARTRE\nMorning walk in Montmartre artist district. Visit Sacré-Cœur. Departure." },
-                            { title: "Barcelona Art", img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", desc: "Gaudi & Gothic Quarter.", content: "ITINERARY: BARCELONA ART\n\nDAY 1: GAUDI TOUR\nVisit Sagrada Familia and Park Güell with skip-the-line tickets.\n\nDAY 2: GOTHIC QUARTER\nWalking tour of the old city. Tapas tasting tour in the evening.\n\nDAY 3: BEACH & SHOPPING\nRelax at Barceloneta beach or shop at Passeig de Gràcia. Departure." }
-                        ]
-                    },
-                    {
-                        title: "Adventure", img: "https://images.unsplash.com/photo-1533240332313-0db49b459ad6?q=80&w=2070", desc: "Hiking, Safari & Nature.",
-                        items: [
-                            { title: "Swiss Alps Hiking", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc: "Interlaken & Jungfrau.", content: "ITINERARY: SWISS ALPS\n\nDAY 1: INTERLAKEN\nArrival in Interlaken. Check-in to mountain lodge.\n\nDAY 2: JUNGFRAUJOCH\nTrain ride to the Top of Europe. Glacier hike and ice palace visit.\n\nDAY 3: LAKE BRIENZ\nBoat cruise on turquoise waters. Departure." },
-                            { title: "Dubai Desert Safari", img: "https://images.unsplash.com/photo-1451290337906-ac938fc89bce?q=80&w=2077", desc: "Dune bashing & BBQ.", content: "ITINERARY: DUBAI DESERT\n\nDAY 1: CITY TOUR\nBurj Khalifa and Dubai Mall.\n\nDAY 2: DESERT SAFARI\n4x4 Dune Bashing, Camel riding, and Bedouin camp dinner with fire show.\n\nDAY 3: PALM JUMEIRAH\nRelax at a beach club on the Palm. Departure." },
-                            { title: "Iceland Roadtrip", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159", desc: "Waterfalls & Geysers.", content: "ITINERARY: ICELAND SOUTH COAST\n\nDAY 1: GOLDEN CIRCLE\nThingvellir, Geysir, and Gullfoss waterfall.\n\nDAY 2: VIK & BLACK BEACH\nSeljalandsfoss waterfall and Reynisfjara black sand beach.\n\nDAY 3: BLUE LAGOON\nRelax in thermal waters before flight." }
-                        ]
-                    },
-                    {
-                        title: "Honeymoon", img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", desc: "Romantic getaways.",
-                        items: [
-                            { title: "Maldives Retreat", img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2070", desc: "Overwater Bungalows.", content: "ITINERARY: MALDIVES LUXURY\n\nDAY 1-5: PRIVATE ISLAND\nStay in an overwater villa with private pool. All-inclusive dining. Sunset dolphin cruise included. Couple's spa treatment." },
-                            { title: "Santorini Sunset", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", desc: "Caldera views.", content: "ITINERARY: SANTORINI DREAM\n\nDAY 1: OIA\nCheck in to a cave hotel with caldera view. Sunset dinner.\n\nDAY 2: CATAMARAN CRUISE\nSailing around the volcano with BBQ lunch and swimming in hot springs.\n\nDAY 3: WINERY TOUR\nTasting local wines. Departure." },
-                            { title: "Amalfi Coast", img: "https://images.unsplash.com/photo-1633321088355-d0f8c054e3e9?q=80&w=2070", desc: "Positano & Capri.", content: "ITINERARY: AMALFI ROMANCE\n\nDAY 1: POSITANO\nArrival and romantic dinner by the sea.\n\nDAY 2: CAPRI DAY TRIP\nPrivate boat to Capri. Visit the Blue Grotto.\n\nDAY 3: RAVELLO\nVisit Villa Cimbrone gardens. Departure." }
-                        ]
-                    },
-                    {
-                        title: "Cultural", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc: "History & Traditions.",
-                        items: [
-                            { title: "Kyoto Temples", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070", desc: "Japan's ancient capital.", content: "ITINERARY: ANCIENT KYOTO\n\nDAY 1: ARASHIYAMA\nBamboo grove and monkey park.\n\nDAY 2: TEMPLES\nKinkaku-ji (Golden Pavilion) and Fushimi Inari Shrine.\n\nDAY 3: GION\nTea ceremony and Geisha district walking tour." },
-                            { title: "Egypt Pyramids", img: "https://images.unsplash.com/photo-1539650116455-251ec23e0659?q=80&w=2070", desc: "Cairo & Luxor.", content: "ITINERARY: PHARAOHS TRAIL\n\nDAY 1: GIZA\nGreat Pyramids and Sphinx tour.\n\nDAY 2: MUSEUM\nEgyptian Museum and Khan el-Khalili bazaar.\n\nDAY 3: NILE DINNER\nDinner cruise on the Nile. Departure." },
-                            { title: "Istanbul History", img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071", desc: "Where East meets West.", content: "ITINERARY: ISTANBUL CLASSIC\n\nDAY 1: SULTANAHMET\nHagia Sophia, Blue Mosque, and Topkapi Palace.\n\nDAY 2: BOSPHORUS\nPrivate boat cruise between Europe and Asia.\n\nDAY 3: BAZAARS\nGrand Bazaar shopping. Departure." }
-                        ]
-                    }
+                    { title: "City Breaks", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", desc: "Short escapes to capitals.", items: [ { title: "Rome Weekend", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", desc: "3 Days in Rome.", content: "ITINERARY: ROME\n\nDay 1: Arrival & Dinner.\nDay 2: Colosseum & Forum.\nDay 3: Vatican." }, { title: "Paris Escape", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", desc: "Romance in Paris.", content: "ITINERARY: PARIS\n\nDay 1: Seine Cruise.\nDay 2: Louvre & Eiffel.\nDay 3: Montmartre." } ] },
+                    { title: "Adventure", img: "https://images.unsplash.com/photo-1533240332313-0db49b459ad6?q=80&w=2070", desc: "Hiking & Safari.", items: [ { title: "Swiss Alps", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc: "Interlaken Hike.", content: "ITINERARY: SWISS ALPS\n\nDay 1: Arrival Interlaken.\nDay 2: Jungfraujoch.\nDay 3: Lake Brienz." } ] },
+                    { title: "Honeymoon", img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", desc: "Romantic getaways.", items: [ { title: "Maldives", img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2070", desc: "Overwater Villa.", content: "ITINERARY: MALDIVES\n\n5 Days of pure relaxation in a private villa." } ] },
+                    { title: "Cultural", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc: "History & Traditions.", items: [ { title: "Kyoto Temples", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070", desc: "Ancient Japan.", content: "ITINERARY: KYOTO\n\nDay 1: Arashiyama.\nDay 2: Golden Pavilion.\nDay 3: Gion District." } ] }
                 ]
             },
-            // Note: For other countries, you would copy the structure above. 
-            // For this demo, I'm making other countries fall back to the same structure 
-            // but you can customize them individually in the future.
+            italy: {
+                accent: "#008C45",
+                hero: [{ title: "La Dolce Vita", desc: "The Sweet Life", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" }],
+                tourCategories: [
+                    { title: "Art Cities", img: "https://images.unsplash.com/photo-1534445867742-43195f401b6c?q=80&w=2070", desc: "Rome, Florence, Venice.", items: [{title:"Rome Classic", img:"https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=2070", desc:"The Eternal City", content:"ITINERARY: ROME\n\nDay 1: Arrival & Piazza Navona.\nDay 2: Vatican Museums.\nDay 3: Colosseum & Departure."}, {title:"Florence Art", img:"https://images.unsplash.com/photo-1543429258-150587d5b1ae?q=80&w=2070", desc:"Renaissance Capital", content:"ITINERARY: FLORENCE\n\nDay 1: Duomo climb.\nDay 2: Uffizi Gallery.\nDay 3: Ponte Vecchio."}, {title:"Venice Canals", img:"https://images.unsplash.com/photo-1514890547357-a9ee288728e0?q=80&w=2070", desc:"Gondola Ride", content:"ITINERARY: VENICE\n\nDay 1: St Mark's Square.\nDay 2: Murano & Burano.\nDay 3: Rialto Market."}] },
+                    { title: "Amalfi Coast", img: "https://images.unsplash.com/photo-1633321088355-d0f8c054e3e9?q=80&w=2070", desc: "Positano & Capri.", items: [{title:"Positano Dream", img:"https://images.unsplash.com/photo-1533602496739-1663470ccf6b?q=80&w=2070", desc:"Cliffside Luxury", content:"ITINERARY: POSITANO\n\nDay 1: Beach Club.\nDay 2: Path of the Gods hike.\nDay 3: Sunset Boat."}, {title:"Capri Day Trip", img:"https://images.unsplash.com/photo-1530906622963-8a60586a4db4?q=80&w=2070", desc:"Blue Grotto", content:"ITINERARY: CAPRI\n\nFull day private boat tour around Capri."}] },
+                    { title: "Food & Wine", img: "https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?q=80&w=2070", desc: "Tuscany & Naples.", items: [{title:"Tuscany Wine", img:"https://images.unsplash.com/photo-1473185906631-9a7444158913?q=80&w=2070", desc:"Chianti Tour", content:"ITINERARY: TUSCANY\n\nDay 1: Siena.\nDay 2: Wine Tasting in Chianti.\nDay 3: San Gimignano."}, {title:"Pizza in Naples", img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2069", desc:"Authentic Cuisine", content:"ITINERARY: NAPLES\n\nDay 1: Spaccanapoli.\nDay 2: Pompeii Trip.\nDay 3: Pizza Making Class."}] },
+                    { title: "Islands", img: "https://images.unsplash.com/photo-1504198266287-1659872e6590?q=80&w=2070", desc: "Sicily & Sardinia.", items: [{title:"Sicily Tour", img:"https://images.unsplash.com/photo-1596706064228-4467d1db2688?q=80&w=2070", desc:"Taormina & Etna", content:"ITINERARY: SICILY\n\nDay 1: Palermo.\nDay 2: Mount Etna.\nDay 3: Taormina Greek Theatre."}] }
+                ]
+            },
+            france: {
+                accent: "#0055A4",
+                hero: [{ title: "Esprit de France", desc: "Romance & Style", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" }],
+                tourCategories: [
+                    { title: "City Highlights", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", desc: "Paris & Lyon.", items: [{title:"Paris First Timer", img:"https://images.unsplash.com/photo-1511739001486-6bfe10ce7859?q=80&w=2070", desc:"The Classics", content:"ITINERARY: PARIS\n\nDay 1: Eiffel Tower.\nDay 2: Louvre & Tuileries.\nDay 3: Seine Cruise."}, {title:"Gastronomic Lyon", img:"https://images.unsplash.com/photo-1606509652598-a359d9c3b88b?q=80&w=2070", desc:"Food Capital", content:"ITINERARY: LYON\n\nDay 1: Old Lyon.\nDay 2: Paul Bocuse Market.\nDay 3: Silk Weavers."}] },
+                    { title: "French Riviera", img: "https://images.unsplash.com/photo-1533104823323-d62b7a4d9342?q=80&w=2070", desc: "Glamour by the sea.", items: [{title:"Nice & Monaco", img:"https://images.unsplash.com/photo-1516982921503-4b9679624597?q=80&w=2070", desc:"Casino & Beach", content:"ITINERARY: RIVIERA\n\nDay 1: Nice Promenade.\nDay 2: Day trip to Monaco.\nDay 3: Eze Village."}, {title:"St Tropez", img:"https://images.unsplash.com/photo-1558107873-c8d451270038?q=80&w=2070", desc:"Luxury Yachts", content:"ITINERARY: ST TROPEZ\n\nDay 1: Pampelonne Beach.\nDay 2: Port walk.\nDay 3: Shopping."}] },
+                    { title: "Wine Regions", img: "https://images.unsplash.com/photo-1598394816675-246472232c73?q=80&w=2070", desc: "Bordeaux & Champagne.", items: [{title:"Bordeaux Wine", img:"https://images.unsplash.com/photo-1558455581-c35d18080614?q=80&w=2070", desc:"Vineyard Tours", content:"ITINERARY: BORDEAUX\n\nDay 1: City of Wine Museum.\nDay 2: St Emilion Tour.\nDay 3: Medoc Tasting."}, {title:"Champagne", img:"https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?q=80&w=2070", desc:"Reims & Epernay", content:"ITINERARY: CHAMPAGNE\n\nDay 1: Reims Cathedral.\nDay 2: Moet & Chandon Cellars.\nDay 3: Vineyard Picnic."}] },
+                    { title: "History", img: "https://images.unsplash.com/photo-1464965392013-162982d6771d?q=80&w=2070", desc: "Normandy & Castles.", items: [{title:"Normandy D-Day", img:"https://images.unsplash.com/photo-1520626353683-161d9a2ae4e4?q=80&w=2070", desc:"WW2 History", content:"ITINERARY: NORMANDY\n\nDay 1: Omaha Beach.\nDay 2: American Cemetery.\nDay 3: Bayeux Tapestry."}, {title:"Loire Valley", img:"https://images.unsplash.com/photo-1543310461-1250325a6231?q=80&w=2070", desc:"Chateaux Tour", content:"ITINERARY: LOIRE\n\nDay 1: Chateau Chambord.\nDay 2: Chenonceau.\nDay 3: Wine tasting."}] }
+                ]
+            },
+            spain: {
+                accent: "#AA151B",
+                hero: [{ title: "Viva España", desc: "Fiesta & Siesta", img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?q=80&w=2070" }],
+                tourCategories: [
+                    { title: "Major Cities", img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", desc: "Barcelona & Madrid.", items: [{title:"Barcelona Art", img:"https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", desc:"Gaudi's Works", content:"ITINERARY: BARCELONA\n\nDay 1: Sagrada Familia.\nDay 2: Park Guell.\nDay 3: Gothic Quarter."}, {title:"Royal Madrid", img:"https://images.unsplash.com/photo-1539037116277-4db20889f2d4?q=80&w=2070", desc:"Museums & Palaces", content:"ITINERARY: MADRID\n\nDay 1: Royal Palace.\nDay 2: Prado Museum.\nDay 3: Retiro Park."}] },
+                    { title: "Andalusia", img: "https://images.unsplash.com/photo-1558642084-fd1ba9181774?q=80&w=2070", desc: "Seville & Granada.", items: [{title:"Seville Culture", img:"https://images.unsplash.com/photo-1558642084-fd1ba9181774?q=80&w=2070", desc:"Flamenco & Tapas", content:"ITINERARY: SEVILLE\n\nDay 1: Alcazar Palace.\nDay 2: Plaza de Espana.\nDay 3: Flamenco Show."}, {title:"Alhambra", img:"https://images.unsplash.com/photo-1564595276630-3e2808c704f0?q=80&w=2070", desc:"Granada", content:"ITINERARY: GRANADA\n\nDay 1: Alhambra Palace.\nDay 2: Albaicin neighborhood.\nDay 3: Tapas tour."}] },
+                    { title: "Islands", img: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=2070", desc: "Ibiza & Mallorca.", items: [{title:"Ibiza Vibes", img:"https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=2070", desc:"Beach & Party", content:"ITINERARY: IBIZA\n\nDay 1: Old Town.\nDay 2: Formentera trip.\nDay 3: Sunset Strip."}, {title:"Mallorca", img:"https://images.unsplash.com/photo-1537042145485-649065633405?q=80&w=2070", desc:"Hidden Coves", content:"ITINERARY: MALLORCA\n\nDay 1: Palma Cathedral.\nDay 2: Tramuntana Mountains.\nDay 3: Calo des Moro."}] },
+                    { title: "Northern Spain", img: "https://images.unsplash.com/photo-1562678853-b0f3404c0dfb?q=80&w=2070", desc: "Basque & Galicia.", items: [{title:"San Sebastian", img:"https://images.unsplash.com/photo-1562678853-b0f3404c0dfb?q=80&w=2070", desc:"Food Capital", content:"ITINERARY: SAN SEBASTIAN\n\nDay 1: La Concha Beach.\nDay 2: Pintxos Tour.\nDay 3: Monte Igueldo."}] }
+                ]
+            },
+            portugal: {
+                accent: "#006600",
+                hero: [{ title: "Golden Coast", desc: "Atlantic Gems", img: "https://images.unsplash.com/photo-1555881400-74d7acaacd81?q=80&w=2070" }],
+                tourCategories: [
+                    { title: "Cities", img: "https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070", desc: "Lisbon & Porto.", items: [{title:"Lisbon Hills", img:"https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070", desc:"Tram 28", content:"ITINERARY: LISBON\n\nDay 1: Alfama District.\nDay 2: Belem Tower.\nDay 3: Sintra Day Trip."}, {title:"Porto Wine", img:"https://images.unsplash.com/photo-1558102822-da67015d3258?q=80&w=2070", desc:"Douro Valley", content:"ITINERARY: PORTO\n\nDay 1: Ribeira.\nDay 2: Port Wine Cellars.\nDay 3: Douro River Cruise."}] },
+                    { title: "Beaches", img: "https://images.unsplash.com/photo-1589877814089-4d2434432617?q=80&w=2070", desc: "The Algarve.", items: [{title:"Lagos Caves", img:"https://images.unsplash.com/photo-1629813134371-332e18512140?q=80&w=2070", desc:"Benagil Cave", content:"ITINERARY: ALGARVE\n\nDay 1: Lagos Old Town.\nDay 2: Benagil Cave Boat Tour.\nDay 3: Seven Hanging Valleys Hike."}] },
+                    { title: "Islands", img: "https://images.unsplash.com/photo-1496245350849-06385df988d8?q=80&w=2070", desc: "Madeira & Azores.", items: [{title:"Madeira Nature", img:"https://images.unsplash.com/photo-1496245350849-06385df988d8?q=80&w=2070", desc:"Floating Garden", content:"ITINERARY: MADEIRA\n\nDay 1: Funchal.\nDay 2: Levada Walk.\nDay 3: Natural Pools."}] },
+                    { title: "History", img: "https://images.unsplash.com/photo-1580236162386-d24b61138243?q=80&w=2070", desc: "Castles & Palaces.", items: [{title:"Sintra Magic", img:"https://images.unsplash.com/photo-1580236162386-d24b61138243?q=80&w=2070", desc:"Pena Palace", content:"ITINERARY: SINTRA\n\nDay 1: Pena Palace.\nDay 2: Quinta da Regaleira.\nDay 3: Moorish Castle."}] }
+                ]
+            },
+            greece: {
+                accent: "#0D5EAF",
+                hero: [{ title: "Aegean Blue", desc: "Gods & Islands", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2069" }],
+                tourCategories: [
+                    { title: "The Cyclades", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", desc: "Santorini & Mykonos.", items: [{title:"Santorini", img:"https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", desc:"Romantic Sunset", content:"ITINERARY: SANTORINI\n\nDay 1: Oia Sunset.\nDay 2: Volcano Boat Tour.\nDay 3: Red Beach."}, {title:"Mykonos", img:"https://images.unsplash.com/photo-1601581875309-fafbf2d3ed92?q=80&w=2070", desc:"Windmills & Party", content:"ITINERARY: MYKONOS\n\nDay 1: Little Venice.\nDay 2: Beach Club.\nDay 3: Delos Trip."}] },
+                    { title: "History", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc: "Athens & Delphi.", items: [{title:"Athens Acropolis", img:"https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc:"Ancient Ruins", content:"ITINERARY: ATHENS\n\nDay 1: Parthenon.\nDay 2: Plaka District.\nDay 3: Acropolis Museum."}] },
+                    { title: "Ionian Islands", img: "https://images.unsplash.com/photo-1589552148408-41076b6b71f5?q=80&w=2070", desc: "Corfu & Zakynthos.", items: [{title:"Zakynthos", img:"https://images.unsplash.com/photo-1589552148408-41076b6b71f5?q=80&w=2070", desc:"Shipwreck Beach", content:"ITINERARY: ZAKYNTHOS\n\nDay 1: Navagio Beach.\nDay 2: Blue Caves.\nDay 3: Turtle Island."}] },
+                    { title: "Crete", img: "https://images.unsplash.com/photo-1555319176-068305c74381?q=80&w=2070", desc: "Big Island Life.", items: [{title:"Crete Explorer", img:"https://images.unsplash.com/photo-1555319176-068305c74381?q=80&w=2070", desc:"Palace of Knossos", content:"ITINERARY: CRETE\n\nDay 1: Chania Old Town.\nDay 2: Elafonisi Pink Beach.\nDay 3: Knossos Palace."}] }
+                ]
+            },
+            germany: {
+                accent: "#DD0000",
+                hero: [{ title: "Heart of Europe", desc: "History & Nature", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070" }],
+                tourCategories: [
+                    { title: "Bavaria", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070", desc: "Alps & Castles.", items: [{title:"Neuschwanstein", img:"https://images.unsplash.com/photo-1534068590799-09895a701e3e?q=80&w=2070", desc:"Fairytale Castle", content:"ITINERARY: BAVARIA\n\nDay 1: Munich.\nDay 2: Neuschwanstein Castle.\nDay 3: Linderhof Palace."}] },
+                    { title: "Berlin", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", desc: "Modern History.", items: [{title:"Berlin Wall", img:"https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", desc:"Cold War Tour", content:"ITINERARY: BERLIN\n\nDay 1: Brandenburg Gate.\nDay 2: Berlin Wall & Checkpoint Charlie.\nDay 3: Museum Island."}] },
+                    { title: "Rhine Valley", img: "https://images.unsplash.com/photo-1522964789503-4f1144df3c51?q=80&w=2070", desc: "River Cruises.", items: [{title:"Rhine Cruise", img:"https://images.unsplash.com/photo-1522964789503-4f1144df3c51?q=80&w=2070", desc:"Vineyards & Castles", content:"ITINERARY: RHINE\n\nDay 1: Cologne Cathedral.\nDay 2: River Cruise.\nDay 3: Wine Tasting."}] },
+                    { title: "Black Forest", img: "https://images.unsplash.com/photo-1516966006083-b3d27744a6b9?q=80&w=2070", desc: "Nature & Cuckoo Clocks.", items: [{title:"Forest Trail", img:"https://images.unsplash.com/photo-1516966006083-b3d27744a6b9?q=80&w=2070", desc:"Hiking", content:"ITINERARY: BLACK FOREST\n\nDay 1: Freiburg.\nDay 2: Lake Titisee.\nDay 3: Triberg Waterfalls."}] }
+                ]
+            },
+            iceland: {
+                accent: "#0085CA",
+                hero: [{ title: "Land of Fire", desc: "Ice & Magma", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159" }],
+                tourCategories: [
+                    { title: "Golden Circle", img: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", desc: "Essential Iceland.", items: [{title:"Classic Route", img:"https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", desc:"Geysir & Gullfoss", content:"ITINERARY: GOLDEN CIRCLE\n\nDay 1: Thingvellir Park.\nDay 2: Geysir Geothermal Area.\nDay 3: Gullfoss Waterfall."}] },
+                    { title: "South Coast", img: "https://images.unsplash.com/photo-1526958097901-5e6d742d3371?q=80&w=2070", desc: "Waterfalls & Black Sand.", items: [{title:"Vik & Waterfalls", img:"https://images.unsplash.com/photo-1526958097901-5e6d742d3371?q=80&w=2070", desc:"Skogafoss", content:"ITINERARY: SOUTH COAST\n\nDay 1: Seljalandsfoss.\nDay 2: Skogafoss.\nDay 3: Black Sand Beach."}] },
+                    { title: "Northern Lights", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc: "Winter Magic.", items: [{title:"Aurora Hunt", img:"https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc:"Night Tour", content:"ITINERARY: AURORA\n\nDay 1: Reykjavik Tour.\nDay 2: Super Jeep Night Tour.\nDay 3: Blue Lagoon."}] },
+                    { title: "Highlands", img: "https://images.unsplash.com/photo-1499638673689-79a0b5115d87?q=80&w=2070", desc: "Off-Road Adventure.", items: [{title:"Landmannalaugar", img:"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?q=80&w=2070", desc:"Hiking & Hot Springs", content:"ITINERARY: HIGHLANDS\n\nDay 1: Super Jeep Drive.\nDay 2: Hiking.\nDay 3: Hot Springs Bath."}] }
+                ]
+            },
+            norway: {
+                accent: "#BA0C2F",
+                hero: [{ title: "Fjord Kingdom", desc: "Nature's Masterpiece", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070" }],
+                tourCategories: [
+                    { title: "Fjords", img: "https://images.unsplash.com/photo-1506701168343-4cc66503c512?q=80&w=2070", desc: "Western Norway.", items: [{title:"Nærøyfjord", img:"https://images.unsplash.com/photo-1506701168343-4cc66503c512?q=80&w=2070", desc:"UNESCO Site", content:"ITINERARY: FJORDS\n\nDay 1: Bergen.\nDay 2: Fjord Cruise.\nDay 3: Flam Railway."}] },
+                    { title: "Arctic", img: "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", desc: "Lofoten & Tromso.", items: [{title:"Lofoten Islands", img:"https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", desc:"Fishing Villages", content:"ITINERARY: LOFOTEN\n\nDay 1: Svolvaer.\nDay 2: Reine.\nDay 3: Midnight Sun Hike."}, {title:"Tromso", img:"https://images.unsplash.com/photo-1518182170546-07661fd94144?q=80&w=2070", desc:"Polar Capital", content:"ITINERARY: TROMSO\n\nDay 1: Arctic Cathedral.\nDay 2: Reindeer Sledding.\nDay 3: Cable Car."}] },
+                    { title: "Hiking", img: "https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", desc: "Famous Treks.", items: [{title:"Trolltunga", img:"https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", desc:"The Troll's Tongue", content:"ITINERARY: HIKING\n\nDay 1: Odda.\nDay 2: Trolltunga Hike (10-12 hours).\nDay 3: Recovery & Spa."}] },
+                    { title: "Cities", img: "https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", desc: "Oslo & Bergen.", items: [{title:"Oslo Highlights", img:"https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", desc:"Viking History", content:"ITINERARY: OSLO\n\nDay 1: Opera House.\nDay 2: Viking Ship Museum.\nDay 3: Vigeland Park."}] }
+                ]
+            }
         };
 
         const blogPosts = [
@@ -362,21 +373,18 @@
 
         // --- LOGIC ---
         let currentKey = 'world';
-        // Fallback: If a country doesn't have categories defined in 'database', use World's categories
-        // In a real app, you'd define categories for every country.
+
         function getCountryData(key) {
             let data = database[key];
-            if (!data) return database['world']; // Fallback
-            if (!data.tourCategories) data.tourCategories = database['world'].tourCategories; // Mixin
+            if (!data) return database['world']; 
+            if (!data.tourCategories) data.tourCategories = database['world'].tourCategories;
             return data;
         }
 
         const ribbon = document.getElementById('destRibbon');
         const matrix = document.getElementById('matrixGrid');
-        // List of countries to show in ribbon (you can expand this)
         const countries = ['italy', 'france', 'spain', 'portugal', 'greece', 'germany', 'iceland', 'norway'];
 
-        // Init Controls
         countries.forEach(key => {
             const btn = document.createElement('button');
             btn.className = 'stream-btn';
@@ -398,22 +406,17 @@
             currentKey = key;
             const data = getCountryData(key);
 
-            // Theme
             document.documentElement.style.setProperty('--accent', data.accent || '#006994');
             document.querySelector('.logo-sub').innerText = key.toUpperCase();
             document.querySelector('.logo-sub').style.color = data.accent || '#006994';
 
-            // Buttons
             document.querySelectorAll('.stream-btn').forEach(b => {
                 b.classList.toggle('active', b.getAttribute('data-key') === key);
             });
 
             renderHero(data.hero);
-            
-            // RESET GRIDS to Category View
             renderCategories('toursGrid', data.tourCategories, 'tours');
             renderCategories('servicesGrid', serviceCategories, 'services');
-            
             renderBlog(blogPosts);
             window.scrollTo(0,0);
         }
@@ -429,11 +432,10 @@
             });
         }
 
-        // RENDER CATEGORIES (Level 1)
         function renderCategories(gridId, categories, type) {
             const grid = document.getElementById(gridId);
             grid.innerHTML = '';
-            document.getElementById(type + 'Back').classList.remove('visible'); // Hide back btn
+            document.getElementById(type + 'Back').classList.remove('visible');
             document.getElementById(type + 'Title').innerText = type === 'tours' ? 'Curated Experiences' : 'Services';
             document.getElementById(type + 'Desc').style.display = 'block';
 
@@ -446,12 +448,9 @@
             });
         }
 
-        // RENDER SUB ITEMS (Level 2)
         function showSubItems(gridId, items, catTitle, type) {
             const grid = document.getElementById(gridId);
             grid.innerHTML = '';
-            
-            // Update Header
             document.getElementById(type + 'Back').classList.add('visible');
             document.getElementById(type + 'Title').innerText = catTitle;
             document.getElementById(type + 'Desc').style.display = 'none';
@@ -460,13 +459,11 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay"><h3>${item.title}</h3><p>${item.desc}</p></div>`;
-                // Click opens Modal (Level 3)
                 card.onclick = () => openDetail(item.title, item.content, item.img);
                 grid.appendChild(card);
             });
         }
 
-        // Reset logic for Back Button
         function resetGrid(type) {
             if (type === 'tours') {
                 const data = getCountryData(currentKey);
@@ -487,7 +484,6 @@
             });
         }
 
-        // Modal Logic
         const modal = document.getElementById('detailModal');
         function openDetail(title, content, img) {
             document.getElementById('modalTitle').innerText = title;
@@ -498,7 +494,6 @@
         }
         function closeDetail() { modal.classList.remove('active'); }
 
-        // Init
         loadCountry('world');
     </script>
 </body>
