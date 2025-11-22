@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Next Stop: World | Curated Travel</title>
-    <meta name="description" content="Next Stop: World. Curated travel experiences to Italy, France, Japan, and beyond.">
+    <meta name="description" content="Next Stop: World. Curated travel experiences.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -12,26 +12,27 @@
     <style>
         /* --- DYNAMIC VARIABLES --- */
         :root {
-            --accent: #006994;          /* Default Ocean Blue */
+            --accent: #006994;          
             --bg-warm: #f8fbfd;
             --charcoal: #1a1a1a;        
             --gold: #c5a059;            
-            --green: #25D366;            
             --gray-light: #eef2f5;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --header-h: 70px;
+            --ribbon-h: 55px;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
-        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; transition: background 0.5s; }
+        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--ribbon-h) + 20px); }
+        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; transition: background 0.5s; padding-top: calc(var(--header-h) + var(--ribbon-h)); }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        button { cursor: pointer; border: none; outline: none; }
+        button, select { cursor: pointer; border: none; outline: none; }
 
         /* HEADER */
         header {
             background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px);
-            padding: 12px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 0 5%; height: var(--header-h); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
@@ -49,10 +50,30 @@
         .toggle-btn.inactive:hover { color: var(--accent); }
         .dot { color: var(--accent); font-size: 0.8rem; animation: pulse 2s infinite; }
 
+        /* RIBBON (Fixed Panel 2) */
+        .ribbon-container { 
+            position: fixed; top: var(--header-h); left: 0; width: 100%; height: var(--ribbon-h); 
+            background: white; z-index: 999; border-bottom: 1px solid rgba(0,0,0,0.05); 
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.02);
+        }
+        .destination-ribbon { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 0 5%; width: 100%; justify-content: flex-start; align-items: center; height: 100%; }
+        .destination-ribbon::-webkit-scrollbar { display: none; }
+        /* Centering logic for desktop */
+        @media(min-width: 1000px) { .destination-ribbon { justify-content: center; } }
+
+        .dest-btn { padding: 6px 18px; border-radius: 25px; font-size: 0.7rem; font-weight: 700; color: #777; background: var(--gray-light); transition: 0.3s; cursor: pointer; white-space: nowrap; border: 1px solid transparent; flex-shrink: 0; }
+        .dest-btn:hover { background: #ddd; color: var(--charcoal); }
+        .dest-btn.active { background: var(--charcoal); color: white; transform: scale(1.05); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
         /* NAVIGATION & LANG */
         .nav-right { display: flex; gap: 20px; align-items: center; }
-        .lang-btn { font-size: 1.2rem; background: none; padding: 5px; border-radius: 4px; }
-        .lang-btn:hover { background: rgba(0,0,0,0.05); }
+        
+        /* Custom Lang Select */
+        .lang-select { 
+            padding: 5px 10px; border-radius: 4px; border: 1px solid #eee; 
+            background: #f9f9f9; font-size: 0.8rem; font-weight: 600; 
+        }
 
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
@@ -63,7 +84,7 @@
         .bar { width: 25px; height: 3px; background-color: var(--charcoal); transition: 0.3s; }
         
         /* HERO WHEEL */
-        .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
+        .hero-wheel { height: 85vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
         .wheel-track { display: flex; width: 100%; height: 100%; overflow: hidden; }
         .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
         .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.65; z-index: 1; transition: transform 10s linear; }
@@ -82,14 +103,6 @@
         .wheel-arrows { position: absolute; bottom: 90px; right: 5%; z-index: 10; display: flex; gap: 10px; }
         .arrow { color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.7; transition: 0.3s; border: 1px solid white; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; }
         .arrow:hover { opacity: 1; background: white; color: black; }
-
-        /* COUNTRY RIBBON (Below Hero) */
-        .ribbon-container { background: white; padding: 15px 5%; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: center; }
-        .destination-ribbon { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 5px; }
-        .destination-ribbon::-webkit-scrollbar { display: none; }
-        .dest-btn { padding: 8px 20px; border-radius: 25px; font-size: 0.75rem; font-weight: 700; color: #999; background: var(--gray-light); transition: 0.3s; cursor: pointer; white-space: nowrap; border: 1px solid transparent; }
-        .dest-btn:hover { background: #ddd; color: var(--charcoal); }
-        .dest-btn.active { background: var(--charcoal); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-1px); }
 
         /* SECTIONS */
         .section { padding: 80px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
@@ -138,7 +151,7 @@
             .hamburger { display: flex; }
             
             .nav-links { 
-                position: fixed; top: 60px; right: -100%; 
+                position: fixed; top: var(--header-h); right: -100%; 
                 width: 70%; height: 100vh; background: white; 
                 flex-direction: column; justify-content: center; 
                 padding: 40px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); 
@@ -152,8 +165,8 @@
             .section { padding: 60px 5%; min-height: auto; } 
             .wheel-arrows { display: none; }
             .header-left { width: 100%; justify-content: space-between; }
-            .site-toggle { display: none; } /* Optional: Hide toggle on really small screens if needed, or keep it */
-            .site-toggle { margin-right: 10px; }
+            .site-toggle { display: none; } 
+            .destination-ribbon { justify-content: flex-start; }
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
@@ -186,9 +199,25 @@
                 <a href="#blog" class="nav-item" data-key="nav_blog" onclick="toggleMenu()">Blog</a>
                 <a href="#footer" class="nav-item" data-key="nav_about" onclick="toggleMenu()">About</a>
             </nav>
-            <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇬🇪</button>
+            
+            <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 ENG</option>
+                <option value="ka">🇬🇪 GEO</option>
+                <option value="it">🇮🇹 ITA</option>
+                <option value="fr">🇫🇷 FRA</option>
+                <option value="es">🇪🇸 SPA</option>
+                <option value="pt">🇵🇹 POR</option>
+                <option value="de">🇩🇪 DEU</option>
+                <option value="gr">🇬🇷 GRE</option>
+                <option value="is">🇮🇸 ISL</option>
+                <option value="no">🇳🇴 NOR</option>
+            </select>
         </div>
     </header>
+
+    <div class="ribbon-container">
+        <div class="destination-ribbon" id="destRibbon"></div>
+    </div>
 
     <div class="hero-wheel">
         <div class="wheel-track" id="heroTrack"></div>
@@ -197,10 +226,6 @@
             <div class="arrow" onclick="manualSlide(-1)">&#10094;</div>
             <div class="arrow" onclick="manualSlide(1)">&#10095;</div>
         </div>
-    </div>
-
-    <div class="ribbon-container">
-        <div class="destination-ribbon" id="destRibbon"></div>
     </div>
 
     <section id="destinations" class="section">
@@ -253,120 +278,118 @@
     </div>
 
     <script>
-        let currentLang = localStorage.getItem('lang_world') || 'ka';
+        let currentLang = localStorage.getItem('lang_world') || 'en';
+        let currentKey = 'world';
+        let currentSlide = 0;
+        let autoPlayTimer;
 
         const translations = {
-            ka: {
-                nav_tours: "ტურები",
-                nav_services: "სერვისები",
-                nav_blog: "ბლოგი",
-                nav_about: "ჩვენ შესახებ",
-                section_travel_title: "გამორჩეული ტურები",
-                section_travel_desc: "აღმოაჩინეთ მსოფლიოს საუკეთესო მიმართულებები.",
-                section_services_title: "სერვისები",
-                section_services_desc: "სრული მხარდაჭერა თქვენი მოგზაურობისთვის.",
-                section_blog_title: "სამოგზაურო ჟურნალი",
-                section_blog_desc: "რჩევები და სიახლეები.",
-                btn_details: "დეტალურად",
-                btn_read: "წაკითხვა",
-                btn_book: "მოთხოვნის გაგზავნა"
-            },
-            en: {
-                nav_tours: "Tours",
-                nav_services: "Services",
-                nav_blog: "Blog",
-                nav_about: "About",
-                section_travel_title: "Curated Experiences",
-                section_travel_desc: "Explore our hand-picked destinations.",
-                section_services_title: "Services",
-                section_services_desc: "Full support for your international journey.",
-                section_blog_title: "Travel Journal",
-                section_blog_desc: "Tips, guides, and inspiration.",
-                btn_details: "View Details",
-                btn_read: "Read Article",
-                btn_book: "Request Quote"
-            }
+            en: { nav_tours:"Tours", nav_services:"Services", nav_blog:"Blog", nav_about:"About", section_travel_title:"Curated Experiences", section_travel_desc:"Explore our hand-picked destinations.", section_services_title:"Services", section_services_desc:"Full support for your international journey.", section_blog_title:"Travel Journal", section_blog_desc:"Tips, guides, and inspiration.", btn_details:"View Details", btn_read:"Read Article", btn_book:"Request Quote" },
+            ka: { nav_tours:"ტურები", nav_services:"სერვისები", nav_blog:"ბლოგი", nav_about:"ჩვენ შესახებ", section_travel_title:"გამორჩეული ტურები", section_travel_desc:"აღმოაჩინეთ მსოფლიოს საუკეთესო მიმართულებები.", section_services_title:"სერვისები", section_services_desc:"სრული მხარდაჭერა თქვენი მოგზაურობისთვის.", section_blog_title:"სამოგზაურო ჟურნალი", section_blog_desc:"რჩევები და სიახლეები.", btn_details:"დეტალურად", btn_read:"წაკითხვა", btn_book:"მოთხოვნის გაგზავნა" },
+            it: { nav_tours:"Tour", nav_services:"Servizi", nav_blog:"Blog", nav_about:"Chi Siamo", section_travel_title:"Esperienze Curate", section_travel_desc:"Esplora le nostre destinazioni selezionate.", section_services_title:"Servizi", section_services_desc:"Supporto completo per il tuo viaggio.", section_blog_title:"Diario di Viaggio", section_blog_desc:"Consigli, guide e ispirazione.", btn_details:"Dettagli", btn_read:"Leggi", btn_book:"Richiedi Preventivo" },
+            fr: { nav_tours:"Voyages", nav_services:"Services", nav_blog:"Blog", nav_about:"À Propos", section_travel_title:"Expériences Uniques", section_travel_desc:"Découvrez nos destinations triées sur le volet.", section_services_title:"Services", section_services_desc:"Support complet pour votre voyage.", section_blog_title:"Journal de Voyage", section_blog_desc:"Conseils, guides et inspiration.", btn_details:"Détails", btn_read:"Lire", btn_book:"Demander un Devis" },
+            es: { nav_tours:"Viajes", nav_services:"Servicios", nav_blog:"Blog", nav_about:"Nosotros", section_travel_title:"Experiencias Únicas", section_travel_desc:"Explora nuestros destinos seleccionados.", section_services_title:"Servicios", section_services_desc:"Apoyo total para tu viaje.", section_blog_title:"Diario de Viaje", section_blog_desc:"Consejos, guías e inspiración.", btn_details:"Ver Detalles", btn_read:"Leer", btn_book:"Solicitar Presupuesto" },
+            pt: { nav_tours:"Viagens", nav_services:"Serviços", nav_blog:"Blog", nav_about:"Sobre", section_travel_title:"Experiências Únicas", section_travel_desc:"Explore nossos destinos selecionados.", section_services_title:"Serviços", section_services_desc:"Suporte completo para sua viagem.", section_blog_title:"Diário de Viagem", section_blog_desc:"Dicas, guias e inspiração.", btn_details:"Ver Detalhes", btn_read:"Ler", btn_book:"Pedir Cotação" },
+            de: { nav_tours:"Reisen", nav_services:"Service", nav_blog:"Blog", nav_about:"Über Uns", section_travel_title:"Besondere Erlebnisse", section_travel_desc:"Entdecken Sie unsere ausgewählten Ziele.", section_services_title:"Dienstleistungen", section_services_desc:"Volle Unterstützung für Ihre Reise.", section_blog_title:"Reisejournal", section_blog_desc:"Tipps, Ratgeber und Inspiration.", btn_details:"Details", btn_read:"Lesen", btn_book:"Angebot Anfragen" },
+            gr: { nav_tours:"Εκδρομές", nav_services:"Υπηρεσίες", nav_blog:"Blog", nav_about:"Σχετικά", section_travel_title:"Μοναδικές Εμπειρίες", section_travel_desc:"Εξερευνήστε τους επιλεγμένους προορισμούς μας.", section_services_title:"Υπηρεσίες", section_services_desc:"Πλήρης υποστήριξη για το ταξίδι σας.", section_blog_title:"Ταξιδιωτικό Ημερολόγιο", section_blog_desc:"Συμβουλές, οδηγούς και έμπνευση.", btn_details:"Λεπτομέρειες", btn_read:"Διαβάστε", btn_book:"Ζητήστε Προσφορά" },
+            is: { nav_tours:"Ferðir", nav_services:"Þjónusta", nav_blog:"Blogg", nav_about:"Um Okkur", section_travel_title:"Sérvaldar Upplifanir", section_travel_desc:"Skoðaðu valda áfangastaði okkar.", section_services_title:"Þjónusta", section_services_desc:"Fullur stuðningur við ferðina þína.", section_blog_title:"Ferðadagbók", section_blog_desc:"Ráð, leiðbeiningar og innblástur.", btn_details:"Sjá Nánar", btn_read:"Lesa", btn_book:"Biðja um Tilboð" },
+            no: { nav_tours:"Turer", nav_services:"Tjenester", nav_blog:"Blogg", nav_about:"Om Oss", section_travel_title:"Unike Opplevelser", section_travel_desc:"Utforsk våre håndplukkede destinasjoner.", section_services_title:"Tjenester", section_services_desc:"Full støtte for din reise.", section_blog_title:"Reisejournal", section_blog_desc:"Tips, guider og inspirasjon.", btn_details:"Se Detaljer", btn_read:"Les Mer", btn_book:"Be om Tilbud" }
         };
 
-        const whatsapp = "995591705710";
-
         const commonServices = [
-            { title: { ka: "ვიზა მხარდაჭერა", en: "Visa Support" }, desc: { ka: "შენგენი და აშშ", en: "Schengen & USA" }, img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", text: { ka: "ჩვენ დაგეხმარებით სავიზო პროცედურებში...", en: "We assist with visa applications..." } },
-            { title: { ka: "ავიაბილეთები", en: "Flight Booking" }, desc: { ka: "საუკეთესო ფასები", en: "Best Rates" }, img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", text: { ka: "ყველაზე იაფი და კომფორტული რეისები...", en: "Best connections and prices..." } },
-            { title: { ka: "სამოგზაურო დაზღვევა", en: "Travel Insurance" }, desc: { ka: "უსაფრთხოება", en: "Safety First" }, img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", text: { ka: "სრული სამოგზაურო დაზღვევა...", en: "Comprehensive travel insurance..." } },
-            { title: { ka: "თაფლობის თვე", en: "Honeymoons" }, desc: { ka: "რომანტიული ტურები", en: "Romantic Getaways" }, img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", text: { ka: "სპეციალური პაკეტები წყვილებისთვის...", en: "Special packages for newlyweds..." } }
+            { title: "Visa Support", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", text: "Visa assistance for Schengen, USA, and UK." },
+            { title: "Flight Booking", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", text: "Best connections and prices worldwide." },
+            { title: "Travel Insurance", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070", text: "Comprehensive travel insurance packages." },
+            { title: "Honeymoons", img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", text: "Special romantic packages for newlyweds." }
         ];
 
         const database = {
             world: {
                 accent: "#006994",
                 hero: [
-                    { title: { ka: "აღმოაჩინე მსოფლიო", en: "Discover the World" }, desc: { ka: "თქვენი გზამკვლევი", en: "Gateway to Global Travel" }, img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074", fullText: { ka: "იმოგზაურეთ ევროპაში, აზიასა და ამერიკაში...", en: "Explore Europe, Asia and beyond..." } },
-                    { title: { ka: "უვიზო მიმართულებები", en: "Visa-Free Travel" }, desc: { ka: "მარტივი მოგზაურობა", en: "Easy getaways" }, img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070", fullText: { ka: "ქვეყნები სადაც ვიზა არ გჭირდებათ...", en: "Countries where you don't need a visa..." } }
+                    { title: "Discover the World", desc: "Gateway to Global Travel", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074" },
+                    { title: "Visa-Free Travel", desc: "Easy getaways", img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070" }
                 ],
                 tours: [
-                    { title: { ka: "ევროპის ქალაქები", en: "European City Breaks" }, desc: { ka: "პარიზი, რომი, მილანი", en: "Paris, Rome, Milan" }, img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: { ka: "პოპულარული", en: "Popular" }, text: { ka: "უქმეები ევროპაში...", en: "Weekend escapes..." } },
-                    { title: { ka: "ეგზოტიკური აზია", en: "Exotic Asia" }, desc: { ka: "ტაილანდი და ბალი", en: "Thailand & Bali" }, img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", tag: { ka: "ტროპიკული", en: "Tropical" }, text: { ka: "პლაჟები და ჯუნგლები...", en: "Beaches and jungles..." } }
+                    { title: "European City Breaks", desc: "Paris, Rome, Milan", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: "Popular", text: "Weekend escapes to Europe's finest cities." },
+                    { title: "Exotic Asia", desc: "Thailand & Bali", img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", tag: "Tropical", text: "Beaches, jungles, and temples." }
                 ],
-                blog: [
-                    { title: { ka: "ტოპ 5 უვიზო ქვეყანა", en: "Top 5 Visa-Free Countries" }, date: { ka: "გზამკვლევი", en: "Guide" }, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" }
-                ]
+                blog: [ { title: "Top 5 Visa-Free Countries", date: "Guide", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" } ]
             },
             italy: {
                 accent: "#008C45",
-                hero: [
-                    { title: { ka: "La Dolce Vita", en: "La Dolce Vita" }, desc: { ka: "იმოგზაურე იტალიაში", en: "Experience Italy" }, img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070", fullText: { ka: "რომი, ფლორენცია, ვენეცია...", en: "Rome, Florence, Venice..." } }
-                ],
-                tours: [
-                    { title: { ka: "კლასიკური რომი", en: "Classic Rome" }, desc: { ka: "კოლიზეუმი და ვატიკანი", en: "Colosseum & Vatican" }, img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", tag: { ka: "ისტორია", en: "History" }, text: { ka: "3 დღე მარადიულ ქალაქში...", en: "3 Days in the Eternal City..." } }
-                ],
-                blog: [
-                    { title: { ka: "საუკეთესო პიცა ნეაპოლში", en: "Best Pizza in Naples" }, date: { ka: "კვება", en: "Food" }, img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2069" }
-                ]
+                hero: [ { title: "La Dolce Vita", desc: "Experience Italy", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" } ],
+                tours: [ { title: "Classic Rome", desc: "Colosseum & Vatican", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", tag: "History", text: "3 Days in the Eternal City." } ],
+                blog: [ { title: "Best Pizza in Naples", date: "Food", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2069" } ]
             },
             france: {
                 accent: "#0055A4",
-                hero: [
-                    { title: { ka: "პარიზული ოცნებები", en: "Parisian Dreams" }, desc: { ka: "სინათლის ქალაქი", en: "City of Lights" }, img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", fullText: { ka: "ეიფელი, ლუვრი და მონმარტრი...", en: "Eiffel, Louvre, Montmartre..." } }
-                ],
-                tours: [
-                    { title: { ka: "პარიზის ტური", en: "Paris Highlights" }, desc: { ka: "ეიფელი და ლუვრი", en: "Eiffel & Louvre" }, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073", tag: { ka: "ქალაქი", en: "City" }, text: { ka: "კლასიკური პარიზის გამოცდილება...", en: "Classic Paris experience..." } }
-                ],
-                blog: [
-                    { title: { ka: "პარიზი ბიუჯეტურად", en: "Paris on a Budget" }, date: { ka: "რჩევები", en: "Tips" }, img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070" }
-                ]
+                hero: [ { title: "Parisian Dreams", desc: "City of Lights", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" } ],
+                tours: [ { title: "Paris Highlights", desc: "Eiffel & Louvre", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", tag: "City", text: "Classic Paris experience." } ],
+                blog: [ { title: "Paris on a Budget", date: "Tips", img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070" } ]
+            },
+            spain: {
+                accent: "#AA151B",
+                hero: [ { title: "Viva España", desc: "Passion & Culture", img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?q=80&w=2070" } ],
+                tours: [ { title: "Barcelona Art", desc: "Gaudi & Gothic Quarter", img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", tag: "Art", text: "Discover the architecture of Barcelona." } ],
+                blog: [ { title: "Tapas Guide", date: "Food", img: "https://images.unsplash.com/photo-1515443961218-a51367130e69?q=80&w=2070" } ]
+            },
+            portugal: {
+                accent: "#006600",
+                hero: [ { title: "Golden Coast", desc: "Lisbon & Algarve", img: "https://images.unsplash.com/photo-1555881400-74d7acaacd81?q=80&w=2070" } ],
+                tours: [ { title: "Lisbon Tram", desc: "City of 7 Hills", img: "https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070", tag: "City", text: "Exploring the historic streets of Lisbon." } ],
+                blog: [ { title: "Surfing Nazare", date: "Adventure", img: "https://images.unsplash.com/photo-1526347770077-23f63702c464?q=80&w=2070" } ]
+            },
+            greece: {
+                accent: "#0D5EAF",
+                hero: [ { title: "Aegean Blue", desc: "Islands of Gods", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2069" } ],
+                tours: [ { title: "Santorini Sunset", desc: "Oia & Fira", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", tag: "Romance", text: "The most beautiful sunsets in the world." } ],
+                blog: [ { title: "History of Athens", date: "Culture", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070" } ]
+            },
+            germany: {
+                accent: "#DD0000",
+                hero: [ { title: "Bavarian Alps", desc: "Castles & Nature", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070" } ],
+                tours: [ { title: "Berlin History", desc: "Wall & Museums", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", tag: "History", text: "A deep dive into modern history." } ],
+                blog: [ { title: "Oktoberfest Guide", date: "Event", img: "https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=2065" } ]
+            },
+            iceland: {
+                accent: "#0085CA",
+                hero: [ { title: "Land of Fire", desc: "Ice & Northern Lights", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159" } ],
+                tours: [ { title: "Golden Circle", desc: "Geysers & Waterfalls", img: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", tag: "Nature", text: "The ultimate nature expedition." } ],
+                blog: [ { title: "Chasing Auroras", date: "Guide", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070" } ]
+            },
+            norway: {
+                accent: "#BA0C2F",
+                hero: [ { title: "Fjord Majesty", desc: "Nature's Masterpiece", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070" } ],
+                tours: [ { title: "Lofoten Islands", desc: "Arctic Beauty", img: "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", tag: "Nature", text: "Experience the midnight sun." } ],
+                blog: [ { title: "Hiking Trolltunga", date: "Active", img: "https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070" } ]
             }
         };
 
-        let currentKey = 'world';
-        let currentSlide = 0;
-        let autoPlayTimer;
-
-        function toggleMenu() {
-            const nav = document.getElementById('navLinks');
-            nav.classList.toggle('active');
-        }
-
-        function toggleLang() {
-            setLanguage(currentLang === 'en' ? 'ka' : 'en');
-        }
-
-        function setLanguage(lang) {
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        function changeLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('lang_world', lang);
-            document.getElementById('langBtn').innerText = lang === 'en' ? '🇬🇪' : '🇺🇸';
             
+            // UI Translations
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
-                if(translations[lang][key]) el.innerText = translations[lang][key];
+                if(translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+                else if (translations['en'][key]) el.innerText = translations['en'][key]; // Fallback
             });
 
+            // Re-render Content (Note: Content below is English by default for simplicity in this demo, 
+            // but you would create translation keys for every tour in a real app)
             loadCountry(currentKey);
         }
 
         function init() {
+            // Set dropdown to saved lang
+            const saved = localStorage.getItem('lang_world');
+            if(saved) document.getElementById('langSelect').value = saved;
+            
             renderRibbon();
-            setLanguage(currentLang);
+            changeLanguage(saved || 'en');
         }
 
         function renderRibbon() {
@@ -374,13 +397,17 @@
             const keys = Object.keys(database);
             ribbon.innerHTML = '';
             
-            const labels = { world: {ka: "🌍 მსოფლიო", en: "🌍 WORLD"}, italy: {ka: "🇮🇹 იტალია", en: "🇮🇹 ITALY"}, france: {ka: "🇫🇷 საფრანგეთი", en: "🇫🇷 FRANCE"} };
+            const labels = { 
+                world: "🌍 WORLD", italy: "🇮🇹 ITALY", france: "🇫🇷 FRANCE", spain: "🇪🇸 SPAIN", 
+                portugal: "🇵🇹 PORTUGAL", greece: "🇬🇷 GREECE", germany: "🇩🇪 GERMANY", 
+                iceland: "🇮🇸 ICELAND", norway: "🇳🇴 NORWAY" 
+            };
 
             keys.forEach(key => {
                 const btn = document.createElement('button');
                 btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
                 btn.setAttribute('data-country', key);
-                btn.innerText = labels[key][currentLang];
+                btn.innerText = labels[key];
                 btn.onclick = () => loadCountry(key);
                 ribbon.appendChild(btn);
             });
@@ -397,15 +424,12 @@
             document.querySelectorAll('.dest-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if(btn.getAttribute('data-country') === key) btn.classList.add('active');
-                const labels = { world: {ka: "🌍 მსოფლიო", en: "🌍 WORLD"}, italy: {ka: "🇮🇹 იტალია", en: "🇮🇹 ITALY"}, france: {ka: "🇫🇷 საფრანგეთი", en: "🇫🇷 FRANCE"} };
-                btn.innerText = labels[btn.getAttribute('data-country')][currentLang];
             });
 
             renderHero(data.hero);
             renderGrid('travelGrid', data.tours);
             renderGrid('servicesGrid', commonServices); 
             renderBlog(data.blog);
-            // window.scrollTo(0,0); // Removed scroll jump to keep navigation smooth
         }
 
         function renderHero(slides) {
@@ -417,7 +441,7 @@
                 const div = document.createElement('div');
                 div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title[currentLang]}</h2><p class="slide-desc">${slide.desc[currentLang]}</p><button class="slide-btn" onclick="openModal('${slide.title[currentLang]}', '${slide.fullText ? slide.fullText[currentLang] : slide.desc[currentLang]}', '${slide.img}')">${translations[currentLang].btn_details}</button></div>`;
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.desc}', '${slide.img}')">${translations[currentLang].btn_details}</button></div>`;
                 track.appendChild(div);
                 const bar = document.createElement('div'); bar.className = 'progress-bar';
                 bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
@@ -430,9 +454,9 @@
             const grid = document.getElementById(id); grid.innerHTML = '';
             items.forEach(item => {
                 const card = document.createElement('div'); card.className = 'card';
-                const title = item.title[currentLang]; const desc = item.desc[currentLang]; const tag = item.tag ? item.tag[currentLang] : '';
-                card.onclick = () => openModal(title, item.text[currentLang], item.img);
-                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${title}</h3><p>${desc}</p></div>`;
+                const tag = item.tag ? item.tag : '';
+                card.onclick = () => openModal(item.title, item.text, item.img);
+                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${item.title}</h3><p>${item.desc ? item.desc : ''}</p></div>`;
                 grid.appendChild(card);
             });
         }
@@ -441,8 +465,7 @@
             const track = document.getElementById('blogTrack'); track.innerHTML = '';
             items.forEach(item => {
                 const card = document.createElement('div'); card.className = 'blog-card';
-                const title = item.title[currentLang]; const date = item.date[currentLang];
-                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${date}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[currentLang].btn_read}</span></div>`;
+                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">${translations[currentLang].btn_read}</span></div>`;
                 track.appendChild(card);
             });
         }
@@ -464,7 +487,7 @@
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
 
         const modal = document.getElementById('detailModal'); const modalImg = document.getElementById('modalImg'); const modalTitle = document.getElementById('modalTitle'); const modalText = document.getElementById('modalText'); const modalBtn = document.querySelector('.modal-btn');
-        function openModal(title, text, img) { modalTitle.innerText = title; modalText.innerText = text; modalImg.src = img; modalBtn.innerText = translations[currentLang].btn_book; modalBtn.href = `https://wa.me/${whatsapp}?text=Hi, I am interested in ${title}`; modal.classList.add('active'); }
+        function openModal(title, text, img) { modalTitle.innerText = title; modalText.innerText = text; modalImg.src = img; modalBtn.innerText = translations[currentLang].btn_book; modalBtn.href = `https://wa.me/995591705710?text=Hi, I am interested in ${title}`; modal.classList.add('active'); }
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
