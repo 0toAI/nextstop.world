@@ -115,39 +115,44 @@
         .slide-btn { border: 1px solid rgba(255,255,255,0.5); color: white; padding: 15px 45px; text-transform: uppercase; letter-spacing: 3px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); transition: 0.3s; }
         .slide-btn:hover { background: white; color: black; }
 
-        /* --- INTERACTIVE SVG MAP HERO --- */
+        /* --- NEW HOLOGRAPHIC MAP HERO --- */
         .map-hero { 
-            width: 100%; height: 100%; background: #111; /* Dark Ocean */
-            display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
+            width: 100%; height: 100%; background: #0a0a0a; /* Deep dark background */
+            position: relative; overflow: hidden;
         }
-        .map-svg {
-            width: 80%; height: auto; max-height: 90%;
-            filter: drop-shadow(0 0 20px rgba(0, 105, 148, 0.3));
+        .map-bg-img {
+            width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; /* Focus on Europe */
+            opacity: 0.5; filter: grayscale(100%) contrast(1.2); pointer-events: none;
         }
-        /* Default Country Style */
-        .country-path {
-            fill: #333; stroke: #444; stroke-width: 0.5; transition: 0.3s ease; cursor: pointer;
+        .map-overlay-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            max-width: 1400px; margin: 0 auto; left: 50%; transform: translateX(-50%);
         }
-        /* Hover Effect */
-        .country-path:hover {
-            fill: var(--gold); stroke: white; stroke-width: 1;
-            filter: drop-shadow(0 0 10px var(--gold));
-            transform: scale(1.01); transform-origin: center;
+        /* The interactive region hit-box */
+        .map-region {
+            position: absolute;
+            width: 120px; height: 120px; /* Size of the hit area */
+            transform: translate(-50%, -50%); /* Center on coordinate */
+            cursor: pointer; z-index: 10;
+            display: flex; justify-content: center; align-items: center;
         }
-        /* Active Effect */
-        .country-path.active {
-            fill: var(--accent); stroke: white;
+        /* The Glow Effect */
+        .region-glow {
+            position: absolute; width: 250%; height: 250%;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.5) 0%, rgba(197, 160, 89, 0.1) 40%, transparent 70%);
+            opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none; mix-blend-mode: screen;
+            border-radius: 50%;
         }
-        /* Non-interactive land */
-        .land-path { fill: #222; stroke: #333; stroke-width: 0.5; pointer-events: none; }
-
-        /* Map Title Overlay */
-        .map-overlay-text {
-            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
-            text-align: center; pointer-events: none;
+        /* The Label */
+        .region-label {
+            position: relative; z-index: 2; color: rgba(255,255,255,0.7); 
+            font-family: 'Cinzel', serif; font-size: 0.9rem; letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8); transition: 0.3s; text-transform: uppercase;
         }
-        .map-overlay-text h1 { font-family: 'Cinzel', serif; font-size: 3rem; color: white; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .map-overlay-text p { color: #aaa; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
+        /* Hover States */
+        .map-region:hover .region-glow { opacity: 1; transform: scale(1.1); }
+        .map-region:hover .region-label { color: var(--gold); text-shadow: 0 0 10px var(--gold); }
 
 
         /* --- SECTIONS --- */
@@ -194,7 +199,8 @@
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; border-top: 5px solid var(--accent); }
         @media (max-width: 768px) { 
             .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .header-left { width: 100%; justify-content: space-between; } .site-toggle { display: none; } 
-            .map-svg { width: 180%; transform: translateX(-20%); } /* Zoom on mobile */
+            .map-bg-img { object-position: 50% 40%; transform: scale(2.5); } /* Zoom on mobile */
+            .map-region { transform: translate(-50%, -50%) scale(0.7); } /* Smaller targets on mobile */
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
@@ -340,7 +346,6 @@
         function getCountryData(key) {
             let data = database[key];
             if (!data) return database['world']; 
-            // If data missing, fallback to World data
             if (!data.tourCategories) data.tourCategories = database['world'].tourCategories;
             if (!data.blog) data.blog = database['world'].blog;
             return data;
@@ -390,34 +395,47 @@
             const track = document.getElementById('heroTrack');
             track.innerHTML = '';
 
-            // --- MAP VIEW FOR WORLD ---
+            // --- NEW HOLOGRAPHIC MAP VIEW FOR WORLD ---
             if (currentKey === 'world') {
                 const mapDiv = document.createElement('div');
                 mapDiv.className = 'map-hero';
-                // Using a simplified SVG for the world map with specific countries having classes
-                // Note: This is a simplified path set for demo purposes. Real SVGs are huge.
-                mapDiv.innerHTML = `
-                    <svg viewBox="0 0 1000 500" class="map-svg">
-                        <path d="M0,0 L1000,0 L1000,500 L0,500 Z" fill="#111" />
-                        <path d="M200,150 Q250,100 300,150 T400,150" class="land-path" /> 
+                
+                // Using a dark, high-contrast map base
+                const mapHtml = `
+                    <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?q=80&w=2574" class="map-bg-img">
+                    <div class="map-overlay-container">
                         
-                        <path d="M530,160 L540,160 L545,180 L535,185 L530,170 Z" class="country-path" onclick="loadCountry('italy')" data-name="ITALY" />
-                        
-                        <path d="M490,130 L510,130 L515,150 L495,150 Z" class="country-path" onclick="loadCountry('france')" data-name="FRANCE" />
-                        
-                        <path d="M470,150 L490,150 L490,170 L470,170 Z" class="country-path" onclick="loadCountry('spain')" data-name="SPAIN" />
-                        
-                        <path d="M430,80 L450,80 L445,90 L435,90 Z" class="country-path" onclick="loadCountry('iceland')" data-name="ICELAND" />
-                        
-                        <path d="M510,60 L530,60 L520,100 L510,90 Z" class="country-path" onclick="loadCountry('norway')" data-name="NORWAY" />
+                        <div class="map-region" style="top: 68%; left: 53%;" onclick="loadCountry('italy')">
+                            <div class="region-glow"></div><div class="region-label">Italy</div>
+                        </div>
+                        <div class="map-region" style="top: 62%; left: 48%;" onclick="loadCountry('france')">
+                            <div class="region-glow"></div><div class="region-label">France</div>
+                        </div>
+                        <div class="map-region" style="top: 72%; left: 42%;" onclick="loadCountry('spain')">
+                            <div class="region-glow"></div><div class="region-label">Spain</div>
+                        </div>
+                        <div class="map-region" style="top: 73%; left: 38%;" onclick="loadCountry('portugal')">
+                            <div class="region-glow"></div><div class="region-label">Portugal</div>
+                        </div>
+                         <div class="map-region" style="top: 75%; left: 60%;" onclick="loadCountry('greece')">
+                            <div class="region-glow"></div><div class="region-label">Greece</div>
+                        </div>
+                        <div class="map-region" style="top: 55%; left: 53%;" onclick="loadCountry('germany')">
+                            <div class="region-glow"></div><div class="region-label">Germany</div>
+                        </div>
+                        <div class="map-region" style="top: 35%; left: 35%;" onclick="loadCountry('iceland')">
+                            <div class="region-glow"></div><div class="region-label">Iceland</div>
+                        </div>
+                        <div class="map-region" style="top: 40%; left: 55%;" onclick="loadCountry('norway')">
+                            <div class="region-glow"></div><div class="region-label">Norway</div>
+                        </div>
 
-                        <image href="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" x="0" y="0" width="1000" height="500" opacity="0.3" pointer-events="none" />
-                    </svg>
-                    <div class="map-overlay-text">
-                        <h1>NEXT STOP: WORLD</h1>
-                        <p>SELECT A COUNTRY ON THE MAP</p>
+                        <div style="position:absolute; bottom:10%; width:100%; text-align:center; pointer-events:none;">
+                            <h1 style="font-family:'Cinzel'; font-size:3rem; color:white; text-shadow:0 0 20px rgba(197, 160, 89, 0.8);">NEXT STOP: WORLD</h1>
+                        </div>
                     </div>
                 `;
+                mapDiv.innerHTML = mapHtml;
                 track.appendChild(mapDiv);
                 return;
             }
