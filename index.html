@@ -348,25 +348,25 @@
             { 
                 title: { en: "Taste & Culture", ka: "გემო და კულტურა" }, 
                 desc: { en: "Make your NextStop a Flavor", ka: "გასტრონომიული და კულტურული ტურები" }, 
-                img: "https://images.unsplash.com/photo-1551632436-cbf8dd354ca8?auto=format&fit=crop&w=800&q=80", 
+                img: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80", 
                 subItems: [{ title: "Gastronomic Tours", desc: "Italy, France, Spain" }, { title: "Wine Tours", desc: "Bordeaux & Tuscany" }] 
             },
             { 
                 title: { en: "Events & Adrenaline", ka: "ივენთები და ადრენალინი" }, 
                 desc: { en: "Make your NextStop a Rush", ka: "კონცერტები, სპორტი და ექსტრიმი" }, 
-                img: "https://images.unsplash.com/photo-1549497558-4f81a70014a0?auto=format&fit=crop&w=800&q=80", 
+                img: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80", 
                 subItems: [{ title: "Sports Hospitality", desc: "F1, Champions League" }, { title: "Extreme", desc: "Safari, Skiing, Diving" }] 
             },
             { 
                 title: { en: "Medical Concierge", ka: "სამედიცინო კონსიერჟი" }, 
                 desc: { en: "Make your NextStop a Healing Journey", ka: "მკურნალობა თურქეთსა და ისრაელში" }, 
-                img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=800&q=80", 
+                img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80", 
                 subItems: [{ title: "Turkey Clinics", desc: "Hair, Dental, General" }, { title: "Israel & Europe", desc: "Specialist Care" }] 
             },
             { 
                 title: { en: "Business & Visa", ka: "ბიზნესი და ვიზები" }, 
                 desc: { en: "Make your NextStop a Deal", ka: "სავიზო მხარდაჭერა და დელეგაციები" }, 
-                img: "https://images.unsplash.com/photo-1435527683903-08cd53495865?auto=format&fit=crop&w=800&q=80", 
+                img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80", 
                 subItems: [{ title: "Visa Support", desc: "USA, UK, Schengen" }, { title: "MICE", desc: "Delegations & Expos" }] 
             }
         ];
@@ -375,30 +375,26 @@
         const database = {
             world: {
                 accent: "#a84a32",
-                hero: [ 
-                    { title: {en: "Where is your NextStop?", ka: "სად არის თქვენი შემდეგი გაჩერება?"}, desc: {en: "The World is Open", ka: "მსოფლიო ღიაა"}, img: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1600&q=80", fullText: {en: "From the streets of Tbilisi to the vineyards of Tuscany. Tell us your dream destination, and we will design the journey.", ka: "თბილისის ქუჩებიდან ტოსკანის ვენახებამდე. გვითხარით სად გსურთ ყოფნა და ჩვენ დავგეგმავთ თქვენს მოგზაურობას."} },
-                    { title: {en: "Shopping in Milan", ka: "შოპინგი მილანში"}, desc: {en: "Fashion Week", ka: "მოდის კვირეული"}, img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1600&q=80" }, 
-                    { title: {en: "Medical in Turkey", ka: "მკურნალობა თურქეთში"}, desc: {en: "Top Clinics", ka: "კლინიკები"}, img: "https://images.unsplash.com/photo-1565626424177-85d70f90243e?auto=format&fit=crop&w=1600&q=80" }
-                ],
+                // No specific hero array needed; we use dynamic mix
                 tours: [], blog: [] 
             },
             turkey: { 
                 accent: "#E30A17", // Turkey Red
                 tours: [
-                    { title: {en: "Istanbul Shopping", ka: "შოპინგი სტამბოლში"}, desc: {en: "Grand Bazaar", ka: "ბაზარი"}, img: "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=800&q=80", tag: {en: "Shopping", ka: "შოპინგი"}, subItems: [{title: "Mall Tour", desc: "Luxury Brands"}, {title: "Shipping", desc: "Cargo Help"}] },
-                    { title: {en: "Medical Hair/Dental", ka: "თმის გადანერგვა"}, desc: {en: "Top Clinics", ka: "კლინიკები"}, img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80", tag: {en: "Medical", ka: "მკურნალობა"}, subItems: [{title: "Consultation", desc: "Online"}, {title: "Transfer", desc: "VIP"}] },
-                    { title: {en: "Cappadocia", ka: "კაპადოკია"}, desc: {en: "Hot Air Balloons", ka: "საჰაერო ბურთები"}, img: "https://images.unsplash.com/photo-1616193766760-b97c0f0d2c77?auto=format&fit=crop&w=800&q=80", tag: {en: "Romance", ka: "რომანტიკა"}, subItems: [{title: "Sunrise", desc: "Flight"}, {title: "Cave Hotel", desc: "Stay"}] },
+                    { title: {en: "Istanbul Shopping", ka: "შოპინგი სტამბოლში"}, desc: {en: "Grand Bazaar", ka: "ბაზარი"}, img: "https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=800&q=80", tag: {en: "Shopping", ka: "შოპინგი"}, subItems: [{title: "Mall Tour", desc: "Luxury Brands"}, {title: "Shipping", desc: "Cargo Help"}] },
+                    { title: {en: "Medical Hair/Dental", ka: "თმის გადანერგვა"}, desc: {en: "Top Clinics", ka: "კლინიკები"}, img: "https://images.unsplash.com/photo-1584516150909-c43483ee7932?auto=format&fit=crop&w=800&q=80", tag: {en: "Medical", ka: "მკურნალობა"}, subItems: [{title: "Consultation", desc: "Online"}, {title: "Transfer", desc: "VIP"}] },
+                    { title: {en: "Cappadocia", ka: "კაპადოკია"}, desc: {en: "Hot Air Balloons", ka: "საჰაერო ბურთები"}, img: "https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=800&q=80", tag: {en: "Romance", ka: "რომანტიკა"}, subItems: [{title: "Sunrise", desc: "Flight"}, {title: "Cave Hotel", desc: "Stay"}] },
                     { title: {en: "Antalya Resort", ka: "ანტალია"}, desc: {en: "All Inclusive", ka: "ზღვა"}, img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "რელაქსი"}, subItems: [{title: "Rixos", desc: "Booking"}, {title: "Family", desc: "Package"}] }
                 ],
                 blog: [
-                    { title: {en: "Shopping Guide Istanbul", ka: "სტამბოლის გზამკვლევი"}, date: {en: "Shopping", ka: "შოპინგი"}, img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Medical Tourism Tips", ka: "სამედიცინო ტურიზმი"}, date: {en: "Health", ka: "ჯანმრთელობა"}, img: "https://images.unsplash.com/photo-1516549655169-df83a0a836d8?auto=format&fit=crop&w=800&q=80" }
+                    { title: {en: "Shopping Guide Istanbul", ka: "სტამბოლის გზამკვლევი"}, date: {en: "Shopping", ka: "შოპინგი"}, img: "https://images.unsplash.com/photo-1565221289043-d34d3de7c93e?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Medical Tourism Tips", ka: "სამედიცინო ტურიზმი"}, date: {en: "Health", ka: "ჯანმრთელობა"}, img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=800&q=80" }
                 ]
             },
             italy: { 
                 accent: "#009246", // Italy Green
                 tours: [
-                    { title: {en: "Milan Fashion", ka: "მილანი"}, desc: {en: "Shopping & Style", ka: "მოდა"}, img: "https://images.unsplash.com/photo-1496586036124-748981b7dfb1?auto=format&fit=crop&w=800&q=80", tag: {en: "Fashion", ka: "მოდა"}, subItems: [{title: "Duomo", desc: "Visit"}, {title: "Outlets", desc: "Serravalle"}] },
+                    { title: {en: "Milan Fashion", ka: "მილანი"}, desc: {en: "Shopping & Style", ka: "მოდა"}, img: "https://images.unsplash.com/photo-1519332978332-21b7d621d05e?auto=format&fit=crop&w=800&q=80", tag: {en: "Fashion", ka: "მოდა"}, subItems: [{title: "Duomo", desc: "Visit"}, {title: "Outlets", desc: "Serravalle"}] },
                     { title: {en: "Rome History", ka: "რომი"}, desc: {en: "Colosseum & Pizza", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Vatican", desc: "Tour"}, {title: "Food", desc: "Pasta Class"}] },
                     { title: {en: "Tuscany Wine", ka: "ტოსკანა"}, desc: {en: "Vineyards", ka: "ვენახები"}, img: "https://images.unsplash.com/photo-1516594915697-87b5d4a02968?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Winery", desc: "Tasting"}, {title: "Villa", desc: "Stay"}] },
                     { title: {en: "Venice", ka: "ვენეცია"}, desc: {en: "Canals", ka: "არხები"}, img: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?auto=format&fit=crop&w=800&q=80", tag: {en: "Romance", ka: "რომანტიკა"}, subItems: [{title: "Gondola", desc: "Ride"}, {title: "Glass", desc: "Murano"}] }
@@ -450,7 +446,7 @@
             usa: {
                 accent: "#3C3B6E", // USA Navy
                 tours: [
-                    { title: {en: "USA Visa", ka: "აშშ ვიზა"}, desc: {en: "Support", ka: "მხარდაჭერა"}, img: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=80", tag: {en: "Visa", ka: "ვიზა"}, subItems: [{title: "Form", desc: "Filling"}, {title: "Interview", desc: "Prep"}] },
+                    { title: {en: "USA Visa", ka: "აშშ ვიზა"}, desc: {en: "Support", ka: "მხარდაჭერა"}, img: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=800&q=80", tag: {en: "Visa", ka: "ვიზა"}, subItems: [{title: "Form", desc: "Filling"}, {title: "Interview", desc: "Prep"}] },
                     { title: {en: "New York", ka: "ნიუ იორკი"}, desc: {en: "Manhattan", ka: "მანჰეტენი"}, img: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80", tag: {en: "Urban", ka: "ურბანული"}, subItems: [{title: "Hotel", desc: "Times Sq"}, {title: "Flight", desc: "Direct"}] },
                     { title: {en: "California", ka: "კალიფორნია"}, desc: {en: "LA & SF", ka: "ლოს ანჯელესი"}, img: "https://images.unsplash.com/photo-1534050359320-02900022671e?auto=format&fit=crop&w=800&q=80", tag: {en: "Roadtrip", ka: "გზა"}, subItems: [{title: "Car", desc: "Rental"}, {title: "Disney", desc: "Land"}] },
                     { title: {en: "Miami", ka: "მაიამი"}, desc: {en: "Beach & Party", ka: "პლაჟი"}, img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "South Beach", desc: "Hotel"}, {title: "Club", desc: "Night"}] }
@@ -636,13 +632,13 @@
                     if(region.tours) heroItems.push(...region.tours);
                 });
                 shuffle(heroItems);
-                // Keep the static first hero message
-                heroItems = [database.world.hero[0], ...heroItems.slice(0, 5)];
+                // REMOVED STATIC INTRO - NOW JUST 5 DYNAMIC SLIDES
+                heroItems = heroItems.slice(0, 5);
             } else {
                 if(data.tours) heroItems.push(...data.tours);
                 if(data.blog) heroItems.push(...data.blog);
                 shuffle(heroItems);
-                heroItems = heroItems.slice(0, 4); 
+                heroItems = heroItems.slice(0, 5); // Ensure at least a few slides
             }
             
             renderHero(heroItems);
