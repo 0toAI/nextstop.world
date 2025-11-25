@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>NextStop.world | Custom Travel, Medical & Business Tours</title>
-    <meta name="description" content="Planning your NextStop in Europe, Asia, or beyond? We design unique travel experiences, handle visas, and manage medical trips. Start your journey here.">
-    <meta name="keywords" content="Custom tours from Georgia, Visa Support Tbilisi, Medical Tourism Turkey Israel, Business Travel Agency, Luxury Travel Concierge, NextStop World">
-    
+    <meta name="description" content="Planning your NextStop in Europe, Asia, or beyond? We design unique travel experiences, handle visas, and manage medical trips.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. DESIGN VARIABLES (SAME AS .GE) --- */
+        /* --- DESIGN VARIABLES --- */
         :root {
             --bg-warm: #fdfbf7;          
             --charcoal: #1a1a1a;        
@@ -31,7 +29,7 @@
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
         button { cursor: pointer; border: none; outline: none; }
 
-        /* --- 2. HEADER --- */
+        /* --- HEADER --- */
         header {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(15px);
@@ -68,37 +66,16 @@
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; cursor: pointer; }
         .nav-item:hover { color: var(--terracotta); }
 
-        /* PILL LANGUAGE BUTTON */
         .lang-btn { 
-            padding: 6px 16px; 
-            border-radius: 20px; 
-            background: var(--gray-light); 
-            border: 1px solid rgba(0,0,0,0.05);
-            font-size: 0.7rem; 
-            font-weight: 700;
-            color: var(--charcoal);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            min-width: 50px;
-            display: flex;
-            justify-content: center;
+            padding: 6px 16px; border-radius: 20px; background: var(--gray-light); border: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.7rem; font-weight: 700; color: var(--charcoal); cursor: pointer; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 0.5px; min-width: 50px; display: flex; justify-content: center;
         }
-        .lang-btn:hover { 
-            background: white; 
-            border-color: var(--terracotta);
-            color: var(--terracotta);
-            transform: translateY(-1px);
-        }
+        .lang-btn:hover { background: white; border-color: var(--terracotta); color: var(--terracotta); transform: translateY(-1px); }
 
         /* --- RIBBON --- */
         .ribbon-container {
-            width: 100%; 
-            padding: 20px 5%; 
-            background: transparent;
-            position: relative;
-            z-index: 1;
+            width: 100%; padding: 20px 5%; background: transparent; position: relative; z-index: 1;
             mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
         }
@@ -106,38 +83,25 @@
         .destination-ribbon { display: flex; align-items: center; gap: 15px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; white-space: nowrap; }
         .destination-ribbon::-webkit-scrollbar { display: none; }
         
-        .ribbon-label { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; color: var(--charcoal); cursor: pointer; padding: 0 5px; letter-spacing: 1px; transition: 0.3s; min-width: 260px; text-align: center; }
+        .ribbon-label { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; color: var(--charcoal); cursor: pointer; padding: 0 5px; letter-spacing: 1px; transition: 0.3s; min-width: 180px; text-align: center; }
         .ribbon-label:hover { color: var(--terracotta); }
         .ribbon-separator { color: #ddd; font-size: 1.2rem; font-weight: 300; margin: 0 10px 0 0; }
 
         .dest-btn { 
-            padding: 8px 22px; 
-            border-radius: 50px; 
-            font-size: 0.7rem; 
-            font-weight: 700; 
-            color: #888; 
-            background: transparent; 
-            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; 
-            cursor: pointer; 
-            white-space: nowrap; 
-            border: 1px solid rgba(0,0,0,0.1); 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px; 
+            padding: 8px 22px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; color: #888; 
+            background: transparent; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; 
+            cursor: pointer; white-space: nowrap; border: 1px solid rgba(0,0,0,0.1); 
+            text-transform: uppercase; letter-spacing: 0.5px; 
         }
         
         .dest-btn:hover { 
-            border-color: rgba(var(--btn-rgb), 1); 
-            color: rgba(var(--btn-rgb), 1); 
-            background: rgba(var(--btn-rgb), 0.20); 
-            z-index: 12; 
-            position: relative; 
+            border-color: rgba(var(--btn-rgb), 1); color: rgba(var(--btn-rgb), 1); 
+            background: rgba(var(--btn-rgb), 0.20); z-index: 12; position: relative; 
         }
         
         .dest-btn.active { 
-            background: rgba(var(--btn-rgb), 1); 
-            color: white; 
-            border-color: rgba(var(--btn-rgb), 1); 
-            box-shadow: 0 4px 15px rgba(var(--btn-rgb), 0.4); 
+            background: rgba(var(--btn-rgb), 1); color: white; 
+            border-color: rgba(var(--btn-rgb), 1); box-shadow: 0 4px 15px rgba(var(--btn-rgb), 0.4); 
         }
 
         /* --- HERO WHEEL --- */
@@ -168,40 +132,21 @@
             pointer-events: none;
         }
 
-        /* --- SECTIONS & SCROLLERS --- */
+        /* --- SECTIONS --- */
         .section { padding: 80px 5%; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
-        
-        .section-header {
-            display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;
-            border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 20px;
-        }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 20px; }
         .section-title { text-align: left; max-width: 70%; }
         .section-title h2 { font-size: 2rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 5px; }
         .section-title p { color: #777; font-size: 0.9rem; }
         
         .scroll-nav { display: flex; gap: 10px; }
-        .scroll-arrow {
-            width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd;
-            display: flex; justify-content: center; align-items: center; cursor: pointer;
-            background: white; transition: 0.3s; color: var(--charcoal);
-        }
+        .scroll-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd; display: flex; justify-content: center; align-items: center; cursor: pointer; background: white; transition: 0.3s; color: var(--charcoal); }
         .scroll-arrow:hover { background: var(--terracotta); color: white; border-color: var(--terracotta); }
 
-        /* Universal Scroller */
-        .scroller-track {
-            display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 30px 5px;
-            scroll-snap-type: x mandatory; scroll-behavior: smooth;
-            scrollbar-width: none;
-        }
+        .scroller-track { display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 30px 5px; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
         .scroller-track::-webkit-scrollbar { display: none; }
 
-        .card, .blog-card { 
-            flex: 0 0 calc(25% - 15px); 
-            scroll-snap-align: start; 
-            background: white; border-radius: 4px; overflow: hidden; 
-            box-shadow: var(--shadow); transition: 0.4s; height: 380px; 
-            position: relative; cursor: pointer; 
-        }
+        .card, .blog-card { flex: 0 0 calc(25% - 15px); scroll-snap-align: start; background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 380px; position: relative; cursor: pointer; }
         .card:hover, .blog-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         
         .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -211,18 +156,12 @@
         .card p { font-size: 0.85rem; opacity: 0.8; font-weight: 300; }
         .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 4px 10px; font-size: 0.6rem; font-weight: bold; text-transform: uppercase; }
 
-        /* Blog Specifics */
         .blog-img-box { height: 200px; overflow: hidden; }
         .blog-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .blog-content { padding: 25px; }
         .blog-date { font-size: 0.7rem; color: var(--terracotta); font-weight: 700; text-transform: uppercase; }
         .blog-title { font-size: 1.1rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
         .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
-
-        /* FILTERS */
-        .filter-container { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .filter-btn { padding: 6px 18px; border-radius: 30px; border: 1px solid #eee; background: white; font-size: 0.75rem; font-weight: 700; color: #999; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .filter-btn:hover, .filter-btn.active { background: var(--terracotta); color: white; border-color: var(--terracotta); }
 
         /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); opacity: 0; transition: 0.3s; }
@@ -249,9 +188,7 @@
         .footer-social { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
         .social-btn { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 30px; }
         .social-btn:hover { color: var(--terracotta); border-color: var(--terracotta); background: rgba(255,255,255,0.05); }
-        .social-icon { width: 20px; height: 20px; fill: currentColor; }
         
-        /* Footer Logo Sync */
         .footer-logo .logo-main { color: #fff; }
         .footer-logo .logo-sub { color: var(--terracotta); }
 
@@ -301,7 +238,7 @@
     </header>
 
     <div class="hero-wheel">
-        <div class="hero-slogan" data-key="hero_slogan">The Map Has No Borders</div>
+        <div class="hero-slogan" data-key="hero_slogan">Where is your NextStop?</div>
         <div class="wheel-track" id="heroTrack"></div>
         <div class="progress-container" id="progressContainer"></div>
         <div class="wheel-arrows">
@@ -314,14 +251,13 @@
         <div class="section-header">
             <div class="section-title">
                 <h2 data-key="section_travel_title">Curated Experiences</h2>
-                <p data-key="section_travel_desc">Make your NextStop a Discovery. We curate the vibe, you live the moment.</p>
+                <p data-key="section_travel_desc">We curate the vibe, you live the moment. From Europe to Asia.</p>
             </div>
             <div class="scroll-nav">
                 <button class="scroll-arrow" onclick="scrollSection('travelGrid', -1)">&#10094;</button>
                 <button class="scroll-arrow" onclick="scrollSection('travelGrid', 1)">&#10095;</button>
             </div>
         </div>
-        <div class="filter-container" id="travelFilters"></div>
         <div class="scroller-track" id="travelGrid"></div>
     </section>
 
@@ -329,7 +265,7 @@
         <div class="section-header">
             <div class="section-title">
                 <h2 data-key="section_services_title">Our Services</h2>
-                <p data-key="section_services_desc">Make your NextStop Seamless. Medical, Business, and Visa Support.</p>
+                <p data-key="section_services_desc">Medical, Business, and Visa Support.</p>
             </div>
             <div class="scroll-nav">
                 <button class="scroll-arrow" onclick="scrollSection('servicesGrid', -1)">&#10094;</button>
@@ -393,22 +329,21 @@
             en: { 
                 nav_tours: "Tours", nav_services: "Services", nav_blog: "Blog", nav_about: "About", 
                 section_travel_title: "Curated Experiences", section_travel_desc: "We curate the vibe, you live the moment. From Europe to Asia.", 
-                section_services_title: "Global Services", section_services_desc: "Make your NextStop Seamless. Medical, Business, and Visa Support.", 
+                section_services_title: "Global Services", section_services_desc: "Medical, Business, and Visa Support.", 
                 section_blog_title: "Journal", section_blog_desc: "Global insights, Visa updates, and Hidden Gems.", 
-                btn_details: "View Details", btn_read: "Read Article", btn_book: "Inquire Now", filter_all: "All",
-                hero_slogan: "The Map Has No Borders", footer_text: "Ready to leave? Tell us the destination or the feeling you are looking for."
+                btn_details: "View Details", btn_read: "Read Article", btn_book: "Inquire Now",
+                hero_slogan: "Where is your NextStop?", footer_text: "Ready to leave? Tell us the destination or the feeling you are looking for."
             },
             ka: { 
                 nav_tours: "ტურები", nav_services: "სერვისები", nav_blog: "ბლოგი", nav_about: "ჩვენ შესახებ", 
                 section_travel_title: "გამორჩეული გამოცდილება", section_travel_desc: "ევროპიდან აზიამდე. ჩვენ ვქმნით განწყობას, თქვენ ქმნით მოგონებებს.", 
                 section_services_title: "გლობალური სერვისები", section_services_desc: "სამედიცინო, ბიზნეს და სავიზო მხარდაჭერა.", 
                 section_blog_title: "ჟურნალი", section_blog_desc: "სიახლეები ვიზებზე და რჩევები მოგზაურებისთვის.", 
-                btn_details: "დეტალების ნახვა", btn_read: "წაკითხვა", btn_book: "მოკითხვა", filter_all: "ყველა",
-                hero_slogan: "რუკას არ აქვს საზღვრები", footer_text: "მზად ხართ გასამგზავრებლად? გვითხარით სად გსურთ ყოფნა."
+                btn_details: "დეტალების ნახვა", btn_read: "წაკითხვა", btn_book: "მოკითხვა",
+                hero_slogan: "სად არის თქვენი შემდეგი გაჩერება?", footer_text: "მზად ხართ გასამგზავრებლად? გვითხარით სად გსურთ ყოფნა."
             }
         };
 
-        // --- NEW 4 PILLARS OF GLOBAL SERVICES ---
         const commonServices = [
             { 
                 title: { en: "Taste & Culture", ka: "გემო და კულტურა" }, 
@@ -436,68 +371,121 @@
             }
         ];
 
-        // --- GLOBAL DATABASE (New Regions) ---
+        // --- REAL DATABASE (TOP 10 COUNTRIES) ---
         const database = {
             world: {
-                accent: "#a84a32", // Default Terracotta
+                accent: "#a84a32",
                 hero: [ 
-                    { title: {en: "Where is your NextStop?", ka: "სად არის თქვენი შემდეგი გაჩერება?"}, desc: {en: "The Map Has No Borders", ka: "რუკას საზღვრები არ აქვს"}, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=80", fullText: {en: "From the streets of Tbilisi to the vineyards of Tuscany, or from Dubai to Paris. Tell us your dream destination, and we will design the journey.", ka: "თბილისის ქუჩებიდან ტოსკანის ვენახებამდე. გვითხარით სად გსურთ ყოფნა და ჩვენ დავგეგმავთ თქვენს მოგზაურობას."} },
-                    { title: {en: "Medical Tourism", ka: "სამედიცინო ტურიზმი"}, desc: {en: "Turkey & Israel", ka: "თურქეთი და ისრაელი"}, img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1600&q=80" }, 
-                    { title: {en: "Safari Adventure", ka: "საფარი"}, desc: {en: "Tanzania & Kenya", ka: "აფრიკის თავგადასავალი"}, img: "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1600&q=80" }
+                    { title: {en: "Where is your NextStop?", ka: "სად არის თქვენი შემდეგი გაჩერება?"}, desc: {en: "The World is Open", ka: "მსოფლიო ღიაა"}, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=80", fullText: {en: "From the streets of Tbilisi to the vineyards of Tuscany. Tell us your dream destination, and we will design the journey.", ka: "თბილისის ქუჩებიდან ტოსკანის ვენახებამდე. გვითხარით სად გსურთ ყოფნა და ჩვენ დავგეგმავთ თქვენს მოგზაურობას."} },
+                    { title: {en: "Shopping in Milan", ka: "შოპინგი მილანში"}, desc: {en: "Fashion Week", ka: "მოდის კვირეული"}, img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1600&q=80" }, 
+                    { title: {en: "Medical in Turkey", ka: "მკურნალობა თურქეთში"}, desc: {en: "Top Clinics", ka: "კლინიკები"}, img: "https://images.unsplash.com/photo-1565626424177-85d70f90243e?auto=format&fit=crop&w=1600&q=80" }
                 ],
                 tours: [], blog: [] 
             },
-            europe: { 
-                accent: "#003399", // EU Blue
+            turkey: { 
+                accent: "#E30A17", // Turkey Red
                 tours: [
-                    { title: {en: "Italy: Dolce Vita", ka: "იტალია"}, desc: {en: "Food & Wine", ka: "გასტრონომია"}, img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Rome", desc: "History"}, {title: "Tuscany", desc: "Wine"}] },
-                    { title: {en: "France: Chic", ka: "საფრანგეთი"}, desc: {en: "Paris & Vineyards", ka: "პარიზი და ვენახები"}, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80", tag: {en: "Romance", ka: "რომანტიკა"}, subItems: [{title: "Paris", desc: "City Tour"}, {title: "Bordeaux", desc: "Wine"}] },
-                    { title: {en: "Alps Skiing", ka: "ალპები"}, desc: {en: "Winter Sport", ka: "ზამთრის სპორტი"}, img: "https://images.unsplash.com/photo-1489674267075-cee793167910?auto=format&fit=crop&w=800&q=80", tag: {en: "Active", ka: "აქტიური"}, subItems: [{title: "Courchevel", desc: "Luxury Ski"}, {title: "Swiss Alps", desc: "Resort"}] },
-                    { title: {en: "Spain: Fiesta", ka: "ესპანეთი"}, desc: {en: "Barcelona & Madrid", ka: "ბარსელონა"}, img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "Flamenco", desc: "Show"}, {title: "Tapas", desc: "Food"}] }
-                ], 
+                    { title: {en: "Istanbul Shopping", ka: "შოპინგი სტამბოლში"}, desc: {en: "Grand Bazaar", ka: "ბაზარი"}, img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80", tag: {en: "Shopping", ka: "შოპინგი"}, subItems: [{title: "Mall Tour", desc: "Luxury Brands"}, {title: "Shipping", desc: "Cargo Help"}] },
+                    { title: {en: "Medical Hair/Dental", ka: "თმის გადანერგვა"}, desc: {en: "Top Clinics", ka: "კლინიკები"}, img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80", tag: {en: "Medical", ka: "მკურნალობა"}, subItems: [{title: "Consultation", desc: "Online"}, {title: "Transfer", desc: "VIP"}] },
+                    { title: {en: "Cappadocia", ka: "კაპადოკია"}, desc: {en: "Hot Air Balloons", ka: "საჰაერო ბურთები"}, img: "https://images.unsplash.com/photo-1616193766760-b97c0f0d2c77?auto=format&fit=crop&w=800&q=80", tag: {en: "Romance", ka: "რომანტიკა"}, subItems: [{title: "Sunrise", desc: "Flight"}, {title: "Cave Hotel", desc: "Stay"}] },
+                    { title: {en: "Antalya Resort", ka: "ანტალია"}, desc: {en: "All Inclusive", ka: "ზღვა"}, img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "რელაქსი"}, subItems: [{title: "Rixos", desc: "Booking"}, {title: "Family", desc: "Package"}] }
+                ],
                 blog: [
-                    { title: {en: "Schengen Visa Guide", ka: "შენგენის ვიზა"}, date: {en: "Visa", ka: "ვიზა"}, img: "https://images.unsplash.com/photo-1569420067980-60b63895473d?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Best Espresso in Rome", ka: "რომის ესპრესო"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80" }
-                ] 
+                    { title: {en: "Shopping Guide Istanbul", ka: "სტამბოლის გზამკვლევი"}, date: {en: "Shopping", ka: "შოპინგი"}, img: "https://images.unsplash.com/photo-1545423233-f5c78d380e66?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Medical Tourism Tips", ka: "სამედიცინო ტურიზმი"}, date: {en: "Health", ka: "ჯანმრთელობა"}, img: "https://images.unsplash.com/photo-1516549655169-df83a0a836d8?auto=format&fit=crop&w=800&q=80" }
+                ]
             },
-            asia: { 
-                accent: "#D32F2F", // Red
+            italy: { 
+                accent: "#009246", // Italy Green
                 tours: [
-                    { title: {en: "Thailand", ka: "ტაილანდი"}, desc: {en: "Beaches & Temples", ka: "პლაჟები"}, img: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80", tag: {en: "Exotic", ka: "ეგზოტიკა"}, subItems: [{title: "Phuket", desc: "Island"}, {title: "Bangkok", desc: "City"}] },
-                    { title: {en: "Japan", ka: "იაპონია"}, desc: {en: "Tradition & Future", ka: "ტრადიცია"}, img: "https://images.unsplash.com/photo-1528164344705-475426879881?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Tokyo", desc: "Tech"}, {title: "Kyoto", desc: "Temples"}] },
-                    { title: {en: "Bali", ka: "ბალი"}, desc: {en: "Spiritual Retreat", ka: "დასვენება"}, img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "რელაქსი"}, subItems: [{title: "Ubud", desc: "Jungle"}, {title: "Seminyak", desc: "Beach"}] },
-                    { title: {en: "China Expo", ka: "ჩინეთი"}, desc: {en: "Business Delegations", ka: "ბიზნეს ტური"}, img: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?auto=format&fit=crop&w=800&q=80", tag: {en: "Business", ka: "ბიზნესი"}, subItems: [{title: "Canton Fair", desc: "Expo"}, {title: "Shanghai", desc: "Meeting"}] }
-                ], 
+                    { title: {en: "Milan Fashion", ka: "მილანი"}, desc: {en: "Shopping & Style", ka: "მოდა"}, img: "https://images.unsplash.com/photo-1496586036124-748981b7dfb1?auto=format&fit=crop&w=800&q=80", tag: {en: "Fashion", ka: "მოდა"}, subItems: [{title: "Duomo", desc: "Visit"}, {title: "Outlets", desc: "Serravalle"}] },
+                    { title: {en: "Rome History", ka: "რომი"}, desc: {en: "Colosseum & Pizza", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Vatican", desc: "Tour"}, {title: "Food", desc: "Pasta Class"}] },
+                    { title: {en: "Tuscany Wine", ka: "ტოსკანა"}, desc: {en: "Vineyards", ka: "ვენახები"}, img: "https://images.unsplash.com/photo-1516594915697-87b5d4a02968?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Winery", desc: "Tasting"}, {title: "Villa", desc: "Stay"}] },
+                    { title: {en: "Venice", ka: "ვენეცია"}, desc: {en: "Canals", ka: "არხები"}, img: "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Romance", ka: "რომანტიკა"}, subItems: [{title: "Gondola", desc: "Ride"}, {title: "Glass", desc: "Murano"}] }
+                ],
                 blog: [
-                    { title: {en: "China Visa Updates", ka: "ჩინეთის ვიზა"}, date: {en: "News", ka: "სიახლე"}, img: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Thai Food Guide", ka: "ტაილანდური სამზარეულო"}, date: {en: "Eat", ka: "კვება"}, img: "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=800&q=80" }
-                ] 
+                    { title: {en: "Visa for Italy", ka: "იტალიის ვიზა"}, date: {en: "Visa", ka: "ვიზა"}, img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=800&q=80" }
+                ]
             },
-            middle_east: { 
-                accent: "#C1A54D", // Gold/Sand
+            france: { 
+                accent: "#0055A4", // France Blue
                 tours: [
-                    { title: {en: "Dubai Luxury", ka: "დუბაი"}, desc: {en: "Shopping & Business", ka: "შოპინგი"}, img: "https://images.unsplash.com/photo-1512453979798-5ea936a79402?auto=format&fit=crop&w=800&q=80", tag: {en: "Luxury", ka: "ლუქსი"}, subItems: [{title: "Burj Khalifa", desc: "View"}, {title: "Shopping", desc: "Mall"}] },
-                    { title: {en: "Turkey Medical", ka: "თურქეთი"}, desc: {en: "Hair & Dental", ka: "მკურნალობა"}, img: "https://images.unsplash.com/photo-1565626424177-85d70f90243e?auto=format&fit=crop&w=800&q=80", tag: {en: "Health", ka: "ჯანმრთელობა"}, subItems: [{title: "Istanbul", desc: "Clinic"}, {title: "Antalya", desc: "Resort"}] },
-                    { title: {en: "Israel", ka: "ისრაელი"}, desc: {en: "Medical & Pilgrim", ka: "მკურნალობა"}, img: "https://images.unsplash.com/photo-1541367098939-2d1297593dae?auto=format&fit=crop&w=800&q=80", tag: {en: "Health", ka: "ჯანმრთელობა"}, subItems: [{title: "Tel Aviv", desc: "Check-up"}, {title: "Jerusalem", desc: "History"}] },
-                    { title: {en: "Egypt", ka: "ეგვიპტე"}, desc: {en: "Pyramids & Sea", ka: "პირამიდები"}, img: "https://images.unsplash.com/photo-1539650116455-29fb5313f332?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Cairo", desc: "Museum"}, {title: "Sharm", desc: "Diving"}] }
-                ], 
-                blog: [
-                    { title: {en: "Medical Check-up Guide", ka: "სამედიცინო შემოწმება"}, date: {en: "Health", ka: "ჯანმრთელობა"}, img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Dubai Business Setup", ka: "ბიზნესი დუბაიში"}, date: {en: "Work", ka: "საქმე"}, img: "https://images.unsplash.com/photo-1497215842964-222b4bef9736?auto=format&fit=crop&w=800&q=80" }
-                ] 
+                    { title: {en: "Paris Chic", ka: "პარიზი"}, desc: {en: "Eiffel & Art", ka: "ხელოვნება"}, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80", tag: {en: "Romance", ka: "რომანტიკა"}, subItems: [{title: "Louvre", desc: "Museum"}, {title: "River", desc: "Cruise"}] },
+                    { title: {en: "Nice & Cannes", ka: "ნიცა"}, desc: {en: "Cote d'Azur", ka: "სანაპირო"}, img: "https://images.unsplash.com/photo-1533634057630-3162b1444211?auto=format&fit=crop&w=800&q=80", tag: {en: "Luxury", ka: "ლუქსი"}, subItems: [{title: "Beach", desc: "Club"}, {title: "Casino", desc: "Monte Carlo"}] },
+                    { title: {en: "Courchevel Ski", ka: "კურშეველი"}, desc: {en: "Luxury Skiing", ka: "თხილამური"}, img: "https://images.unsplash.com/photo-1489674267075-cee793167910?auto=format&fit=crop&w=800&q=80", tag: {en: "Active", ka: "აქტიური"}, subItems: [{title: "Chalet", desc: "Rental"}, {title: "Pass", desc: "Ski"}] },
+                    { title: {en: "Disneyland", ka: "დისნეილენდი"}, desc: {en: "Family Fun", ka: "ოჯახი"}, img: "https://images.unsplash.com/photo-1596277255577-6f6874d4850d?auto=format&fit=crop&w=800&q=80", tag: {en: "Kids", ka: "ბავშვები"}, subItems: [{title: "Tickets", desc: "Fastpass"}, {title: "Hotel", desc: "Disney"}] }
+                ],
+                blog: [{ title: {en: "Paris on a Budget", ka: "პარიზი ბიუჯეტურად"}, date: {en: "Tips", ka: "რჩევები"}, img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?auto=format&fit=crop&w=800&q=80" }]
             },
-            americas: { 
-                accent: "#283593", // Navy Blue
+            spain: {
+                accent: "#C60B1E", // Spain Red
                 tours: [
-                    { title: {en: "USA Visa Support", ka: "აშშ ვიზა"}, desc: {en: "Consultation", ka: "კონსულტაცია"}, img: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=80", tag: {en: "Visa", ka: "ვიზა"}, subItems: [{title: "Form Filling", desc: "DS-160"}, {title: "Interview", desc: "Prep"}] },
-                    { title: {en: "New York", ka: "ნიუ იორკი"}, desc: {en: "Concrete Jungle", ka: "ქალაქი"}, img: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80", tag: {en: "Urban", ka: "ურბანული"}, subItems: [{title: "Manhattan", desc: "Tour"}, {title: "Business", desc: "Trip"}] },
-                    { title: {en: "Brazil", ka: "ბრაზილია"}, desc: {en: "Rio & Amazon", ka: "რიო"}, img: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80", tag: {en: "Exotic", ka: "ეგზოტიკა"}, subItems: [{title: "Rio", desc: "Carnival"}, {title: "Jungle", desc: "Tour"}] },
-                    { title: {en: "Mexico", ka: "მექსიკა"}, desc: {en: "Tacos & Sun", ka: "მექსიკა"}, img: "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "Cancun", desc: "Beach"}, {title: "Food", desc: "Tour"}] }
-                ], 
-                blog: [
-                    { title: {en: "USA Visa Interview Tips", ka: "აშშ ვიზის რჩევები"}, date: {en: "Guide", ka: "რჩევები"}, img: "https://images.unsplash.com/photo-1540910419868-47a1242c28f8?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "NYC Budget Travel", ka: "ნიუ იორკი ბიუჯეტურად"}, date: {en: "Tips", ka: "რჩევები"}, img: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=800&q=80" }
-                ] 
+                    { title: {en: "Barcelona", ka: "ბარსელონა"}, desc: {en: "Gaudi & Beach", ka: "გაუდი"}, img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=800&q=80", tag: {en: "Art", ka: "ხელოვნება"}, subItems: [{title: "Sagrada", desc: "Tickets"}, {title: "Camp Nou", desc: "Football"}] },
+                    { title: {en: "Ibiza Party", ka: "იბიცამ"}, desc: {en: "Nightlife", ka: "ღამე"}, img: "https://images.unsplash.com/photo-1563789031959-4c02bcb41319?auto=format&fit=crop&w=800&q=80", tag: {en: "Party", ka: "ფართი"}, subItems: [{title: "Clubs", desc: "VIP"}, {title: "Boat", desc: "Party"}] },
+                    { title: {en: "Madrid", ka: "მადრიდი"}, desc: {en: "Royal City", ka: "ქალაქი"}, img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Prado", desc: "Museum"}, {title: "Bernabeu", desc: "Tour"}] },
+                    { title: {en: "Tenerife", ka: "ტენერიფე"}, desc: {en: "Island Sun", ka: "კუნძული"}, img: "https://images.unsplash.com/photo-1534947701777-69b02220d912?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "რელაქსი"}, subItems: [{title: "Volcano", desc: "Teide"}, {title: "Park", desc: "Loro"}] }
+                ],
+                blog: [{ title: {en: "Spain Visa Guide", ka: "ესპანეთის ვიზა"}, date: {en: "Visa", ka: "ვიზა"}, img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=800&q=80" }]
+            },
+            uae: {
+                accent: "#00732F", // UAE Green
+                tours: [
+                    { title: {en: "Dubai Luxury", ka: "დუბაი"}, desc: {en: "Burj Khalifa", ka: "ლუქსი"}, img: "https://images.unsplash.com/photo-1512453979798-5ea936a79402?auto=format&fit=crop&w=800&q=80", tag: {en: "Luxury", ka: "ლუქსი"}, subItems: [{title: "Mall", desc: "Shopping"}, {title: "Safari", desc: "Desert"}] },
+                    { title: {en: "Abu Dhabi", ka: "აბუ დაბი"}, desc: {en: "Grand Mosque", ka: "მეჩეთი"}, img: "https://images.unsplash.com/photo-1518684079-3c830dcef6c3?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Ferrari", desc: "World"}, {title: "Louvre", desc: "Museum"}] },
+                    { title: {en: "Business Setup", ka: "ბიზნესი"}, desc: {en: "Company Reg", ka: "რეგისტრაცია"}, img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80", tag: {en: "Business", ka: "ბიზნესი"}, subItems: [{title: "Bank", desc: "Account"}, {title: "Visa", desc: "Resident"}] },
+                    { title: {en: "F1 Experience", ka: "ფორმულა 1"}, desc: {en: "Yas Marina", ka: "რბოლა"}, img: "https://images.unsplash.com/photo-1534438097545-2c853f973959?auto=format&fit=crop&w=800&q=80", tag: {en: "Event", ka: "ივენთი"}, subItems: [{title: "Tickets", desc: "Paddock"}, {title: "Hotel", desc: "Track"}] }
+                ],
+                blog: [{ title: {en: "Moving to Dubai", ka: "ცხოვრება დუბაიში"}, date: {en: "Guide", ka: "გზამკვლევი"}, img: "https://images.unsplash.com/photo-1512453979798-5ea936a79402?auto=format&fit=crop&w=800&q=80" }]
+            },
+            thailand: {
+                accent: "#A51931", // Thai Red
+                tours: [
+                    { title: {en: "Phuket Beach", ka: "ფუკეტი"}, desc: {en: "Island Hopping", ka: "კუნძულები"}, img: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80", tag: {en: "Exotic", ka: "ეგზოტიკა"}, subItems: [{title: "Phi Phi", desc: "Boat"}, {title: "Resort", desc: "Stay"}] },
+                    { title: {en: "Bangkok", ka: "ბანგკოკი"}, desc: {en: "City & Temples", ka: "ქალაქი"}, img: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80", tag: {en: "City", ka: "ქალაქი"}, subItems: [{title: "Food", desc: "Street"}, {title: "Palace", desc: "Grand"}] },
+                    { title: {en: "Samui", ka: "სამუი"}, desc: {en: "Luxury Villas", ka: "ვილები"}, img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "რელაქსი"}, subItems: [{title: "Spa", desc: "Massage"}, {title: "Villa", desc: "Pool"}] },
+                    { title: {en: "Chiang Mai", ka: "ჩიანგ მაი"}, desc: {en: "Elephants", ka: "სპილოები"}, img: "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Sanctuary", desc: "Visit"}, {title: "Temple", desc: "Doi Suthep"}] }
+                ],
+                blog: [{ title: {en: "Thai Food Guide", ka: "ტაილანდური კერძები"}, date: {en: "Food", ka: "კვება"}, img: "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=800&q=80" }]
+            },
+            usa: {
+                accent: "#3C3B6E", // USA Navy
+                tours: [
+                    { title: {en: "USA Visa", ka: "აშშ ვიზა"}, desc: {en: "Support", ka: "მხარდაჭერა"}, img: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=80", tag: {en: "Visa", ka: "ვიზა"}, subItems: [{title: "Form", desc: "Filling"}, {title: "Interview", desc: "Prep"}] },
+                    { title: {en: "New York", ka: "ნიუ იორკი"}, desc: {en: "Manhattan", ka: "მანჰეტენი"}, img: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80", tag: {en: "Urban", ka: "ურბანული"}, subItems: [{title: "Hotel", desc: "Times Sq"}, {title: "Flight", desc: "Direct"}] },
+                    { title: {en: "California", ka: "კალიფორნია"}, desc: {en: "LA & SF", ka: "ლოს ანჯელესი"}, img: "https://images.unsplash.com/photo-1534050359320-02900022671e?auto=format&fit=crop&w=800&q=80", tag: {en: "Roadtrip", ka: "გზა"}, subItems: [{title: "Car", desc: "Rental"}, {title: "Disney", desc: "Land"}] },
+                    { title: {en: "Miami", ka: "მაიამი"}, desc: {en: "Beach & Party", ka: "პლაჟი"}, img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "South Beach", desc: "Hotel"}, {title: "Club", desc: "Night"}] }
+                ],
+                blog: [{ title: {en: "Green Card Guide", ka: "მწვანე ბარათი"}, date: {en: "Info", ka: "ინფო"}, img: "https://images.unsplash.com/photo-1540910419868-47a1242c28f8?auto=format&fit=crop&w=800&q=80" }]
+            },
+            egypt: {
+                accent: "#C09300", // Pharaoh Gold
+                tours: [
+                    { title: {en: "Sharm El Sheikh", ka: "შარმ ელ შეიხი"}, desc: {en: "All Inclusive", ka: "ზღვა"}, img: "https://images.unsplash.com/photo-1539650116455-29fb5313f332?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "რელაქსი"}, subItems: [{title: "Resort", desc: "5 Star"}, {title: "Diving", desc: "Red Sea"}] },
+                    { title: {en: "Cairo Pyramids", ka: "პირამიდები"}, desc: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Giza", desc: "Tour"}, {title: "Museum", desc: "Entry"}] },
+                    { title: {en: "Hurghada", ka: "ჰურგადა"}, desc: {en: "Family Resort", ka: "ოჯახი"}, img: "https://images.unsplash.com/photo-1565538006841-3b52123c72b2?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "Aqua Park", desc: "Hotel"}, {title: "Boat", desc: "Trip"}] },
+                    { title: {en: "Nile Cruise", ka: "ნილოსის კრუიზი"}, desc: {en: "Luxury Boat", ka: "კრუიზი"}, img: "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?auto=format&fit=crop&w=800&q=80", tag: {en: "Unique", ka: "უნიკალური"}, subItems: [{title: "Luxor", desc: "Temple"}, {title: "Cruise", desc: "4 Days"}] }
+                ],
+                blog: [{ title: {en: "Best Time for Egypt", ka: "როდის წავიდეთ ეგვიპტეში"}, date: {en: "Tips", ka: "რჩევები"}, img: "https://images.unsplash.com/photo-1539650116455-29fb5313f332?auto=format&fit=crop&w=800&q=80" }]
+            },
+            germany: {
+                accent: "#DD0000", // German Red
+                tours: [
+                    { title: {en: "Berlin", ka: "ბერლინი"}, desc: {en: "Culture & Night", ka: "კულტურა"}, img: "https://images.unsplash.com/photo-1560969184-10fe8719e654?auto=format&fit=crop&w=800&q=80", tag: {en: "City", ka: "ქალაქი"}, subItems: [{title: "Club", desc: "Entry"}, {title: "History", desc: "Wall"}] },
+                    { title: {en: "Munich Cars", ka: "მიუნხენი"}, desc: {en: "BMW & Beer", ka: "მანქანები"}, img: "https://images.unsplash.com/photo-1595835035546-d250865d4926?auto=format&fit=crop&w=800&q=80", tag: {en: "Cars", ka: "მანქანა"}, subItems: [{title: "BMW World", desc: "Visit"}, {title: "Beer", desc: "Hall"}] },
+                    { title: {en: "Medical Check", ka: "მკურნალობა"}, desc: {en: "Top Doctors", ka: "ექიმები"}, img: "https://images.unsplash.com/photo-1579165466741-7f35a4755657?auto=format&fit=crop&w=800&q=80", tag: {en: "Health", ka: "ჯანმრთელობა"}, subItems: [{title: "Clinic", desc: "Berlin"}, {title: "Visa", desc: "Support"}] },
+                    { title: {en: "Oktoberfest", ka: "ოქტომბერფესტი"}, desc: {en: "Beer Festival", ka: "ფესტივალი"}, img: "https://images.unsplash.com/photo-1569435017126-5b4d081f9640?auto=format&fit=crop&w=800&q=80", tag: {en: "Event", ka: "ივენთი"}, subItems: [{title: "Table", desc: "Reserve"}, {title: "Hotel", desc: "Booking"}] }
+                ],
+                blog: [{ title: {en: "Car Import Guide", ka: "მანქანის ჩამოყვანა"}, date: {en: "Cars", ka: "მანქანა"}, img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80" }]
+            },
+            israel: {
+                accent: "#0038B8", // Israel Blue
+                tours: [
+                    { title: {en: "Jerusalem", ka: "იერუსალიმი"}, desc: {en: "Holy Sites", ka: "წმინდა ადგილები"}, img: "https://images.unsplash.com/photo-1541367098939-2d1297593dae?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Old City", desc: "Tour"}, {title: "Church", desc: "Visit"}] },
+                    { title: {en: "Tel Aviv", ka: "თელ ავივი"}, desc: {en: "Beach & City", ka: "ქალაქი"}, img: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&w=800&q=80", tag: {en: "Urban", ka: "ურბანული"}, subItems: [{title: "Hotel", desc: "Sea View"}, {title: "Food", desc: "Market"}] },
+                    { title: {en: "Medical", ka: "მკურნალობა"}, desc: {en: "Oncology", ka: "ონკოლოგია"}, img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80", tag: {en: "Health", ka: "ჯანმრთელობა"}, subItems: [{title: "Clinic", desc: "Assuta"}, {title: "Doctor", desc: "Consult"}] },
+                    { title: {en: "Dead Sea", ka: "მკვდარი ზღვა"}, desc: {en: "Wellness", ka: "ველნესი"}, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "რელაქსი"}, subItems: [{title: "Spa", desc: "Mud"}, {title: "Hotel", desc: "Resort"}] }
+                ],
+                blog: [{ title: {en: "Medical Visa Israel", ka: "სამედიცინო ვიზა"}, date: {en: "Visa", ka: "ვიზა"}, img: "https://images.unsplash.com/photo-1516574187841-693018f54fbd?auto=format&fit=crop&w=800&q=80" }]
             }
         };
 
@@ -576,15 +564,22 @@
 
         function renderRibbon() {
             const ribbon = document.getElementById('destRibbon');
-            const order = ['world', 'europe', 'asia', 'middle_east', 'americas'];
+            // TOP 10 COUNTRIES LIST
+            const order = ['world', 'turkey', 'italy', 'france', 'spain', 'uae', 'thailand', 'usa', 'egypt', 'germany', 'israel'];
             ribbon.innerHTML = '';
             
             const labels = {
                 world: { en: "WORLDWIDE", ka: "მსოფლიო" },
-                europe: { en: "EUROPE", ka: "ევროპა" },
-                asia: { en: "ASIA", ka: "აზია" },
-                middle_east: { en: "MIDDLE EAST", ka: "ახლო აღმოსავლეთი" },
-                americas: { en: "AMERICAS", ka: "ამერიკა" }
+                turkey: { en: "TURKEY", ka: "თურქეთი" },
+                italy: { en: "ITALY", ka: "იტალია" },
+                france: { en: "FRANCE", ka: "საფრანგეთი" },
+                spain: { en: "SPAIN", ka: "ესპანეთი" },
+                uae: { en: "UAE / DUBAI", ka: "დუბაი" },
+                thailand: { en: "THAILAND", ka: "ტაილანდი" },
+                usa: { en: "USA", ka: "აშშ" },
+                egypt: { en: "EGYPT", ka: "ეგვიპტე" },
+                germany: { en: "GERMANY", ka: "გერმანია" },
+                israel: { en: "ISRAEL", ka: "ისრაელი" }
             };
             
             const lang = localStorage.getItem('lang') || 'en';
@@ -607,7 +602,7 @@
                     btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
                     btn.setAttribute('data-region', key);
                     
-                    // Inject dynamic color variable
+                    // Inject specific country color
                     const colorHex = database[key].accent;
                     const colorRgb = hexToRgb(colorHex);
                     btn.style.setProperty('--btn-rgb', colorRgb);
@@ -627,7 +622,7 @@
             if(data.accent) {
                 document.documentElement.style.setProperty('--terracotta', data.accent);
                 document.querySelector('.logo-sub').style.color = data.accent;
-                document.querySelector('.logo-sub').innerText = key === 'world' ? 'WORLD' : key.toUpperCase().replace('_', ' ');
+                document.querySelector('.logo-sub').innerText = key === 'world' ? 'WORLD' : key.toUpperCase();
             }
             
             renderRibbon(); 
@@ -636,7 +631,7 @@
             let heroItems = [];
             if (key === 'world') {
                 heroItems = [...commonServices];
-                // Pull specialized tours for hero mix
+                // Mix in random tours from top countries
                 Object.values(database).forEach(region => {
                     if(region.tours) heroItems.push(...region.tours);
                 });
