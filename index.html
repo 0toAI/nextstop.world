@@ -19,9 +19,6 @@
             --header-h: 70px;
             --ribbon-h: 65px;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            /* The crucial vertical alignment line from the left edge */
-            --align-left: 200px; 
-            --edge-padding: 4%;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
@@ -34,25 +31,16 @@
         /* --- HEADER --- */
         header {
             background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px);
-            height: var(--header-h); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 0 5%; height: var(--header-h); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .header-inner {
-            display: flex; justify-content: space-between; align-items: center; height: 100%;
-            padding-right: var(--edge-padding); /* Right side padding */
-        }
-        .header-left-aligned {
-            display: flex; align-items: center; height: 100%;
-        }
-        /* Logo sits in the space *before* the alignment line */
-        .logo-container { 
-            display: flex; align-items: center; height: 100%; cursor: pointer; 
-            width: var(--align-left); padding-left: var(--edge-padding);
-        }
-        .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--charcoal); letter-spacing: -0.5px; }
-        /* Subtitle removed as requested */
+        .header-left { display: flex; align-items: center; gap: 30px; }
+        
+        /* Logo - Word "World" removed */
+        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; }
+        .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
 
-        /* Toggle starts exactly at the alignment line */
         .site-toggle { display: flex; background: #eef2f5; padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
         .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; transition: 0.3s; }
         .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
@@ -63,21 +51,19 @@
         .ribbon-wrapper {
             position: fixed; top: var(--header-h); left: 0; width: 100%; height: var(--ribbon-h);
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);
-            z-index: 999; display: flex; align-items: center;
+            z-index: 999; display: flex; align-items: center; padding: 0 5%;
             border-bottom: 1px solid rgba(0,0,0,0.05);
             box-shadow: 0 10px 20px rgba(0,0,0,0.02);
         }
         
-        /* Ribbon stream starts exactly at the alignment line */
         .ribbon-stream { 
             flex: 1; display: flex; align-items: center; gap: 10px; overflow-x: auto; scrollbar-width: none; height: 100%; 
-            padding-left: var(--align-left); /* The crucial alignment */
-            padding-right: var(--edge-padding);
-            mask-image: linear-gradient(to right, transparent 0%, black var(--align-left), black 95%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black var(--align-left), black 95%, transparent 100%);
+            mask-image: linear-gradient(to right, black 95%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 95%, transparent 100%);
         }
         .ribbon-stream::-webkit-scrollbar { display: none; }
         
+        /* Standard Country Button */
         .stream-btn { 
             padding: 8px 20px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; 
             color: #555; background: white; border: 1px solid rgba(0,0,0,0.05);
@@ -85,18 +71,36 @@
             text-transform: uppercase;
         }
         .stream-btn:hover { color: var(--accent); transform: translateY(-2px); }
+        
+        /* Active Country Button (Colored) */
         .stream-btn.active { 
             background: var(--accent); color: white; border-color: transparent;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2); transform: scale(1.05);
         }
-        
-        .more-btn {
-            width: 35px; height: 35px; border-radius: 50%; background: #eee; color: #333;
-            display: flex; justify-content: center; align-items: center; font-size: 1.1rem;
-            flex-shrink: 0; cursor: pointer; transition: 0.4s;
-            margin-right: var(--edge-padding);
+
+        /* SPECIAL STYLE FOR WORLD BUTTON (Transparent) */
+        .stream-btn.world-home {
+            background: transparent;
+            border: 1px solid transparent;
+            box-shadow: none;
+            color: #999;
+            font-size: 0.8rem; /* Slightly larger to stand out */
+            letter-spacing: 1px;
+            padding-left: 0; /* Align left */
         }
-        .more-btn:hover { transform: rotate(90deg) scale(1.1); background: var(--accent); color: white; }
+        .stream-btn.world-home:hover {
+            transform: none;
+            color: var(--charcoal);
+        }
+        .stream-btn.world-home.active {
+            background: transparent;
+            color: var(--charcoal);
+            font-weight: 900;
+            transform: none;
+            box-shadow: none;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+        }
 
         /* --- NAV & HERO --- */
         .nav-right { display: flex; gap: 20px; align-items: center; }
@@ -104,6 +108,7 @@
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
         
+        /* HERO WHEEL */
         .hero-wheel { height: 85vh; width: 100%; overflow: hidden; background: #000; position: relative; }
         .wheel-track { display: flex; width: 100%; height: 100%; }
         .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
@@ -120,7 +125,7 @@
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
 
         /* --- SECTIONS --- */
-        .section { padding: 80px var(--edge-padding); min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+        .section { padding: 80px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
         .section-title { text-align: center; margin-bottom: 60px; position: relative; }
         .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 10px; }
         
@@ -152,29 +157,16 @@
         .blog-title { font-size: 1.1rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; line-height: 1.3; }
 
         /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 2100; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2100; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
         .modal-overlay.active { display: flex; }
         .modal-content { background: white; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; animation: slideUp 0.4s ease; }
         .modal-header-img { height: 300px; width: 100%; object-fit: cover; }
         .modal-body { padding: 40px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: white; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; }
         .modal-btn { background: var(--accent); color: white; padding: 15px 30px; display: inline-block; font-weight: bold; text-transform: uppercase; margin-top: 20px; }
-        
-        /* MATRIX */
-        .matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
-        .matrix-item { padding: 15px; background: #f9f9f9; border-radius: 8px; text-align: center; font-weight: 600; color: #555; transition: 0.2s; cursor: pointer; border: 1px solid transparent; }
-        .matrix-item:hover { background: white; border-color: var(--accent); color: var(--accent); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transform: translateY(-3px); }
-        .matrix-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
-        .matrix-title { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--charcoal); }
-        .matrix-close { font-size: 2rem; cursor: pointer; transition: 0.3s; }
 
-        footer { background: #111; color: #777; padding: 80px var(--edge-padding); text-align: center; border-top: 5px solid var(--accent); }
-        @media (max-width: 768px) { 
-            :root { --align-left: 140px; } /* Tighten alignment on mobile */
-            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .site-toggle { display: none; } 
-            /* On mobile, ribbon padding adjusts, logo gets smaller */
-            .logo-main { font-size: 1rem; }
-        }
+        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; border-top: 5px solid var(--accent); }
+        @media (max-width: 768px) { .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .header-left { width: 100%; justify-content: space-between; } .site-toggle { display: none; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -182,41 +174,31 @@
 <body>
 
     <header>
-        <div class="header-inner">
-            <div class="header-left-aligned">
-                <div class="logo-container" onclick="location.reload()">
-                    <span class="logo-main">NEXT STOP</span>
-                </div>
-                <div class="site-toggle">
-                    <a href="https://nextstop.ge" class="toggle-btn inactive">GEORGIA</a>
-                    <div class="toggle-btn active" onclick="loadCountry('world')"><span class="dot">●</span> WORLD</div>
-                </div>
+        <div class="header-left">
+            <div class="logo-container" onclick="location.reload()">
+                <span class="logo-main">NEXT STOP</span>
             </div>
-            <div class="nav-right">
-                <nav class="nav-links">
-                    <a href="#destinations" class="nav-item">Tours</a>
-                    <a href="#services" class="nav-item">Services</a>
-                    <a href="#blog" class="nav-item">Blog</a>
-                </nav>
-                <select class="lang-select" onchange="changeLanguage(this.value)">
-                    <option value="en">🇺🇸 ENG</option>
-                    <option value="ka">🇬🇪 GEO</option>
-                </select>
+            <div class="site-toggle">
+                <a href="https://nextstop.ge" class="toggle-btn inactive">GEORGIA</a>
+                <div class="toggle-btn active" onclick="loadCountry('world')"><span class="dot">●</span> WORLD</div>
             </div>
+        </div>
+        <div class="nav-right">
+            <nav class="nav-links">
+                <a href="#destinations" class="nav-item">Tours</a>
+                <a href="#services" class="nav-item">Services</a>
+                <a href="#blog" class="nav-item">Blog</a>
+            </nav>
+            <select class="lang-select" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 ENG</option>
+                <option value="ka">🇬🇪 GEO</option>
+            </select>
         </div>
     </header>
 
     <div class="ribbon-wrapper">
-        <div class="ribbon-stream" id="destRibbon"></div>
-        <button class="more-btn" onclick="toggleMatrix()">+</button>
-    </div>
-
-    <div class="matrix-overlay" id="matrixOverlay">
-        <div class="matrix-header">
-            <h2 class="matrix-title">Select Destination</h2>
-            <div class="matrix-close" onclick="toggleMatrix()">✕</div>
-        </div>
-        <div class="matrix-grid" id="matrixGrid"></div>
+        <div class="ribbon-stream" id="destRibbon">
+            </div>
     </div>
 
     <div class="hero-wheel">
@@ -251,7 +233,7 @@
     </section>
 
     <footer id="footer">
-        <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1); width: auto; padding: 0;">
+        <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1);">
             <span class="logo-main">NEXT STOP</span>
         </div>
         <p>Tbilisi, Georgia | <a href="tel:+995591705710" style="color:#aaa;">+995 591 70 57 10</a></p>
@@ -303,7 +285,7 @@
                 tourCategories: [
                     { title: "Art Cities", img: "https://images.unsplash.com/photo-1534445867742-43195f401b6c?q=80&w=2070", desc: "Rome, Florence, Venice.", items: [{title:"Rome Classic", img:"https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=2070", desc:"The Eternal City", content:"ITINERARY: ROME\n\nDay 1: Arrival & Piazza Navona.\nDay 2: Vatican Museums.\nDay 3: Colosseum & Departure."}, {title:"Florence Art", img:"https://images.unsplash.com/photo-1543429258-150587d5b1ae?q=80&w=2070", desc:"Renaissance Capital", content:"ITINERARY: FLORENCE\n\nDay 1: Duomo climb.\nDay 2: Uffizi Gallery.\nDay 3: Ponte Vecchio."}, {title:"Venice Canals", img:"https://images.unsplash.com/photo-1514890547357-a9ee288728e0?q=80&w=2070", desc:"Gondola Ride", content:"ITINERARY: VENICE\n\nDay 1: St Mark's Square.\nDay 2: Murano & Burano.\nDay 3: Rialto Market."}] },
                     { title: "Amalfi Coast", img: "https://images.unsplash.com/photo-1633321088355-d0f8c054e3e9?q=80&w=2070", desc: "Positano & Capri.", items: [{title:"Positano Dream", img:"https://images.unsplash.com/photo-1533602496739-1663470ccf6b?q=80&w=2070", desc:"Cliffside Luxury", content:"ITINERARY: POSITANO\n\nDay 1: Beach Club.\nDay 2: Boat Tour."}] },
-                    { title: "Food & Wine", img: "https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?q=80&w=2070", desc: "Tuscany & Naples.", items: [{title:"Tuscany Wine", img:"https://images.unsplash.com/photo-1473185906631-9a7444158913?q=80&w=2070", desc:"Chianti", content:"ITINERARY: TUSCANY\n\nDay 1: Siena.\nDay 2: Wine Tasting."}] },
+                    { title: "Food & Wine", img: "https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?q=80&w=2070", desc: "Tuscany & Naples.", items: [{title:"Tuscany Wine", img:"https://images.unsplash.com/photo-1473185906631-9a7444158913?q=80&w=2070", desc:"Chianti Tour", content:"ITINERARY: TUSCANY\n\nDay 1: Siena.\nDay 2: Wine Tasting in Chianti.\nDay 3: San Gimignano."}, {title:"Pizza in Naples", img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2069", desc:"Authentic Cuisine", content:"ITINERARY: NAPLES\n\nDay 1: Spaccanapoli.\nDay 2: Pompeii Trip.\nDay 3: Pizza Making Class."}] },
                     { title: "Islands", img: "https://images.unsplash.com/photo-1504198266287-1659872e6590?q=80&w=2070", desc: "Sicily.", items: [{title:"Sicily Tour", img:"https://images.unsplash.com/photo-1596706064228-4467d1db2688?q=80&w=2070", desc:"Etna", content:"ITINERARY: SICILY\n\nDay 1: Palermo.\nDay 2: Etna."}] }
                 ],
                 blog: [ { title: "Hidden Italy Gems", date: "Inspiration", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" } ]
@@ -314,7 +296,7 @@
             greece: { accent: "#0D5EAF", hero: [{ title: "Aegean Blue", desc: "Gods & Islands", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2069" }], tourCategories: [ { title: "Cyclades", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", desc: "Santorini", items: [{title:"Santorini", img:"https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", desc:"Sunset", content:"ITINERARY: SANTORINI\n\nDay 1: Oia."}] }, { title: "History", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc: "Athens", items: [{title:"Athens", img:"https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc:"Acropolis", content:"ITINERARY: ATHENS\n\nDay 1: Parthenon."}] }, { title: "Ionian", img: "https://images.unsplash.com/photo-1589552148408-41076b6b71f5?q=80&w=2070", desc: "Zakynthos", items: [{title:"Zakynthos", img:"https://images.unsplash.com/photo-1589552148408-41076b6b71f5?q=80&w=2070", desc:"Shipwreck", content:"ITINERARY: ZAKYNTHOS\n\nDay 1: Navagio Beach."}] }, { title: "Crete", img: "https://images.unsplash.com/photo-1555319176-068305c74381?q=80&w=2070", desc: "Big Island", items: [{title:"Crete", img:"https://images.unsplash.com/photo-1555319176-068305c74381?q=80&w=2070", desc:"Knossos", content:"ITINERARY: CRETE\n\nDay 1: Palace."}] } ], blog: [{title: "Greek Food", date: "Food", img: "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed92?q=80&w=2070"}] },
             germany: { accent: "#DD0000", hero: [{ title: "Heart of Europe", desc: "History & Nature", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070" }], tourCategories: [ { title: "Bavaria", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070", desc: "Castles", items: [{title:"Neuschwanstein", img:"https://images.unsplash.com/photo-1534068590799-09895a701e3e?q=80&w=2070", desc:"Fairytale", content:"ITINERARY: BAVARIA\n\nDay 1: Castle Tour."}] }, { title: "Berlin", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", desc: "History", items: [{title:"Berlin", img:"https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", desc:"Wall", content:"ITINERARY: BERLIN\n\nDay 1: The Wall."}] }, { title: "Rhine", img: "https://images.unsplash.com/photo-1522964789503-4f1144df3c51?q=80&w=2070", desc: "Cruise", items: [{title:"River Cruise", img:"https://images.unsplash.com/photo-1522964789503-4f1144df3c51?q=80&w=2070", desc:"Wine", content:"ITINERARY: RHINE\n\nDay 1: Boat Trip."}] }, { title: "Nature", img: "https://images.unsplash.com/photo-1516966006083-b3d27744a6b9?q=80&w=2070", desc: "Black Forest", items: [{title:"Black Forest", img:"https://images.unsplash.com/photo-1516966006083-b3d27744a6b9?q=80&w=2070", desc:"Hiking", content:"ITINERARY: FOREST\n\nDay 1: Hike."}] } ], blog: [{title: "Berlin Guide", date: "City", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070"}] },
             iceland: { accent: "#0085CA", hero: [{ title: "Land of Fire", desc: "Ice & Magma", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159" }], tourCategories: [ { title: "Golden Circle", img: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", desc: "Classic", items: [{title:"Golden Circle", img:"https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", desc:"Geysir", content:"ITINERARY: GOLDEN CIRCLE\n\nDay 1: Geysir."}] }, { title: "South Coast", img: "https://images.unsplash.com/photo-1526958097901-5e6d742d3371?q=80&w=2070", desc: "Waterfalls", items: [{title:"South Coast", img:"https://images.unsplash.com/photo-1526958097901-5e6d742d3371?q=80&w=2070", desc:"Vik", content:"ITINERARY: SOUTH COAST\n\nDay 1: Waterfalls."}] }, { title: "Aurora", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc: "Northern Lights", items: [{title:"Aurora Hunt", img:"https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc:"Night Tour", content:"ITINERARY: AURORA\n\nDay 1: Jeep Tour."}] }, { title: "Highlands", img: "https://images.unsplash.com/photo-1499638673689-79a0b5115d87?q=80&w=2070", desc: "Off-road", items: [{title:"Highlands", img:"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?q=80&w=2070", desc:"Hiking", content:"ITINERARY: HIGHLANDS\n\nDay 1: Hike."}] } ], blog: [{title: "Iceland Packing", date: "Tips", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159"}] },
-            norway: { accent: "#BA0C2F", hero: [{ title: "Fjord Kingdom", desc: "Nature's Masterpiece", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070" }], tourCategories: [ { title: "Fjords", img: "https://images.unsplash.com/photo-1506701168343-4cc66503c512?q=80&w=2070", desc: "Cruises", items: [{title:"Fjord Cruise", img:"https://images.unsplash.com/photo-1506701168343-4cc66503c512?q=80&w=2070", desc:"Boat", content:"ITINERARY: FJORDS\n\nDay 1: Cruise."}] }, { title: "Arctic", img: "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", desc: "Lofoten", items: [{title:"Lofoten", img:"https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", desc:"Islands", content:"ITINERARY: LOFOTEN\n\nDay 1: Fishing Village."}] }, { title: "Hiking", img: "https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", desc: "Trolltunga", items: [{title:"Trolltunga", img:"https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", desc:"Hike", content:"ITINERARY: HIKE\n\nDay 1: Long Hike."}] }, { title: "Cities", img: "https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", desc: "Oslo", items: [{title:"Oslo", img:"https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", desc:"Museums", content:"ITINERARY: OSLO\n\nDay 1: Opera."}] } ], blog: [{title: "Norway Roadtrip", date: "Guide", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070"}] }
+            norway: { accent: "#BA0C2F", hero: [{ title: "Fjord Kingdom", desc: "Nature's Masterpiece", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070" }], tourCategories: [ { title: "Fjords", img: "https://images.unsplash.com/photo-1506701168343-4cc66503c512?q=80&w=2070", desc: "Cruises", items: [{title:"Fjord Cruise", img:"https://images.unsplash.com/photo-1506701168343-4cc66503c512?q=80&w=2070", desc:"Boat", content:"ITINERARY: FJORDS\n\nDay 1: Cruise."}] }, { title: "Arctic", img: "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", desc: "Lofoten", items: [{title:"Lofoten", img:"https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", desc:"Islands", content:"ITINERARY: LOFOTEN\n\nDay 1: Fishing Village."}] }, { title: "Hiking", img: "https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", desc: "Famous Treks.", items: [{title:"Trolltunga", img:"https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", desc:"The Troll's Tongue", content:"ITINERARY: HIKING\n\nDay 1: Odda.\nDay 2: Trolltunga Hike (10-12 hours).\nDay 3: Recovery & Spa."}] }, { title: "Cities", img: "https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", desc: "Oslo & Bergen.", items: [{title:"Oslo", img:"https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", desc:"Museums", content:"ITINERARY: OSLO\n\nDay 1: Opera."}] } ], blog: [{title: "Norway Roadtrip", date: "Guide", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070"}] }
         };
 
         // --- LOGIC ---
@@ -329,47 +311,42 @@
         }
 
         const ribbon = document.getElementById('destRibbon');
-        const matrix = document.getElementById('matrixGrid');
-        const countries = ['italy', 'france', 'spain', 'portugal', 'greece', 'germany', 'iceland', 'norway'];
+        // Added WORLD to the start of the array
+        const countries = ['world', 'italy', 'france', 'spain', 'portugal', 'greece', 'germany', 'iceland', 'norway'];
 
         countries.forEach(key => {
             const btn = document.createElement('button');
-            btn.className = 'stream-btn';
-            btn.innerText = key.toUpperCase();
+            // Special style for World button
+            if (key === 'world') {
+                btn.className = 'stream-btn world-home';
+                btn.innerText = "WORLD";
+            } else {
+                btn.className = 'stream-btn';
+                btn.innerText = key.toUpperCase();
+            }
+            
             btn.onclick = () => loadCountry(key);
             btn.setAttribute('data-key', key);
             ribbon.appendChild(btn);
-
-            const item = document.createElement('div');
-            item.className = 'matrix-item';
-            item.innerText = key.charAt(0).toUpperCase() + key.slice(1);
-            item.onclick = () => { loadCountry(key); toggleMatrix(); };
-            matrix.appendChild(item);
         });
-
-        function toggleMatrix() { document.getElementById('matrixOverlay').classList.toggle('active'); }
 
         function loadCountry(key) {
             currentKey = key;
             const data = getCountryData(key);
 
             document.documentElement.style.setProperty('--accent', data.accent || '#006994');
-            // Logo subtitle update removed
+            // Logo stays static "NEXT STOP"
 
+            // Handle Button Classes
             document.querySelectorAll('.stream-btn').forEach(b => {
-                b.classList.toggle('active', b.getAttribute('data-key') === key);
+                const isWorld = b.classList.contains('world-home');
+                const isCurrent = b.getAttribute('data-key') === key;
+                
+                b.classList.toggle('active', isCurrent);
+                
+                // Ensure World button stays transparent even when active, just bold/underlined via CSS
+                // (CSS class .world-home.active handles this)
             });
-            
-            // Toggle button update
-             const worldToggle = document.querySelector('.toggle-btn.active');
-             if (key === 'world') {
-                 worldToggle.innerHTML = '<span class="dot">●</span> WORLD';
-                 worldToggle.style.color = 'var(--charcoal)';
-             } else {
-                 worldToggle.innerText = 'WORLD';
-                 worldToggle.style.color = '#999';
-             }
-
 
             renderHero(data.hero);
             renderCategories('toursGrid', data.tourCategories, 'tours');
